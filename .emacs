@@ -1,5 +1,7 @@
 (menu-bar-mode 0)
 (tool-bar-mode 0)
+(scroll-bar-mode -1)
+(toggle-frame-fullscreen)
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -9,7 +11,6 @@
    '("78e9a3e1c519656654044aeb25acb8bec02579508c145b6db158d2cfad87c44e" "583148e87f779040b5349db48b6fcad6fe9a873c6ada20487e9a1ec40d845505" default))
  '(global-display-line-numbers-mode t)
  '(haskell-mode-hook '(interactive-haskell-mode) t)
- '(initial-frame-alist '((fullscreen . maximized)))
  '(lsp-dart-dap-flutter-hot-reload-on-save t)
  '(org-roam-directory "~/org/roam/")
  '(package-selected-packages
@@ -76,7 +77,7 @@
                     :inherit nil)
 (require 'key-chord)
 (setq key-chord-two-keys-delay 0.5)
-(key-chord-define evil-insert-state-map "jk" 'evil-normal-state)
+(key-chord-define evil-insert-state-map "ff" 'evil-normal-state)
 (key-chord-mode 1)
 (evil-leader/set-leader ",")
 (evil-leader/set-key
@@ -150,7 +151,7 @@
     (folding-mode-add-find-file-hook)
   (message "Library `folding' not found"))
 (folding-add-to-marks-list 'dart-mode "#{{{" "#}}}" nil t)
-(company-mode 1)
+(global-company-mode 1)
 ;; Add yasnippet support for all company backends
 ;; https://github.com/syl20bnr/spacemacs/pull/179
 (defvar company-mode/enable-yas t

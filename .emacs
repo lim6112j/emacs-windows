@@ -77,7 +77,7 @@
                     :inherit nil)
 (require 'key-chord)
 (setq key-chord-two-keys-delay 0.5)
-(key-chord-define evil-insert-state-map "ff" 'evil-normal-state)
+(key-chord-define evil-insert-state-map "df" 'evil-normal-state)
 (key-chord-mode 1)
 (evil-leader/set-leader ",")
 (evil-leader/set-key

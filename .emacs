@@ -164,3 +164,12 @@
             '(:with company-yasnippet))))
 
 (setq company-backends (mapcar #'company-mode/backend-with-yas company-backends))
+
+add-to-list 'load-path "~/.emacs.d/elpa/evil-20211021.2104/evil")
+(require 'evil)
+(evil-mode 1)
+
+(add-to-list 'load-path
+             "~/.emacs.d/elpa/yasnippet-20200604.246")
+(require 'yasnippet)
+(yas-global-mode 1)

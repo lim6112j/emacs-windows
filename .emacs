@@ -59,7 +59,6 @@
 ;;(global-set-key (kbd "C-c C-<") 'mc/mark-all-like-this)
 (put 'upcase-region 'disabled nil)
 (global-set-key (kbd "M-o") (lambda () (interactive)(end-of-line)(newline)))
-(add-to-list 'load-path "~/.emacs.d/elpa/evil-1.14.0")
 (require 'evil)
 (require 'evil-leader)
 (global-evil-leader-mode)

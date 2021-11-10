@@ -165,3 +165,7 @@
 (setq company-backends (mapcar #'company-mode/backend-with-yas company-backends))
 (add-hook 'haskell-mode-hook #'lsp)
 (add-hook 'haskell-literate-mode-hook #'lsp)
+(use-package ess
+  :ensure t
+  :init
+  (require 'ess-site))

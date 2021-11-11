@@ -14,8 +14,7 @@
  '(lsp-dart-dap-flutter-hot-reload-on-save t)
  '(org-roam-directory "~/org/roam/")
  '(package-selected-packages
-   '(smex company-lua luarocks flycheck-haskell lsp-origami folding lua-mode magit counsel projectile-ripgrep wgrep ivy org-evil yasnippet-snippets evil-surround php-mode evil-terminal-cursor-changer web-mode lsp-haskell evil-org org org-roam dart-mode lsp-mode lsp-dart lsp-treemacs flycheck company lsp-ui company hover))
- '(tool-bar-mode nil))
+   '(smex company-lua luarocks flycheck-haskell lsp-origami folding lua-mode magit counsel projectile-ripgrep wgrep ivy org-evil yasnippet-snippets evil-surround php-mode evil-terminal-cursor-changer web-mode lsp-haskell evil-org org org-roam dart-mode lsp-mode lsp-dart lsp-treemacs flycheck company lsp-ui company hover)))
 ;;(custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -83,7 +82,7 @@
 (set-face-attribute 'comint-highlight-prompt nil
                     :inherit nil)
 (require 'key-chord)
-(setq key-chord-two-keys-delay 0.5)
+(setq key-chord-two-keys-delay 0.2)
 (key-chord-define evil-insert-state-map "df" 'evil-normal-state)
 (key-chord-mode 1)
 (evil-leader/set-leader ",")
@@ -114,7 +113,7 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(default ((t (:family "D2Coding" :foundry "outline" :slant normal :weight normal :height 98 :width normal)))))
+ '(default ((t (:family "D2Coding" :foundry "outline" :slant normal :weight bold :height 98 :width normal)))))
 (setq org-roam-v2-ack t)
 (setq org-return-follows-link  t)
 (put 'narrow-to-region 'disabled nil)

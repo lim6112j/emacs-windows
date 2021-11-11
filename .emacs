@@ -10,11 +10,11 @@
  '(custom-safe-themes
    '("3b8284e207ff93dfc5e5ada8b7b00a3305351a3fb222782d8033a400a48eca48" "78e9a3e1c519656654044aeb25acb8bec02579508c145b6db158d2cfad87c44e" "583148e87f779040b5349db48b6fcad6fe9a873c6ada20487e9a1ec40d845505" default))
  '(global-display-line-numbers-mode t)
- '(haskell-mode-hook '(interactive-haskell-mode))
+ '(haskell-mode-hook '(interactive-haskell-mode) t)
  '(lsp-dart-dap-flutter-hot-reload-on-save t)
  '(org-roam-directory "~/org/roam/")
  '(package-selected-packages
-   '(company-lua luarocks flycheck-haskell lsp-origami folding lua-mode magit counsel projectile-ripgrep wgrep ivy org-evil yasnippet-snippets evil-surround php-mode evil-terminal-cursor-changer web-mode lsp-haskell evil-org org org-roam dart-mode lsp-mode lsp-dart lsp-treemacs flycheck company lsp-ui company hover))
+   '(smex company-lua luarocks flycheck-haskell lsp-origami folding lua-mode magit counsel projectile-ripgrep wgrep ivy org-evil yasnippet-snippets evil-surround php-mode evil-terminal-cursor-changer web-mode lsp-haskell evil-org org org-roam dart-mode lsp-mode lsp-dart lsp-treemacs flycheck company lsp-ui company hover))
  '(tool-bar-mode nil))
 ;;(custom-set-faces
  ;; custom-set-faces was added by Custom.
@@ -28,8 +28,11 @@
 ;; and `package-pinned-packages`. Most users will not need or want to do this.
 (add-to-list 'package-archives '("melpa-stable" . "https://stable.melpa.org/packages/") t)
 (package-initialize)
-;;(require 'smex) ; Not needed if you use package.el
-;;(smex-initialize) ; Can be omitted. This might cause a (minimal) delay
+(unless (package-installed-p 'use-package)
+  (package-refresh-contents)
+  (package-install 'use-package))
+(require 'smex) ; Not needed if you use package.el
+(smex-initialize) ; Can be omitted. This might cause a (minimal) delay
                     ; when Smex is auto-initialized on its first run.
 (when (cl-find-if-not #'package-installed-p package-selected-packages)
   (package-refresh-contents)
@@ -38,8 +41,9 @@
 (when (memq window-system '(mac ns x))
   (exec-path-from-shell-initialize))
 
+(global-set-key (kbd "M-x") 'counsel-M-x)
 ;;(global-set-key (kbd "M-x") 'smex)
-;;(global-set-key (kbd "M-X") 'smex-major-mode-commands)
+(global-set-key (kbd "M-X") 'smex-major-mode-commands)
 ;; This is your old M-x.
 (global-set-key (kbd "C-c C-c M-x") 'execute-extended-command)
 (global-set-key (kbd "C-.") #'next-window-any-frame)

@@ -138,9 +138,12 @@
   :ensure t
   :config
   (global-evil-surround-mode 1))
-(require 'yasnippet)
-(yas-global-mode 1)
-					;wsl-copy
+
+;;(require 'yasnippet)
+;;(yas-global-mode 1)
+(yas-reload-all)
+(add-hook 'prog-mode-hook #'yas-minor-mode)
+;wsl-copy
 (defun wsl-copy (start end)
   (interactive "r")
   (shell-command-on-region start end "clip.exe")

@@ -19,9 +19,10 @@
  '(nrepl-message-colors
    '("#CC9393" "#DFAF8F" "#F0DFAF" "#7F9F7F" "#BFEBBF" "#93E0E3" "#94BFF3" "#DC8CC3"))
  '(org-roam-directory "~/org/roam/")
+ '(org-superstar-headline-bullets-list '(9673 9675 9673 10047))
  '(org-use-speed-commands nil)
  '(package-selected-packages
-   '(org-bullets smex company-lua luarocks flycheck-haskell lsp-origami folding lua-mode magit counsel projectile-ripgrep wgrep ivy org-evil yasnippet-snippets evil-surround php-mode evil-terminal-cursor-changer web-mode lsp-haskell evil-org org org-roam dart-mode lsp-mode lsp-dart lsp-treemacs flycheck company lsp-ui company hover))
+   '(multi-term org-superstar org-bullets smex company-lua luarocks flycheck-haskell lsp-origami folding lua-mode magit counsel projectile-ripgrep wgrep ivy org-evil yasnippet-snippets evil-surround php-mode evil-terminal-cursor-changer web-mode lsp-haskell evil-org org org-roam dart-mode lsp-mode lsp-dart lsp-treemacs flycheck company lsp-ui company hover))
  '(pdf-view-midnight-colors '("#DCDCCC" . "#383838"))
  '(vc-annotate-background "#2B2B2B")
  '(vc-annotate-color-map
@@ -94,21 +95,32 @@
                     :inherit nil)
 (require 'key-chord)
 (setq key-chord-two-keys-delay 0.2)
+(key-chord-define evil-visual-state-map "df" 'evil-normal-state)
 (key-chord-define evil-insert-state-map "df" 'evil-normal-state)
+(key-chord-define evil-visual-state-map "jk" 'evil-normal-state)
+(key-chord-define evil-insert-state-map "jk" 'evil-normal-state)
 (key-chord-mode 1)
-(evil-leader/set-leader ",")
+(evil-leader/set-leader "<SPC>")
 (evil-leader/set-key
+  "h" 'windmove-left
+  "H" 'evil-window-move-far-left
+  "l" 'windmove-right
+  "L" 'evil-window-move-far-right
+  "k" 'windmove-up
+  "K" 'evil-window-move-very-top
+  "j" 'windmove-down
+  "J" 'evil-window-move-very-bottom
   "d" 'dired
+  "p" 'projectile-command-map
   "e" 'counsel-find-file
   "b" 'switch-to-buffer
-  "k" 'kill-buffer
+  "x" 'kill-buffer
   "g" 'magit-status
   "s" 'save-buffer
   "t" 'treemacs
   "c" 'lsp-execute-code-action
   "f" 'lsp-format-buffer
   "S" 'shell)
-
 
 (add-hook 'dart-mode-hook 'lsp)
 
@@ -124,7 +136,16 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(default ((t (:family "D2Coding" :foundry "outline" :slant normal :weight bold :height 98 :width normal)))))
+ '(default ((t (:family "D2Coding" :foundry "outline" :slant normal :weight bold :height 98 :width normal))))
+ '(org-document-title ((t (:inherit default :weight bold :foreground "#DCDCCC" :font "Verdana" :height 1.5 :underline nil))))
+ '(org-level-1 ((t (:inherit default :weight bold :foreground "#DCDCCC" :font "Verdana" :height 1.75))))
+ '(org-level-2 ((t (:inherit default :weight bold :foreground "#DCDCCC" :font "Verdana" :height 1.5))))
+ '(org-level-3 ((t (:inherit default :weight bold :foreground "#DCDCCC" :font "Verdana" :height 1.25))))
+ '(org-level-4 ((t (:inherit default :weight bold :foreground "#DCDCCC" :font "Verdana" :height 1.1))))
+ '(org-level-5 ((t (:inherit default :weight bold :foreground "#DCDCCC" :font "Verdana"))))
+ '(org-level-6 ((t (:inherit default :weight bold :foreground "#DCDCCC" :font "Verdana"))))
+ '(org-level-7 ((t (:inherit default :weight bold :foreground "#DCDCCC" :font "Verdana"))))
+ '(org-level-8 ((t (:inherit default :weight bold :foreground "#DCDCCC" :font "Verdana")))))
 (setq org-roam-v2-ack t)
 (setq org-return-follows-link  t)
 (put 'narrow-to-region 'disabled nil)
@@ -180,5 +201,5 @@
   :ensure t
   :init
   (require 'ess-site))
-(require 'org-bullets)
-(add-hook 'org-mode-hook (lambda () (org-bullets-mode 1)))
+(require 'org-superstar)
+(add-hook 'org-mode-hook (lambda () (org-superstar-mode 1)))

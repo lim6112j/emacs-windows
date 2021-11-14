@@ -22,7 +22,7 @@
  '(org-superstar-headline-bullets-list '(9673 9675 9673 10047))
  '(org-use-speed-commands nil)
  '(package-selected-packages
-   '(ess multi-term org-superstar org-bullets smex company-lua luarocks flycheck-haskell lsp-origami folding lua-mode magit counsel projectile-ripgrep wgrep ivy org-evil yasnippet-snippets evil-surround php-mode evil-terminal-cursor-changer web-mode lsp-haskell evil-org org org-roam dart-mode lsp-mode lsp-dart lsp-treemacs flycheck company lsp-ui company hover))
+   '(which-key ess multi-term org-superstar org-bullets smex company-lua luarocks flycheck-haskell lsp-origami folding lua-mode magit counsel projectile-ripgrep wgrep ivy org-evil yasnippet-snippets evil-surround php-mode evil-terminal-cursor-changer web-mode lsp-haskell evil-org org org-roam dart-mode lsp-mode lsp-dart lsp-treemacs flycheck company lsp-ui company hover))
  '(pdf-view-midnight-colors '("#DCDCCC" . "#383838"))
  '(vc-annotate-background "#2B2B2B")
  '(vc-annotate-color-map
@@ -102,25 +102,32 @@
 (key-chord-mode 1)
 (evil-leader/set-leader "<SPC>")
 (evil-leader/set-key
-  "h" 'windmove-left
-  "H" 'evil-window-move-far-left
-  "l" 'windmove-right
-  "L" 'evil-window-move-far-right
-  "k" 'windmove-up
-  "K" 'evil-window-move-very-top
-  "j" 'windmove-down
-  "J" 'evil-window-move-very-bottom
-  "d" 'dired
+  ;;"w h" 'windmove-left
+  ;;"w H" 'evil-window-move-far-left
+  ;;"w l" 'windmove-right
+  ;;"w L" 'evil-window-move-far-right
+  ;;"w k" 'windmove-up
+  ;;"w K" 'evil-window-move-very-top
+  ;;"w j" 'windmove-down
+  ;;"w J" 'evil-window-move-very-bottom
+  ;;"w d" 'evil-window-delete
+  ;;"w s" 'evil-window-new
+  ;;"w v" 'evil-window-vnew
+  "w" 'evil-window-map
   "p" 'projectile-command-map
-  "e" 'counsel-find-file
-  "b" 'switch-to-buffer
-  "x" 'kill-buffer
-  "g" 'magit-status
-  "s" 'save-buffer
-  "t" 'treemacs
-  "c" 'lsp-execute-code-action
-  "f" 'lsp-format-buffer
-  "S" 'shell)
+  "f f" 'counsel-find-file
+  "f s" 'save-buffer
+  "f d" 'dired
+  "b b" 'counsel-switch-buffer
+  "b k" 'kill-buffer
+  "g g" 'magit-status
+  "g c" 'magit-log-current
+  "t t" 'treemacs
+  "t f" 'treemacs-create-file
+  "t d" 'treemacs-create-dir
+  "c c" 'lsp-execute-code-action
+  "c f" 'lsp-format-buffer
+  "s" 'shell)
 
 (add-hook 'dart-mode-hook 'lsp)
 
@@ -203,3 +210,4 @@
   (require 'ess-site))
 (require 'org-superstar)
 (add-hook 'org-mode-hook (lambda () (org-superstar-mode 1)))
+(which-key-mode)

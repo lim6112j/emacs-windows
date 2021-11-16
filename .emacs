@@ -129,6 +129,7 @@
   "t d" 'treemacs-create-dir
   "c c" 'lsp-execute-code-action
   "c f" 'lsp-format-buffer
+  "q q" 'save-buffers-kill-emacs
   "s" 'shell)
 
 (add-hook 'dart-mode-hook 'lsp)

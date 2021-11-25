@@ -130,6 +130,7 @@
   "c c" 'lsp-execute-code-action
   "c f" 'lsp-format-buffer
   "q q" 'save-buffers-kill-emacs
+  ":" 'counsel-M-x
   "s" 'shell)
 
 (add-hook 'dart-mode-hook 'lsp)

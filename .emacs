@@ -215,3 +215,6 @@
 (require 'org-superstar)
 (add-hook 'org-mode-hook (lambda () (org-superstar-mode 1)))
 (which-key-mode)
+(org-babel-do-load-languages
+ 'org-babel-load-languages
+ '((R . t)))

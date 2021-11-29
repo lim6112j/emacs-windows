@@ -131,6 +131,8 @@
   "c f" 'lsp-format-buffer
   "q q" 'save-buffers-kill-emacs
   ":" 'counsel-M-x
+  "," 'ido-switch-buffer
+  "<" 'list-all-buffers
   "s" 'shell)
 
 (add-hook 'dart-mode-hook 'lsp)

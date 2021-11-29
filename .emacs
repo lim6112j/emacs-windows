@@ -132,7 +132,7 @@
   "q q" 'save-buffers-kill-emacs
   ":" 'counsel-M-x
   "," 'ido-switch-buffer
-  "<" 'list-all-buffers
+  "<" 'list-buffers
   "s" 'shell)
 
 (add-hook 'dart-mode-hook 'lsp)

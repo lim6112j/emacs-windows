@@ -22,7 +22,7 @@
  '(org-superstar-headline-bullets-list '(9673 9675 9673 10047))
  '(org-use-speed-commands nil)
  '(package-selected-packages
-   '(pyenv-mode which-key ess multi-term org-superstar org-bullets smex company-lua luarocks flycheck-haskell lsp-origami folding lua-mode magit counsel projectile-ripgrep wgrep ivy org-evil yasnippet-snippets evil-surround php-mode evil-terminal-cursor-changer web-mode lsp-haskell evil-org org org-roam dart-mode lsp-mode lsp-dart lsp-treemacs flycheck company lsp-ui company hover))
+   '(pyenv-mode which-key ess multi-term org-superstar org-bullets smex company-lua luarocks flycheck-haskell lsp-origami folding lua-mode magit counsel projectile-ripgrep wgrep ivy org-evil yasnippet-snippets evil-surround php-mode evil-terminal-cursor-changer web-mode lsp-haskell evil-org org org-roam dart-mode lsp-mode lsp-dart lsp-treemacs flycheck company lsp-ui company hover yasnippet dap-mode))
  '(pdf-view-midnight-colors '("#DCDCCC" . "#383838"))
  '(projectile-globally-ignored-directories
    '(".idea" ".vscode" ".ensime_cache" ".eunit" ".git" ".hg" ".fslckout" "_FOSSIL_" ".bzr" "_darcs" ".tox" ".svn" ".stack-work" ".ccls-cache" ".cache" ".clangd" "Application Data" "AppData" "Cookies" "Documents" "local settings" "NetHood"))
@@ -93,6 +93,8 @@
 ;; for mac
 ;;(define-key projectile-mode-map (kbd "s-p") 'projectile-command-map)
 (define-key projectile-mode-map (kbd "C-c p") 'projectile-command-map)
+;; super key remapping to 'C-c s'
+(define-key function-key-map (kbd "C-c s") 'event-apply-super-modifier)
 (set-face-attribute 'comint-highlight-prompt nil
                     :inherit nil)
 (require 'key-chord)
@@ -133,7 +135,8 @@
   ":" 'counsel-M-x
   "," 'ido-switch-buffer
   "<" 'list-buffers
-  "s" 'shell)
+  "e s" 'shell
+  "e e" 'eshell)
 
 (add-hook 'dart-mode-hook 'lsp)
 
@@ -223,4 +226,11 @@
 ;; Mouse scrolling in terminal emacs like windows terminal
 (unless (display-graphic-p)
   (xterm-mouse-mode 1)
+  )
+(add-hook 'c-mode-hook 'lsp)
+(add-hook 'c++-mode-hook 'lsp)
+(with-eval-after-load 'lsp-mode
+  (add-hook 'lsp-mode-hook #'lsp-enable-which-key-integration)
+  (require 'dap-cpptools)
+  (yas-global-mode)
   )

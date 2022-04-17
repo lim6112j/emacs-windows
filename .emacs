@@ -11,7 +11,7 @@
  '(company-quickhelp-color-foreground "#DCDCCC")
  '(custom-enabled-themes '(wombat))
  '(custom-safe-themes
-   '("3b8284e207ff93dfc5e5ada8b7b00a3305351a3fb222782d8033a400a48eca48" "78e9a3e1c519656654044aeb25acb8bec02579508c145b6db158d2cfad87c44e" "583148e87f779040b5349db48b6fcad6fe9a873c6ada20487e9a1ec40d845505" default))
+   '("fc48cc3bb3c90f7761adf65858921ba3aedba1b223755b5924398c666e78af8b" "3b8284e207ff93dfc5e5ada8b7b00a3305351a3fb222782d8033a400a48eca48" "78e9a3e1c519656654044aeb25acb8bec02579508c145b6db158d2cfad87c44e" "583148e87f779040b5349db48b6fcad6fe9a873c6ada20487e9a1ec40d845505" default))
  '(fci-rule-color "#383838")
  '(global-display-line-numbers-mode t)
  '(haskell-mode-hook '(interactive-haskell-mode) t)
@@ -99,8 +99,8 @@
 (setq key-chord-two-keys-delay 0.2)
 (key-chord-define evil-visual-state-map "df" 'evil-normal-state)
 (key-chord-define evil-insert-state-map "df" 'evil-normal-state)
-(key-chord-define evil-visual-state-map "jk" 'evil-normal-state)
-(key-chord-define evil-insert-state-map "jk" 'evil-normal-state)
+;;(key-chord-define evil-visual-state-map "jk" 'evil-normal-state)
+;;(key-chord-define evil-insert-state-map "jk" 'evil-normal-state)
 (key-chord-mode 1)
 (evil-leader/set-leader "<SPC>")
 (evil-leader/set-key
@@ -220,3 +220,7 @@
 (org-babel-do-load-languages
  'org-babel-load-languages
  '((R . t)))
+;; Mouse scrolling in terminal emacs like windows terminal
+(unless (display-graphic-p)
+  (xterm-mouse-mode 1)
+  )

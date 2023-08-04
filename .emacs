@@ -22,7 +22,7 @@
  '(org-superstar-headline-bullets-list '(9673 9675 9673 10047))
  '(org-use-speed-commands nil)
  '(package-selected-packages
-   '(pyenv-mode which-key ess multi-term org-superstar org-bullets smex company-lua luarocks flycheck-haskell lsp-origami folding lua-mode magit counsel projectile-ripgrep wgrep ivy org-evil yasnippet-snippets evil-surround php-mode evil-terminal-cursor-changer web-mode lsp-haskell evil-org org org-roam dart-mode lsp-mode lsp-dart lsp-treemacs flycheck company lsp-ui company hover yasnippet dap-mode))
+   '(pyenv-mode which-key ess multi-term org-superstar org-bullets smex company-lua luarocks flycheck-haskell lsp-origami folding lua-mode magit counsel helm-lsp helm-xref projectile-ripgrep wgrep ivy org-evil yasnippet-snippets evil-surround php-mode evil-terminal-cursor-changer web-mode lsp-haskell evil-org org org-roam dart-mode lsp-mode lsp-dart lsp-treemacs flycheck company lsp-ui company hover yasnippet dap-mode))
  '(pdf-view-midnight-colors '("#DCDCCC" . "#383838"))
  '(projectile-globally-ignored-directories
    '(".idea" ".vscode" ".ensime_cache" ".eunit" ".git" ".hg" ".fslckout" "_FOSSIL_" ".bzr" "_darcs" ".tox" ".svn" ".stack-work" ".ccls-cache" ".cache" ".clangd" "Application Data" "AppData" "Cookies" "Documents" "local settings" "NetHood"))
@@ -64,11 +64,17 @@
 (when (memq window-system '(mac ns x))
   (exec-path-from-shell-initialize))
 
-(global-set-key (kbd "M-x") 'counsel-M-x)
+;;(global-set-key (kbd "M-x") 'counsel-M-x)
 ;;(global-set-key (kbd "M-x") 'smex)
-(global-set-key (kbd "M-X") 'smex-major-mode-commands)
+;;(global-set-key (kbd "M-X") 'smex-major-mode-commands)
 ;; This is your old M-x.
-(global-set-key (kbd "C-c C-c M-x") 'execute-extended-command)
+;;(global-set-key (kbd "C-c C-c M-x") 'execute-extended-command)
+(helm-mode)
+(require 'helm-xref)
+(define-key global-map [remap find-file] #'helm-find-files)
+(define-key global-map [remap execute-extended-command] #'helm-M-x)
+(define-key global-map [remap switch-to-buffer] #'helm-mini)
+
 (global-set-key (kbd "C-.") #'next-window-any-frame)
 (global-set-key (kbd "C-,") #'prev-window)
 
@@ -233,4 +239,5 @@
   (add-hook 'lsp-mode-hook #'lsp-enable-which-key-integration)
   (require 'dap-cpptools)
   (yas-global-mode)
+  (electric-pair-mode)
   )

@@ -1,3 +1,5 @@
+;; (set-language-environment "Korean")
+;; (prefer-coding-system 'utf-8)
 (menu-bar-mode 1)
 (tool-bar-mode 0)
 (scroll-bar-mode -1)
@@ -43,8 +45,9 @@
    '("f366d4bc6d14dcac2963d45df51956b2409a15b770ec2f6d730e73ce0ca5c8a7" default))
  '(global-display-line-numbers-mode t)
  '(package-selected-packages
-   '(org-roam org company rust-mode yasnippet lsp savehist vertico projectile helm-lsp lsp-treemacs lsp-ivy help-lsp lsp-ui lsp-mode typescript-mode helm zenburn-theme use-package smartparens multiple-cursors))
- '(tool-bar-mode nil))
+   '(org-roam-ui org-roam org company rust-mode yasnippet lsp savehist vertico projectile helm-lsp lsp-treemacs lsp-ivy help-lsp lsp-ui lsp-mode typescript-mode helm zenburn-theme use-package smartparens multiple-cursors))
+ '(tool-bar-mode nil)
+ '(warning-suppress-types '((magit))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -140,3 +143,11 @@
 ;; vertico ends
 (require 'rust-mode)
 (org-roam-db-autosync-mode)
+(when (and (eq system-type 'gnu/linux)
+           (string-match
+            "Linux.*Microsoft.*Linux"
+            (shell-command-to-string "uname -a")))
+  (setq
+   browse-url-generic-program  "/mnt/c/Windows/System32/cmd.exe"
+   browse-url-generic-args     '("/c" "start")
+   browse-url-browser-function #'browse-url-generic))

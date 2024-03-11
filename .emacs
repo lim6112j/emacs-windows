@@ -43,7 +43,7 @@
    '("f366d4bc6d14dcac2963d45df51956b2409a15b770ec2f6d730e73ce0ca5c8a7" default))
  '(global-display-line-numbers-mode t)
  '(package-selected-packages
-   '(projectile helm-lsp lsp-treemacs lsp-ivy help-lsp lsp-ui lsp-mode typescript-mode helm zenburn-theme use-package smartparens multiple-cursors))
+   '(vertico projectile helm-lsp lsp-treemacs lsp-ivy help-lsp lsp-ui lsp-mode typescript-mode helm zenburn-theme use-package smartparens multiple-cursors))
  '(tool-bar-mode nil))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
@@ -76,6 +76,7 @@
 
 ;; optional if you want which-key integration
 (use-package which-key
+  :ensure which-key
     :config
     (which-key-mode))
 (projectile-mode +1)

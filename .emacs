@@ -43,7 +43,7 @@
    '("f366d4bc6d14dcac2963d45df51956b2409a15b770ec2f6d730e73ce0ca5c8a7" default))
  '(global-display-line-numbers-mode t)
  '(package-selected-packages
-   '(vertico projectile helm-lsp lsp-treemacs lsp-ivy help-lsp lsp-ui lsp-mode typescript-mode helm zenburn-theme use-package smartparens multiple-cursors))
+   '(yasnippet lsp savehist vertico projectile helm-lsp lsp-treemacs lsp-ivy help-lsp lsp-ui lsp-mode typescript-mode helm zenburn-theme use-package smartparens multiple-cursors))
  '(tool-bar-mode nil))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
@@ -53,6 +53,7 @@
  '(default ((t (:family "MesloLGM Nerd Font Mono" :foundry "PfEd" :slant normal :weight normal :height 130 :width normal)))))
 
 (use-package lsp-mode
+  :ensure lsp-mode
   :init
   ;; set prefix for lsp-command-keymap (few alternatives - "C-l", "C-c l")
   (setq lsp-keymap-prefix "C-c l")

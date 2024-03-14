@@ -90,7 +90,7 @@
 ;; Recommended keymap prefix on Windows/Linux
 (define-key projectile-mode-map (kbd "C-c p") 'projectile-command-map)
 ;; treemacs
-(define-key treemacs (kbd "C-c t") 'treemacs)
+(global-set-key (kbd "C-c t") 'treemacs)
 ;; Enable vertico
 (use-package vertico
   :ensure vertico

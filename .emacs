@@ -47,7 +47,7 @@
    '("f366d4bc6d14dcac2963d45df51956b2409a15b770ec2f6d730e73ce0ca5c8a7" default))
  '(global-display-line-numbers-mode t)
  '(package-selected-packages
-   '(org-roam-ui org-roam org company rust-mode yasnippet lsp savehist vertico projectile helm-lsp lsp-treemacs lsp-ivy help-lsp lsp-ui lsp-mode typescript-mode helm zenburn-theme use-package smartparens multiple-cursors))
+   '(tree-sitter-mode org-roam-ui org-roam org company rust-mode yasnippet lsp savehist vertico projectile helm-lsp lsp-treemacs lsp-ivy help-lsp lsp-ui lsp-mode typescript-mode helm zenburn-theme use-package smartparens multiple-cursors))
  '(tool-bar-mode nil)
  '(warning-suppress-types '((magit))))
 (custom-set-faces
@@ -57,6 +57,10 @@
  ;; If there is more than one, they won't work right.
  '(default ((t (:family "MesloLGM Nerd Font Mono" :foundry "PfEd" :slant normal :weight normal :height 130 :width normal)))))
 
+;; (use-package tree-sitter
+;;   :ensure t
+;;   :hook (
+;; 	 (typescript-mode-hook . tree-sitter-mode)))
 (use-package lsp-mode
   :ensure lsp-mode
   :init
@@ -173,3 +177,40 @@
    browse-url-generic-args     '("/c" "start")
    browse-url-browser-function #'browse-url-generic))
 (setq org-directory "~/org/")
+(defun hs-cycle (&optional level)
+  (interactive "p")
+  (let (message-log-max
+        (inhibit-message t))
+    (if (= level 1)
+        (pcase last-command
+          ('hs-cycle
+           (hs-hide-level 1)
+           (setq this-command 'hs-cycle-children))
+          ('hs-cycle-children
+           ;; TODO: Fix this case. `hs-show-block' needs to be
+           ;; called twice to open all folds of the parent
+           ;; block.
+           (save-excursion (hs-show-block))
+           (hs-show-block)
+           (setq this-command 'hs-cycle-subtree))
+          ('hs-cycle-subtree
+           (hs-hide-block))
+          (_
+           (if (not (hs-already-hidden-p))
+               (hs-hide-block)
+             (hs-hide-level 1)
+             (setq this-command 'hs-cycle-children))))
+      (hs-hide-level level)
+      (setq this-command 'hs-hide-level))))
+
+(defun hs-global-cycle ()
+    (interactive)
+    (pcase last-command
+      ('hs-global-cycle
+       (save-excursion (hs-show-all))
+       (setq this-command 'hs-global-show))
+      (_ (hs-hide-all))))
+(global-set-key (kbd "C-<tab>") 'hs-cycle)
+(global-set-key (kbd "C-S-<tab>") 'hs-cycle)
+
+(add-hook 'typescript-mode-hook 'hs-minor-mode)

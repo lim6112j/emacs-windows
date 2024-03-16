@@ -5,6 +5,8 @@
 (scroll-bar-mode -1)
 (toggle-frame-fullscreen)
 (global-display-line-numbers-mode)
+(when (memq window-system '(mac ns x))
+  (exec-path-from-shell-initialize))
 (setq package-install-upgrade-built-in t)
 (add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/") t)
 (add-to-list 'package-archives '("melpa-stable" . "https://stable.melpa.org/packages/") t)
@@ -144,7 +146,24 @@
   (setq enable-recursive-minibuffers t))
 ;; vertico ends
 (require 'rust-mode)
-(org-roam-db-autosync-mode)
+(use-package org-roam
+  :ensure t
+  :custom
+  (org-roam-directory (file-truename "~/org/"))
+  :bind (("C-c n l" . org-roam-buffer-toggle)
+         ("C-c n f" . org-roam-node-find)
+         ("C-c n g" . org-roam-graph)
+         ("C-c n i" . org-roam-node-insert)
+         ("C-c n c" . org-roam-capture)
+         ;; Dailies
+         ("C-c n j" . org-roam-dailies-capture-today))
+  :config
+  ;; If you're using a vertical completion framework, you might want a more informative completion interface
+  (setq org-roam-node-display-template (concat "${title:*} " (propertize "${tags:10}" 'face 'org-tag)))
+  (org-roam-db-autosync-mode)
+  ;; If using org-roam-protocol
+  (require 'org-roam-protocol))
+
 (when (and (eq system-type 'gnu/linux)
            (string-match
             "Linux.*Microsoft.*Linux"
@@ -153,3 +172,4 @@
    browse-url-generic-program  "/mnt/c/Windows/System32/cmd.exe"
    browse-url-generic-args     '("/c" "start")
    browse-url-browser-function #'browse-url-generic))
+(setq org-directory "~/org/")

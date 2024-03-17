@@ -214,3 +214,21 @@
 (global-set-key (kbd "C-S-<tab>") 'hs-cycle)
 
 (add-hook 'typescript-mode-hook 'hs-minor-mode)
+;; Move cursor to end of current line
+;; Insert new line below current line
+;; it will also indent newline
+(global-set-key (kbd "<C-return>") (lambda ()
+                   (interactive)
+                   (end-of-line)
+                   (newline-and-indent)))
+
+;; Move cursor to previous line 
+;; Go to end of the line
+;; Insert new line below current line (So it actually insert new line above with indentation)
+;; it will also indent newline
+(global-set-key (kbd "<C-S-return>") (lambda ()
+                       (interactive)
+                       (previous-line)
+                       (end-of-line)
+                       (newline-and-indent)
+                       ))

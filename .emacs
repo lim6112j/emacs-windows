@@ -5,6 +5,7 @@
 (scroll-bar-mode -1)
 (toggle-frame-fullscreen)
 (global-display-line-numbers-mode)
+(auto-revert-mode 1)
 (when (memq window-system '(mac ns x))
   (exec-path-from-shell-initialize))
 (setq package-install-upgrade-built-in t)

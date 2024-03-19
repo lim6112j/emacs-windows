@@ -47,8 +47,8 @@
  '(custom-safe-themes
 	 '("f366d4bc6d14dcac2963d45df51956b2409a15b770ec2f6d730e73ce0ca5c8a7" default))
  '(global-display-line-numbers-mode t)
- '(ns-alternate-modifier 'meta)
- '(ns-command-modifier 'super)
+ '(mac-option-modifier 'meta)
+ '(mac-command-modifier 'super)
  '(package-selected-packages
 	 '(tree-sitter-mode org-roam-ui org-roam org company rust-mode yasnippet lsp savehist vertico projectile helm-lsp lsp-treemacs lsp-ivy help-lsp lsp-ui lsp-mode typescript-mode helm zenburn-theme use-package smartparens multiple-cursors))
  '(tab-width 2)

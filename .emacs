@@ -213,7 +213,7 @@
        (setq this-command 'hs-global-show))
       (_ (hs-hide-all))))
 (global-set-key (kbd "C-<tab>") 'hs-cycle)
-(global-set-key (kbd "C-S-<tab>") 'hs-cycle)
+(global-set-key (kbd "C-S-<tab>") 'hs-global-cycle)
 
 (add-hook 'typescript-mode-hook 'hs-minor-mode)
 ;; Move cursor to end of current line

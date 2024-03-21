@@ -47,10 +47,12 @@
  '(custom-safe-themes
 	 '("f366d4bc6d14dcac2963d45df51956b2409a15b770ec2f6d730e73ce0ca5c8a7" default))
  '(global-display-line-numbers-mode t)
- '(mac-option-modifier 'meta)
  '(mac-command-modifier 'super)
+ '(mac-option-modifier 'meta)
  '(package-selected-packages
-	 '(tree-sitter-mode org-roam-ui org-roam org company rust-mode yasnippet lsp savehist vertico projectile helm-lsp lsp-treemacs lsp-ivy help-lsp lsp-ui lsp-mode typescript-mode helm zenburn-theme use-package smartparens multiple-cursors))
+	 '(ripgrep tree-sitter-mode org-roam-ui org-roam org company rust-mode yasnippet lsp savehist vertico projectile helm-lsp lsp-treemacs lsp-ivy help-lsp lsp-ui lsp-mode typescript-mode helm zenburn-theme use-package smartparens multiple-cursors))
+ '(projectile-globally-ignored-directories
+	 '("^\\.idea$" "^\\.vscode$" "^\\.ensime_cache$" "^\\.eunit$" "^\\.git$" "^\\.hg$" "^\\.fslckout$" "^_FOSSIL_$" "^\\.bzr$" "^_darcs$" "^\\.pijul$" "^\\.tox$" "^\\.svn$" "^\\.stack-work$" "^\\.ccls-cache$" "^\\.cache$" "^\\.clangd$" "^\\.sl$" "^\\.jj$" "^\\.dist$"))
  '(tab-width 2)
  '(tool-bar-mode nil)
  '(warning-suppress-types '((magit))))

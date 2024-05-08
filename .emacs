@@ -50,7 +50,7 @@
  '(ns-alternate-modifier 'meta)
  '(ns-command-modifier 'super)
  '(package-selected-packages
-	 '(all haskell-mode projectile-ripgrep ripgrep tree-sitter-mode org-roam-ui org-roam org company rust-mode yasnippet lsp savehist vertico projectile helm-lsp lsp-treemacs lsp-ivy help-lsp lsp-ui lsp-mode typescript-mode helm zenburn-theme use-package smartparens multiple-cursors))
+	 '(general treesit-auto tree-sitter-langs tree-sitter eldoc-box all haskell-mode projectile-ripgrep ripgrep tree-sitter-mode org-roam-ui org-roam org company rust-mode yasnippet lsp savehist vertico projectile helm-lsp lsp-treemacs lsp-ivy help-lsp lsp-ui lsp-mode typescript-mode helm zenburn-theme use-package smartparens multiple-cursors))
  '(projectile-globally-ignored-directories
 	 '("^\\.idea$" "^\\.vscode$" "^\\.ensime_cache$" "^\\.eunit$" "^\\.git$" "^\\.hg$" "^\\.fslckout$" "^_FOSSIL_$" "^\\.bzr$" "^_darcs$" "^\\.pijul$" "^\\.tox$" "^\\.svn$" "^\\.stack-work$" "^\\.ccls-cache$" "^\\.cache$" "^\\.clangd$" "^\\.sl$" "^\\.jj$" "^\\.dist$"))
  '(tab-width 2)
@@ -80,12 +80,12 @@
 ;;  :commands lsp)
 ;;
 ;; optionally
-(use-package lsp-ui :ensure lsp-ui :commands lsp-ui-mode)
+;;(use-package lsp-ui :ensure lsp-ui :commands lsp-ui-mode)
 ;; if you are helm user
-(use-package helm-lsp :ensure helm-lsp :commands helm-lsp-workspace-symbol)
+;;(use-package helm-lsp :ensure helm-lsp :commands helm-lsp-workspace-symbol)
 ;; if you are ivy user
-(use-package lsp-ivy :ensure lsp-ivy :commands lsp-ivy-workspace-symbol)
-(use-package lsp-treemacs :ensure lsp-treemacs :commands lsp-treemacs-errors-list)
+;;(use-package lsp-ivy :ensure lsp-ivy :commands lsp-ivy-workspace-symbol)
+;;(use-package lsp-treemacs :ensure lsp-treemacs :commands lsp-treemacs-errors-list)
 
 ;; optionally if you want to use debugger
 ;;(use-package dap-mode)
@@ -299,11 +299,12 @@
         (scroll-up 3))))
   ;; this won't work without installing general; I include it as an example
   ;; see: https://github.com/skyler544/rex/blob/main/config/rex-keybindings.el
-  :general
-  (:keymaps 'eglot-mode-map
-            "C-k" 'rex/eldoc-box-scroll-up
-            "C-j" 'rex/eldoc-box-scroll-down
-            "M-h" 'eldoc-box-help-at-point))
+;;  :general
+;;  (:keymaps 'eglot-mode-map
+;;            "C-k" 'rex/eldoc-box-scroll-up
+;;            "C-j" 'rex/eldoc-box-scroll-down
+;;            "M-h" 'eldoc-box-help-at-point)
+)
 ;; these files are started in fundamental mode
 ;; by default, but conf-mode handles them well
 (use-package emacs :ensure nil

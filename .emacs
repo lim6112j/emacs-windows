@@ -67,18 +67,18 @@
 ;;   :ensure t
 ;;   :hook (
 ;; 	 (typescript-mode-hook . tree-sitter-mode)))
-(use-package lsp-mode
-  :ensure lsp-mode
-  :init
-  ;; set prefix for lsp-command-keymap (few alternatives - "C-l", "C-c l")
-  (setq lsp-keymap-prefix "C-c l")
-  :hook (;; replace XXX-mode with concrete major-mode(e. g. python-mode)
-         (typescript-mode . lsp)
-	 (rust-mode . lsp)
-         ;; if you want which-key integration
-         (lsp-mode . lsp-enable-which-key-integration))
-  :commands lsp)
-
+;;(use-package lsp-mode
+;;  :ensure lsp-mode
+;;  :init
+;;  ;; set prefix for lsp-command-keymap (few alternatives - "C-l", "C-c l")
+;;  (setq lsp-keymap-prefix "C-c l")
+;;  :hook (;; replace XXX-mode with concrete major-mode(e. g. python-mode)
+;;         (typescript-mode . lsp)
+;;	 (rust-mode . lsp)
+;;         ;; if you want which-key integration
+;;         (lsp-mode . lsp-enable-which-key-integration))
+;;  :commands lsp)
+;;
 ;; optionally
 (use-package lsp-ui :ensure lsp-ui :commands lsp-ui-mode)
 ;; if you are helm user
@@ -238,7 +238,9 @@
                        (end-of-line)
                        (newline-and-indent)
                        ))
-;; eglot setting for typescript and haskell
+
+;; setting for typescript and haskell
+
 ;; use-package for configuring, even though eglot is
 ;; built-in in Emacs 29, thus :ensure nil
 (use-package eglot :ensure nil :defer t
@@ -276,3 +278,84 @@
   (eglot-managed-mode
    . (lambda () (setq eldoc-documentation-function
                       'eldoc-documentation-compose-eagerly))))
+;; triggering this manually is imo much nicer than having it pop up
+;; automatically and obscure the code once you open it, you can scroll it with
+;; C-j and C-k and any other command closes it again, but it can very rarely get
+;; stuck on screen, which requires C-g
+(use-package eldoc-box
+  :defer t
+  :config
+  (defun rex/eldoc-box-scroll-up ()
+    "Scroll up in `eldoc-box--frame'"
+    (interactive)
+    (with-current-buffer eldoc-box--buffer
+      (with-selected-frame eldoc-box--frame
+        (scroll-down 3))))
+  (defun rex/eldoc-box-scroll-down ()
+    "Scroll down in `eldoc-box--frame'"
+    (interactive)
+    (with-current-buffer eldoc-box--buffer
+      (with-selected-frame eldoc-box--frame
+        (scroll-up 3))))
+  ;; this won't work without installing general; I include it as an example
+  ;; see: https://github.com/skyler544/rex/blob/main/config/rex-keybindings.el
+  :general
+  (:keymaps 'eglot-mode-map
+            "C-k" 'rex/eldoc-box-scroll-up
+            "C-j" 'rex/eldoc-box-scroll-down
+            "M-h" 'eldoc-box-help-at-point))
+;; these files are started in fundamental mode
+;; by default, but conf-mode handles them well
+(use-package emacs :ensure nil
+  :mode
+  ("\\.env.test$" . conf-mode)
+  ("\\.env.local$" . conf-mode)
+  ("\\.env.sample$" . conf-mode)
+  ("\\.env$" . conf-mode))
+
+(use-package web-mode
+  :config
+  (setq web-mode-code-indent-offset 2)
+  (setq web-mode-markup-indent-offset 2)
+  :mode
+  ("\\.html$" . web-mode)
+  ("\\.twig$" . web-mode))
+;; this should be replaced by the built-in modes eventually, but it's not always
+;; simple to switch and not every language has a builtin `lang'-ts-mode
+(use-package tree-sitter
+  :demand t
+  :diminish tree-sitter-mode
+  :config
+  (setq treesit-font-lock-level 4))
+
+(use-package tree-sitter-langs
+  :after tree-sitter)
+
+;; seems like it will still throw a warning the first time you visit a file with
+;; a treesit major mode if you don't have the grammar installed; manually
+;; running M-x lang-ts-mode after waiting a few seconds for this package to
+;; install and compile the grammar fixes the warning and you shouldn't see it
+;; again afterwards
+(use-package treesit-auto
+  :config
+  (setq treesit-auto-install t))
+
+(use-package flymake :ensure nil
+  :init
+  (setq-default flymake-no-changes-timeout 1)
+  :config
+  (setq flymake-mode-line-format
+        ;; the default mode line lighter takes up an unnecessary amount of
+        ;; space, so make it shorter
+        '(" " flymake-mode-line-exception flymake-mode-line-counters)))
+(use-package add-node-modules-path
+  :hook
+  (tsx-ts-mode . add-node-modules-path)
+  (typescript-ts-mode . add-node-modules-path))
+
+;; you need to have prettier installed for this to work obviously
+(use-package prettier-js
+  :diminish prettier-js-mode
+  :hook
+  (tsx-ts-mode . prettier-js-mode)
+  (typescript-ts-mode . prettier-js-mode))

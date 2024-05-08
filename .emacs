@@ -238,17 +238,41 @@
                        (end-of-line)
                        (newline-and-indent)
                        ))
-(use-package eglot
-  :ensure t
+;; eglot setting for typescript and haskell
+;; use-package for configuring, even though eglot is
+;; built-in in Emacs 29, thus :ensure nil
+(use-package eglot :ensure nil :defer t
+  :custom-face
+  ;; personal preference here; I hate it when packages
+  ;; use the `shadow' face for stuff, it's impossible to read
+  (eglot-inlay-hint-face
+   ((t ( :foreground unspecified
+         :inherit font-lock-comment-face))))
   :config
-  (add-hook 'haskell-mode-hook 'eglot-ensure)
-  :config
+  ;; these two lines help prevent lag with the typescript language server. they
+  ;; might actually be mutually exclusive but I haven't investigated further
+  (with-eval-after-load 'eglot (fset #'jsonrpc--log-event #'ignore))
+  (setq eglot-events-buffer-size 0)
+;;  (add-hook 'haskell-mode-hook 'eglot-ensure)
   (setq-default eglot-workspace-configuration
                 '((haskell
                    (plugin
                     (stan
                      (globalOn . :json-false))))))  ;; disable stan
-  :custom
-  (eglot-autoshutdown t)  ;; shutdown language server after closing last file
-  (eglot-confirm-server-initiated-edits nil)  ;; allow edits without confirmation
-  )
+
+  ;; just do it, don't prompt me
+  (setq eglot-confirm-server-initiated-edits nil)
+  (setq eglot-sync-connect 0)
+  (setq eglot-autoshutdown t)
+  (setq rex/language-servers
+        (list '(tsx-ts-mode "typescript-language-server" "--stdio")
+              ))
+  (dolist (server rex/language-servers)
+    (add-to-list 'eglot-server-programs server))
+  :hook
+  (haskell-mode . eglot-ensure)
+  (typescript-ts-mode . eglot-ensure)
+  (tsx-ts-mode . eglot-ensure)
+  (eglot-managed-mode
+   . (lambda () (setq eldoc-documentation-function
+                      'eldoc-documentation-compose-eagerly))))

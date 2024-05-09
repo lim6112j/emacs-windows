@@ -360,3 +360,7 @@
   :hook
   (tsx-ts-mode . prettier-js-mode)
   (typescript-ts-mode . prettier-js-mode))
+
+;; next error
+(global-set-key (kbd "M-n") 'flymake-goto-next-error)
+(global-set-key (kbd "M-p") 'flymake-goto-prev-error)

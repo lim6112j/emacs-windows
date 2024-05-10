@@ -364,3 +364,7 @@
 ;; next error
 (global-set-key (kbd "M-n") 'flymake-goto-next-error)
 (global-set-key (kbd "M-p") 'flymake-goto-prev-error)
+
+;; mac alt-x weird char input
+(setq mac-option-modifier 'meta)
+(setq mac-command-modifier 'super)

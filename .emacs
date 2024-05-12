@@ -261,7 +261,11 @@
                    (plugin
                     (stan
                      (globalOn . :json-false))))))  ;; disable stan
-
+	(add-to-list 'eglot-server-programs
+                       '(rust-mode . ("rust-analyzer" :initializationOptions
+                                     ( :procMacro (:enable t)
+                                       :cargo ( :buildScripts (:enable t)
+                                                :features "all"))))))
   ;; just do it, don't prompt me
   (setq eglot-confirm-server-initiated-edits nil)
   (setq eglot-sync-connect 0)

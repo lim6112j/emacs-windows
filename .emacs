@@ -430,3 +430,4 @@
 (global-set-key (kbd "<s-M-return>") 'newline-above)
 
 (add-hook 'rust-mode-hook 'company-mode)
+(add-hook 'typescript-ts-mode-hook 'company-mode)

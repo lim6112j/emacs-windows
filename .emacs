@@ -241,7 +241,7 @@
 
 ;; setting for typescript and haskell
 
-;; use-package for configuring, even though eglot is
+;; use-package for configuring, even though eglotis
 ;; built-in in Emacs 29, thus :ensure nil
 (use-package eglot :ensure nil :defer t
   :custom-face
@@ -268,11 +268,11 @@
                    (plugin
                     (stan
                      (globalOn . :json-false))))))  ;; disable stan
-	(add-to-list 'eglot-server-programs
-                       '(rust-mode . ("rust-analyzer" :initializationOptions
-                                     ( :procMacro (:enable t)
-                                       :cargo ( :buildScripts (:enable t)
-                                                :features "all"))))))
+	;; (add-to-list 'eglot-server-programs
+  ;;                      '(rust-mode . ("rust-analyzer" :initializationOptions
+  ;;                                    ( :procMacro (:enable t)
+  ;;                                      :cargo ( :buildScripts (:enable t)
+  ;;                                               :features "all"))))))
   ;; just do it, don't prompt me
   (setq eglot-confirm-server-initiated-edits nil)
   (setq eglot-sync-connect 0)
@@ -408,3 +408,24 @@
 
 (global-set-key (kbd "M-<up>") 'move-line-up)
 (global-set-key (kbd "M-<down>") 'move-line-down)
+
+;; open line below
+;; newline-without-break-of-line
+(defun newline-without-break-of-line ()
+  "1. move to end of the line.
+  2. insert newline with index"
+
+  (interactive)
+  (let ((oldpos (point)))
+    (end-of-line)
+    (newline-and-indent)))
+(defun newline-above ()
+(interactive)
+(let ((oldpos (point)))
+	(beginning-of-line)
+	(newline-and-indent)
+	(previous-line)
+	(indent-to-left-margin))
+)
+(global-set-key (kbd "<s-return>") 'newline-without-break-of-line)
+(global-set-key (kbd "<s-M-return>") 'newline-above)

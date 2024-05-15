@@ -425,6 +425,8 @@
 	(previous-line)
   (end-of-line)
 	(newline-and-indent)
-)
+))
 (global-set-key (kbd "<s-return>") 'newline-without-break-of-line)
 (global-set-key (kbd "<s-M-return>") 'newline-above)
+
+(add-hook 'rust-mode-hook 'company-mode)

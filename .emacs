@@ -440,3 +440,9 @@
       load-path))      (setq erlang-root-dir "/usr/local/opt/erlang/bin")
       (setq exec-path (cons "/usr/local/opt/erlang/bin" exec-path))
       (require 'erlang-start)
+;; faster emacs
+(fset #'jsonrpc--log-event #'ignore)
+(setq eglot-events-buffer-size 0)
+(setq eglot-sync-connect nil)
+(setq company-idle-delay 0.2)
+(setq company-minimum-prefix-length 1)

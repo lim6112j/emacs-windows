@@ -436,13 +436,35 @@
 (put 'upcase-region 'disabled nil)
 (put 'downcase-region 'disabled nil)
 
-(setq load-path (cons  "/usr/local/opt/erlang/lib/erlang/lib/tools-3.6/emacs"
-      load-path))      (setq erlang-root-dir "/usr/local/opt/erlang/bin")
-      (setq exec-path (cons "/usr/local/opt/erlang/bin" exec-path))
+;; for m1 mac
+(setq load-path (cons  "/opt/homebrew/opt/erlang/lib/erlang/lib/tools-3.6/emacs"
+      load-path))      (setq erlang-root-dir "/opt/homebrew/opt/erlang/bin")
+      (setq exec-path (cons "/opt/homebrew/opt/erlang/bin" exec-path))
       (require 'erlang-start)
+;; for intel mac
+;; (setq load-path (cons  "/usr/local/opt/erlang/lib/erlang/lib/tools-3.6/emacs"
+;;       load-path))      (setq erlang-root-dir "/usr/local/opt/erlang/bin")
+;;       (setq exec-path (cons "/usr/local/opt/erlang/bin" exec-path))
+;;       (require 'erlang-start)
 ;; faster emacs
 (fset #'jsonrpc--log-event #'ignore)
 (setq eglot-events-buffer-size 0)
 (setq eglot-sync-connect nil)
 (setq company-idle-delay 0.2)
 (setq company-minimum-prefix-length 1)
+
+;; for autosave annoying vc appearance
+(add-to-list 'load-path "/Users/byeongcheollim/emacs-auto-save") ; add auto-save to your load-path
+(require 'auto-save)
+(auto-save-enable)
+
+(setq auto-save-silent t)   ; quietly save
+(setq auto-save-delete-trailing-whitespace t)  ; automatically delete spaces at the end of the line when saving
+
+;;; custom predicates if you don't want auto save.
+;;; disable auto save mode when current filetype is an gpg file.
+(setq auto-save-disable-predicates
+      '((lambda ()
+      (string-suffix-p
+      "gpg"
+      (file-name-extension (buffer-name)) t))))

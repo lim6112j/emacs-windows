@@ -51,7 +51,7 @@
  '(ns-alternate-modifier 'meta)
  '(ns-command-modifier 'super)
  '(package-selected-packages
- '(eglot typescript-mode prettier-js jsonrpc general treesit-auto tree-sitter-langs tree-sitter eldoc-box all haskell-mode projectile-ripgrep ripgrep tree-sitter-mode org-roam-ui org-roam org company rust-mode yasnippet lsp savehist vertico projectile helm-lsp lsp-treemacs lsp-ivy help-lsp lsp-ui lsp-mode helm zenburn-theme use-package smartparens multiple-cursors))
+	 '(elixir-mode eglot typescript-mode prettier-js jsonrpc general treesit-auto tree-sitter-langs tree-sitter eldoc-box all haskell-mode projectile-ripgrep ripgrep tree-sitter-mode org-roam-ui org-roam org company rust-mode yasnippet lsp savehist vertico projectile helm-lsp lsp-treemacs lsp-ivy help-lsp lsp-ui lsp-mode helm zenburn-theme use-package smartparens multiple-cursors))
  '(projectile-globally-ignored-directories
 	 '("^\\.idea$" "^\\.vscode$" "^\\.ensime_cache$" "^\\.eunit$" "^\\.git$" "^\\.hg$" "^\\.fslckout$" "^_FOSSIL_$" "^\\.bzr$" "^_darcs$" "^\\.pijul$" "^\\.tox$" "^\\.svn$" "^\\.stack-work$" "^\\.ccls-cache$" "^\\.cache$" "^\\.clangd$" "^\\.sl$" "^\\.jj$" "^\\.dist$"))
  '(tab-width 2)
@@ -229,7 +229,7 @@
                    (end-of-line)
                    (newline-and-indent)))
 
-;; Move cursor to previous line 
+;; Move cursor to previous line
 ;; Go to end of the line
 ;; Insert new line below current line (So it actually insert new line above with indentation)
 ;; it will also indent newline
@@ -263,7 +263,8 @@
 		(define-key eglot-java-mode-map (kbd "C-c l T") #'eglot-java-project-build-task)
 		(define-key eglot-java-mode-map (kbd "C-c l R") #'eglot-java-project-build-refresh))
   (setq eglot-events-buffer-size 0)
-;;  (add-hook 'haskell-mode-hook 'eglot-ensure)
+  (add-hook 'elixir-mode-hook 'eglot-ensure)
+	(add-to-list 'eglot-server-programs '(elixir-mode "/Users/byeongcheollim/workspace/elixir-ls-v0.22.0/language_server.sh"))
   (setq-default eglot-workspace-configuration
                 '((haskell
                    (plugin
@@ -437,15 +438,15 @@
 (put 'downcase-region 'disabled nil)
 
 ;; for m1 mac
-(setq load-path (cons  "/opt/homebrew/opt/erlang/lib/erlang/lib/tools-3.6/emacs"
-      load-path))      (setq erlang-root-dir "/opt/homebrew/opt/erlang/bin")
-      (setq exec-path (cons "/opt/homebrew/opt/erlang/bin" exec-path))
-      (require 'erlang-start)
-;; for intel mac
-;; (setq load-path (cons  "/usr/local/opt/erlang/lib/erlang/lib/tools-3.6/emacs"
-;;       load-path))      (setq erlang-root-dir "/usr/local/opt/erlang/bin")
-;;       (setq exec-path (cons "/usr/local/opt/erlang/bin" exec-path))
+;; (setq load-path (cons  "/opt/homebrew/opt/erlang/lib/erlang/lib/tools-3.6/emacs"
+;;       load-path))      (setq erlang-root-dir "/opt/homebrew/opt/erlang/bin")
+;;       (setq exec-path (cons "/opt/homebrew/opt/erlang/bin" exec-path))
 ;;       (require 'erlang-start)
+;; for intel mac
+(setq load-path (cons  "/usr/local/opt/erlang/lib/erlang/lib/tools-3.6/emacs"
+      load-path))      (setq erlang-root-dir "/usr/local/opt/erlang/bin")
+      (setq exec-path (cons "/usr/local/opt/erlang/bin" exec-path))
+      (require 'erlang-start)
 ;; faster emacs
 (fset #'jsonrpc--log-event #'ignore)
 (setq eglot-events-buffer-size 0)

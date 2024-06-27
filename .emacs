@@ -6,8 +6,6 @@
 (toggle-frame-fullscreen)
 (global-display-line-numbers-mode)
 (global-auto-revert-mode)
-(when (memq window-system '(mac ns x))
-  (exec-path-from-shell-initialize))
 (setq package-install-upgrade-built-in t)
 (add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/") t)
 (add-to-list 'package-archives '("melpa-stable" . "https://stable.melpa.org/packages/") t)
@@ -97,6 +95,8 @@
   :ensure which-key
     :config
     (which-key-mode))
+(when (memq window-system '(mac ns x))
+  (exec-path-from-shell-initialize))
 (projectile-mode +1)
 ;; Recommended keymap prefix on macOS
 (define-key projectile-mode-map (kbd "s-p") 'projectile-command-map)
@@ -438,15 +438,15 @@
 (put 'downcase-region 'disabled nil)
 
 ;; for m1 mac
-;; (setq load-path (cons  "/opt/homebrew/opt/erlang/lib/erlang/lib/tools-3.6/emacs"
-;;       load-path))      (setq erlang-root-dir "/opt/homebrew/opt/erlang/bin")
-;;       (setq exec-path (cons "/opt/homebrew/opt/erlang/bin" exec-path))
-;;       (require 'erlang-start)
-;; for intel mac
-(setq load-path (cons  "/usr/local/opt/erlang/lib/erlang/lib/tools-3.6/emacs"
-      load-path))      (setq erlang-root-dir "/usr/local/opt/erlang/bin")
-      (setq exec-path (cons "/usr/local/opt/erlang/bin" exec-path))
+(setq load-path (cons  "/opt/homebrew/opt/erlang/lib/erlang/lib/tools-3.6/emacs"
+      load-path))      (setq erlang-root-dir "/opt/homebrew/opt/erlang/bin")
+      (setq exec-path (cons "/opt/homebrew/opt/erlang/bin" exec-path))
       (require 'erlang-start)
+;; for intel mac
+;;(Setq Load-path (cons  "/usr/local/opt/erlang/lib/erlang/lib/tools-3.6/emacs"
+;;      load-path))      (setq erlang-root-dir "/usr/local/opt/erlang/bin")
+;;      (setq exec-path (cons "/usr/local/opt/erlang/bin" exec-path))
+;;      (require 'erlang-start)
 ;; faster emacs
 (fset #'jsonrpc--log-event #'ignore)
 (setq eglot-events-buffer-size 0)

@@ -3,6 +3,9 @@
 (menu-bar-mode 1)
 (tool-bar-mode 0)
 (scroll-bar-mode -1)
+;; mac alt-x weird char input
+(setq mac-option-modifier 'meta)
+(setq mac-command-modifier 'super)
 (toggle-frame-fullscreen)
 (global-display-line-numbers-mode)
 (global-auto-revert-mode)
@@ -49,7 +52,7 @@
  '(ns-alternate-modifier 'meta)
  '(ns-command-modifier 'super)
  '(package-selected-packages
-	 '(elixir-mode eglot typescript-mode prettier-js jsonrpc general treesit-auto tree-sitter-langs tree-sitter eldoc-box all haskell-mode projectile-ripgrep ripgrep tree-sitter-mode org-roam-ui org-roam org company rust-mode yasnippet lsp savehist vertico projectile helm-lsp lsp-treemacs lsp-ivy help-lsp lsp-ui lsp-mode helm zenburn-theme use-package smartparens multiple-cursors))
+	 '(eglot-java elixir-mode eglot typescript-mode prettier-js jsonrpc general tree-sitter-langs tree-sitter eldoc-box all haskell-mode projectile-ripgrep ripgrep tree-sitter-mode org-roam-ui org-roam org company rust-mode yasnippet lsp savehist vertico projectile helm-lsp lsp-treemacs lsp-ivy help-lsp lsp-ui lsp-mode helm zenburn-theme use-package smartparens multiple-cursors))
  '(projectile-globally-ignored-directories
 	 '("^\\.idea$" "^\\.vscode$" "^\\.ensime_cache$" "^\\.eunit$" "^\\.git$" "^\\.hg$" "^\\.fslckout$" "^_FOSSIL_$" "^\\.bzr$" "^_darcs$" "^\\.pijul$" "^\\.tox$" "^\\.svn$" "^\\.stack-work$" "^\\.ccls-cache$" "^\\.cache$" "^\\.clangd$" "^\\.sl$" "^\\.jj$" "^\\.dist$"))
  '(tab-width 2)
@@ -255,13 +258,13 @@
   ;; these two lines help prevent lag with the typescript language server. they
   ;; might actually be mutually exclusive but I haven't investigated further
   (with-eval-after-load 'eglot (fset #'jsonrpc--log-event #'ignore))
-	(with-eval-after-load 'eglot-java
-		(define-key eglot-java-mode-map (kbd "C-c l n") #'eglot-java-file-new)
-		(define-key eglot-java-mode-map (kbd "C-c l x") #'eglot-java-run-main)
-		(define-key eglot-java-mode-map (kbd "C-c l t") #'eglot-java-run-test)
-		(define-key eglot-java-mode-map (kbd "C-c l N") #'eglot-java-project-new)
-		(define-key eglot-java-mode-map (kbd "C-c l T") #'eglot-java-project-build-task)
-		(define-key eglot-java-mode-map (kbd "C-c l R") #'eglot-java-project-build-refresh))
+	;; (with-eval-after-load 'eglot-java
+	;; 	(define-key eglot-java-mode-map (kbd "C-c l n") #'eglot-java-file-new)
+	;; 	(define-key eglot-java-mode-map (kbd "C-c l x") #'eglot-java-run-main)
+	;; 	(define-key eglot-java-mode-map (kbd "C-c l t") #'eglot-java-run-test)
+	;; 	(define-key eglot-java-mode-map (kbd "C-c l N") #'eglot-java-project-new)
+	;; 	(define-key eglot-java-mode-map (kbd "C-c l T") #'eglot-java-project-build-task)
+	;; 	(define-key eglot-java-mode-map (kbd "C-c l R") #'eglot-java-project-build-refresh))
   (setq eglot-events-buffer-size 0)
   (add-hook 'elixir-mode-hook 'eglot-ensure)
 	(add-to-list 'eglot-server-programs '(elixir-mode "/Users/byeongcheollim/workspace/elixir-ls-v0.22.0/language_server.sh"))
@@ -353,9 +356,9 @@
 ;; running M-x lang-ts-mode after waiting a few seconds for this package to
 ;; install and compile the grammar fixes the warning and you shouldn't see it
 ;; again afterwards
-(use-package treesit-auto
-  :config
-  (setq treesit-auto-install t))
+;;(use-package treesit-auto
+;;  :config
+;;  (setq treesit-auto-install t))
 
 (use-package flymake :ensure nil
   :init
@@ -381,9 +384,6 @@
 (global-set-key (kbd "M-n") 'flymake-goto-next-error)
 (global-set-key (kbd "M-p") 'flymake-goto-prev-error)
 
-;; mac alt-x weird char input
-(setq mac-option-modifier 'meta)
-(setq mac-command-modifier 'super)
 
 ;; move line
 (defun move-line (n)

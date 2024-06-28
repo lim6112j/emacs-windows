@@ -258,13 +258,13 @@
   ;; these two lines help prevent lag with the typescript language server. they
   ;; might actually be mutually exclusive but I haven't investigated further
   (with-eval-after-load 'eglot (fset #'jsonrpc--log-event #'ignore))
-	;; (with-eval-after-load 'eglot-java
-	;; 	(define-key eglot-java-mode-map (kbd "C-c l n") #'eglot-java-file-new)
-	;; 	(define-key eglot-java-mode-map (kbd "C-c l x") #'eglot-java-run-main)
-	;; 	(define-key eglot-java-mode-map (kbd "C-c l t") #'eglot-java-run-test)
-	;; 	(define-key eglot-java-mode-map (kbd "C-c l N") #'eglot-java-project-new)
-	;; 	(define-key eglot-java-mode-map (kbd "C-c l T") #'eglot-java-project-build-task)
-	;; 	(define-key eglot-java-mode-map (kbd "C-c l R") #'eglot-java-project-build-refresh))
+	 (with-eval-after-load 'eglot-java
+	 	(define-key eglot-java-mode-map (kbd "C-c l n") #'eglot-java-file-new)
+	 	(define-key eglot-java-mode-map (kbd "C-c l x") #'eglot-java-run-main)
+	 	(define-key eglot-java-mode-map (kbd "C-c l t") #'eglot-java-run-test)
+	 	(define-key eglot-java-mode-map (kbd "C-c l N") #'eglot-java-project-new)
+	 	(define-key eglot-java-mode-map (kbd "C-c l T") #'eglot-java-project-build-task)
+	 	(define-key eglot-java-mode-map (kbd "C-c l R") #'eglot-java-project-build-refresh))
   (setq eglot-events-buffer-size 0)
   (add-hook 'elixir-mode-hook 'eglot-ensure)
 	(add-to-list 'eglot-server-programs '(elixir-mode "/Users/byeongcheollim/workspace/elixir-ls-v0.22.0/language_server.sh"))

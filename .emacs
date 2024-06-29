@@ -9,11 +9,12 @@
 (toggle-frame-fullscreen)
 (global-display-line-numbers-mode)
 (global-auto-revert-mode)
+(package-initialize)
 (setq package-install-upgrade-built-in t)
 (add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/") t)
 (add-to-list 'package-archives '("melpa-stable" . "https://stable.melpa.org/packages/") t)
 (use-package zenburn-theme
-  :ensure zenburn-theme)
+  :ensure t)
 (load-theme 'zenburn t)
 ;; multiple cursors
 (use-package multiple-cursors
@@ -52,7 +53,7 @@
  '(ns-alternate-modifier 'meta)
  '(ns-command-modifier 'super)
  '(package-selected-packages
-	 '(eglot-java elixir-mode eglot typescript-mode prettier-js jsonrpc general tree-sitter-langs tree-sitter eldoc-box all haskell-mode projectile-ripgrep ripgrep tree-sitter-mode org-roam-ui org-roam org company rust-mode yasnippet lsp savehist vertico projectile helm-lsp lsp-treemacs lsp-ivy help-lsp lsp-ui lsp-mode helm zenburn-theme use-package smartparens multiple-cursors))
+	 '(eglot-java which-key elixir-mode prettier-js jsonrpc general eldoc-box all haskell-mode projectile-ripgrep ripgrep tree-sitter-mode org-roam-ui org-roam org rust-mode yasnippet lsp savehist vertico projectile helm-lsp lsp-treemacs lsp-ivy help-lsp lsp-ui lsp-mode helm zenburn-theme use-package smartparens multiple-cursors))
  '(projectile-globally-ignored-directories
 	 '("^\\.idea$" "^\\.vscode$" "^\\.ensime_cache$" "^\\.eunit$" "^\\.git$" "^\\.hg$" "^\\.fslckout$" "^_FOSSIL_$" "^\\.bzr$" "^_darcs$" "^\\.pijul$" "^\\.tox$" "^\\.svn$" "^\\.stack-work$" "^\\.ccls-cache$" "^\\.cache$" "^\\.clangd$" "^\\.sl$" "^\\.jj$" "^\\.dist$"))
  '(tab-width 2)
@@ -99,12 +100,20 @@
     :config
     (which-key-mode))
 (when (memq window-system '(mac ns x))
-  (exec-path-from-shell-initialize))
-(projectile-mode +1)
-;; Recommended keymap prefix on macOS
-(define-key projectile-mode-map (kbd "s-p") 'projectile-command-map)
-;; Recommended keymap prefix on Windows/Linux
-(define-key projectile-mode-map (kbd "C-c p") 'projectile-command-map)
+  (use-package exec-path-from-shell
+		:ensure t
+		:config
+		(exec-path-from-shell-initialize)))
+(use-package projectile
+	:ensure t
+	:config
+	(projectile-mode +1)
+	;; Recommended keymap prefix on macOS
+	(define-key projectile-mode-map (kbd "s-p") 'projectile-command-map)
+	;; Recommended keymap prefix on Windows/Linux
+	(define-key projectile-mode-map (kbd "C-c p") 'projectile-command-map)
+)
+
 ;; treemacs
 (global-set-key (kbd "C-c t") 'treemacs)
 ;; Enable vertico
@@ -159,7 +168,8 @@
   ;; Enable recursive minibuffers
   (setq enable-recursive-minibuffers t))
 ;; vertico ends
-(require 'rust-mode)
+(use-package rust-mode
+	:ensure t)
 (use-package org-roam
   :ensure t
   :custom
@@ -222,8 +232,11 @@
       (_ (hs-hide-all))))
 (global-set-key (kbd "C-<tab>") 'hs-cycle)
 (global-set-key (kbd "C-S-<tab>") 'hs-global-cycle)
+(use-package typescript-mode
+	:ensure t
+	:config
+	(add-hook 'typescript-mode-hook 'hs-minor-mode))
 
-(add-hook 'typescript-mode-hook 'hs-minor-mode)
 ;; Move cursor to end of current line
 ;; Insert new line below current line
 ;; it will also indent newline
@@ -244,7 +257,8 @@
                        ))
 
 ;; setting for typescript and haskell
-
+(use-package eglot-java
+	:ensure t)
 ;; use-package for configuring, even though eglotis
 ;; built-in in Emacs 29, thus :ensure nil
 (use-package eglot :ensure nil :defer t
@@ -258,13 +272,15 @@
   ;; these two lines help prevent lag with the typescript language server. they
   ;; might actually be mutually exclusive but I haven't investigated further
   (with-eval-after-load 'eglot (fset #'jsonrpc--log-event #'ignore))
-	 (with-eval-after-load 'eglot-java
+	(with-eval-after-load 'eglot-java
 	 	(define-key eglot-java-mode-map (kbd "C-c l n") #'eglot-java-file-new)
 	 	(define-key eglot-java-mode-map (kbd "C-c l x") #'eglot-java-run-main)
 	 	(define-key eglot-java-mode-map (kbd "C-c l t") #'eglot-java-run-test)
 	 	(define-key eglot-java-mode-map (kbd "C-c l N") #'eglot-java-project-new)
 	 	(define-key eglot-java-mode-map (kbd "C-c l T") #'eglot-java-project-build-task)
 	 	(define-key eglot-java-mode-map (kbd "C-c l R") #'eglot-java-project-build-refresh))
+	(add-to-list 'eglot-server-programs '(java-mode "/Users/byeongcheollim/.emacs.d/share/eclipse.jdt.ls/bin/jdtls"))
+	(add-hook 'java-mode-hook 'eglot-java-mode)
   (setq eglot-events-buffer-size 0)
   (add-hook 'elixir-mode-hook 'eglot-ensure)
 	(add-to-list 'eglot-server-programs '(elixir-mode "/Users/byeongcheollim/workspace/elixir-ls-v0.22.0/language_server.sh"))
@@ -343,12 +359,14 @@
 ;; this should be replaced by the built-in modes eventually, but it's not always
 ;; simple to switch and not every language has a builtin `lang'-ts-mode
 (use-package tree-sitter
+	:ensure t
   :demand t
   :diminish tree-sitter-mode
   :config
   (setq treesit-font-lock-level 4))
 
 (use-package tree-sitter-langs
+	:ensure t
   :after tree-sitter)
 
 ;; seems like it will still throw a warning the first time you visit a file with
@@ -431,9 +449,12 @@
 ))
 (global-set-key (kbd "<s-return>") 'newline-without-break-of-line)
 (global-set-key (kbd "<s-M-return>") 'newline-above)
+(use-package company
+	:ensure t
+	:config
+	(add-hook 'rust-mode-hook 'company-mode)
+	(add-hook 'typescript-mode-hook 'company-mode))
 
-(add-hook 'rust-mode-hook 'company-mode)
-(add-hook 'typescript-mode-hook 'company-mode)
 (put 'upcase-region 'disabled nil)
 (put 'downcase-region 'disabled nil)
 

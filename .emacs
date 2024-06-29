@@ -53,7 +53,7 @@
  '(ns-alternate-modifier 'meta)
  '(ns-command-modifier 'super)
  '(package-selected-packages
-	 '(eglot-java treemacs company tree-sitter-langs tree-sitter typescript-mode exec-path-from-shell which-key elixir-mode prettier-js jsonrpc general eldoc-box all haskell-mode projectile-ripgrep ripgrep tree-sitter-mode org-roam-ui org-roam org rust-mode yasnippet lsp savehist vertico projectile helm-lsp lsp-treemacs lsp-ivy help-lsp lsp-ui lsp-mode helm zenburn-theme use-package smartparens multiple-cursors))
+	 '(yaml-mode eglot-java treemacs company tree-sitter-langs tree-sitter typescript-mode exec-path-from-shell which-key elixir-mode prettier-js jsonrpc general eldoc-box all haskell-mode projectile-ripgrep ripgrep tree-sitter-mode org-roam-ui org-roam org rust-mode yasnippet lsp savehist vertico projectile helm-lsp lsp-treemacs lsp-ivy help-lsp lsp-ui lsp-mode helm zenburn-theme use-package smartparens multiple-cursors))
  '(projectile-globally-ignored-directories
 	 '("^\\.idea$" "^\\.vscode$" "^\\.ensime_cache$" "^\\.eunit$" "^\\.git$" "^\\.hg$" "^\\.fslckout$" "^_FOSSIL_$" "^\\.bzr$" "^_darcs$" "^\\.pijul$" "^\\.tox$" "^\\.svn$" "^\\.stack-work$" "^\\.ccls-cache$" "^\\.cache$" "^\\.clangd$" "^\\.sl$" "^\\.jj$" "^\\.dist$"))
  '(tab-width 2)
@@ -309,6 +309,7 @@
     (add-to-list 'eglot-server-programs server))
   :hook
 	(java-mode . eglot-java-mode)
+	(java-mode . eglot-ensure)
   (haskell-mode . eglot-ensure)
   (typescript-ts-mode . eglot-ensure)
   (tsx-ts-mode . eglot-ensure)
@@ -352,7 +353,10 @@
   ("\\.env.local$" . conf-mode)
   ("\\.env.sample$" . conf-mode)
   ("\\.env$" . conf-mode))
-
+(use-package yaml-mode
+	:ensure t
+	:config
+	(add-to-list 'auto-mode-alist '("\\.yml\\'" . yaml-mode)))
 (use-package web-mode
   :config
   (setq web-mode-code-indent-offset 2)

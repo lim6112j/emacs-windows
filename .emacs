@@ -438,15 +438,15 @@
 (put 'downcase-region 'disabled nil)
 
 ;; for m1 mac
-(setq load-path (cons  "/opt/homebrew/opt/erlang/lib/erlang/lib/tools-3.6/emacs"
-      load-path))      (setq erlang-root-dir "/opt/homebrew/opt/erlang/bin")
-      (setq exec-path (cons "/opt/homebrew/opt/erlang/bin" exec-path))
-      (require 'erlang-start)
-;; for intel mac
-;;(Setq Load-path (cons  "/usr/local/opt/erlang/lib/erlang/lib/tools-3.6/emacs"
-;;      load-path))      (setq erlang-root-dir "/usr/local/opt/erlang/bin")
-;;      (setq exec-path (cons "/usr/local/opt/erlang/bin" exec-path))
+;;(setq load-path (cons  "/opt/homebrew/opt/erlang/lib/erlang/lib/tools-3.6/emacs"
+;;      load-path))      (setq erlang-root-dir "/opt/homebrew/opt/erlang/bin")
+;;      (setq exec-path (cons "/opt/homebrew/opt/erlang/bin" exec-path))
 ;;      (require 'erlang-start)
+;; for intel mac
+(setq load-path (cons  "/usr/local/opt/erlang/lib/erlang/lib/tools-3.6/emacs" load-path))
+(setq erlang-root-dir "/usr/local/opt/erlang/bin")
+(setq exec-path (cons "/usr/local/opt/erlang/bin" exec-path))
+(require 'erlang-start)
 ;; faster emacs
 (fset #'jsonrpc--log-event #'ignore)
 (setq eglot-events-buffer-size 0)

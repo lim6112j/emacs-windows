@@ -53,7 +53,7 @@
  '(ns-alternate-modifier 'meta)
  '(ns-command-modifier 'super)
  '(package-selected-packages
-	 '(treemacs company tree-sitter-langs tree-sitter typescript-mode exec-path-from-shell which-key elixir-mode prettier-js jsonrpc general eldoc-box all haskell-mode projectile-ripgrep ripgrep tree-sitter-mode org-roam-ui org-roam org rust-mode yasnippet lsp savehist vertico projectile helm-lsp lsp-treemacs lsp-ivy help-lsp lsp-ui lsp-mode helm zenburn-theme use-package smartparens multiple-cursors))
+	 '(eglot-java treemacs company tree-sitter-langs tree-sitter typescript-mode exec-path-from-shell which-key elixir-mode prettier-js jsonrpc general eldoc-box all haskell-mode projectile-ripgrep ripgrep tree-sitter-mode org-roam-ui org-roam org rust-mode yasnippet lsp savehist vertico projectile helm-lsp lsp-treemacs lsp-ivy help-lsp lsp-ui lsp-mode helm zenburn-theme use-package smartparens multiple-cursors))
  '(projectile-globally-ignored-directories
 	 '("^\\.idea$" "^\\.vscode$" "^\\.ensime_cache$" "^\\.eunit$" "^\\.git$" "^\\.hg$" "^\\.fslckout$" "^_FOSSIL_$" "^\\.bzr$" "^_darcs$" "^\\.pijul$" "^\\.tox$" "^\\.svn$" "^\\.stack-work$" "^\\.ccls-cache$" "^\\.cache$" "^\\.clangd$" "^\\.sl$" "^\\.jj$" "^\\.dist$"))
  '(tab-width 2)
@@ -260,6 +260,9 @@
                        (newline-and-indent)
                        ))
 
+(use-package eglot-java
+	:ensure t)
+
 ;; setting for typescript and haskell
 ;; use-package for configuring, even though ;; built-in in Emacs 29, thus :ensure nil
 (use-package eglot :ensure nil :defer t
@@ -274,14 +277,14 @@
   ;; might actually be mutually exclusive but I haven't investigated further
 	(with-eval-after-load 'eglot (fset #'jsonrpc--log-event #'ignore))
 	(with-eval-after-load 'eglot-java
-	 	(define-key eglot-java-mode-map (kbd "C-c l n") #'eglot-java-file-new)
-	 	(define-key eglot-java-mode-map (kbd "C-c l x") #'eglot-java-run-main)
-	 	(define-key eglot-java-mode-map (kbd "C-c l t") #'eglot-java-run-test)
-	 	(define-key eglot-java-mode-map (kbd "C-c l N") #'eglot-java-project-new)
-	 	(define-key eglot-java-mode-map (kbd "C-c l T") #'eglot-java-project-build-task)
-	 	(define-key eglot-java-mode-map (kbd "C-c l R") #'eglot-java-project-build-refresh))
+		(define-key eglot-java-mode-map (kbd "C-c l n") #'eglot-java-file-new)
+		(define-key eglot-java-mode-map (kbd "C-c l x") #'eglot-java-run-main)
+		(define-key eglot-java-mode-map (kbd "C-c l t") #'eglot-java-run-test)
+		(define-key eglot-java-mode-map (kbd "C-c l N") #'eglot-java-project-new)
+		(define-key eglot-java-mode-map (kbd "C-c l T") #'eglot-java-project-build-task)
+		(define-key eglot-java-mode-map (kbd "C-c l R") #'eglot-java-project-build-refresh))
 	;;(add-to-list 'eglot-server-programs '(java-mode "jdtls"))
-	(add-to-list 'eglot-server-programs '(java-mode "/Users/byeongcheollim/.emacs.d/share/eclipse.jdt.ls/org.eclipse.jdt.ls.product/target/repository/bin/jdtls"))
+	(add-to-list 'eglot-server-programs '(java-mode "/Users/byeongcheollim/.emacs.d/share/eclipse.jdt.ls/bin/jdtls"))
   (setq eglot-events-buffer-size 0)
   (add-hook 'elixir-mode-hook 'eglot-ensure)
 	(add-to-list 'eglot-server-programs '(elixir-mode "/Users/byeongcheollim/workspace/elixir-ls-v0.22.0/language_server.sh"))
@@ -305,6 +308,7 @@
   (dolist (server rex/language-servers)
     (add-to-list 'eglot-server-programs server))
   :hook
+	(java-mode . eglot-java-mode)
   (haskell-mode . eglot-ensure)
   (typescript-ts-mode . eglot-ensure)
   (tsx-ts-mode . eglot-ensure)

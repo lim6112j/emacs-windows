@@ -6,7 +6,7 @@
 ;; mac alt-x weird char input
 (setq mac-option-modifier 'meta)
 (setq mac-command-modifier 'super)
-(toggle-frame-fullscreen)
+;;(toggle-frame-fullscreen)
 (global-display-line-numbers-mode)
 (global-auto-revert-mode)
 (package-initialize)
@@ -53,7 +53,7 @@
  '(ns-alternate-modifier 'meta)
  '(ns-command-modifier 'super)
  '(package-selected-packages
-	 '(yaml-mode eglot-java treemacs company tree-sitter-langs tree-sitter typescript-mode exec-path-from-shell which-key elixir-mode prettier-js jsonrpc general eldoc-box all haskell-mode projectile-ripgrep ripgrep tree-sitter-mode org-roam-ui org-roam org rust-mode yasnippet lsp savehist vertico projectile helm-lsp lsp-treemacs lsp-ivy help-lsp lsp-ui lsp-mode helm zenburn-theme use-package smartparens multiple-cursors))
+	 '(kotlin-mode yaml-mode eglot-java treemacs company tree-sitter-langs tree-sitter typescript-mode exec-path-from-shell which-key elixir-mode prettier-js jsonrpc general eldoc-box all haskell-mode projectile-ripgrep ripgrep tree-sitter-mode org-roam-ui org-roam org rust-mode yasnippet lsp savehist vertico projectile helm-lsp lsp-treemacs lsp-ivy help-lsp lsp-ui lsp-mode helm zenburn-theme use-package smartparens multiple-cursors))
  '(projectile-globally-ignored-directories
 	 '("^\\.idea$" "^\\.vscode$" "^\\.ensime_cache$" "^\\.eunit$" "^\\.git$" "^\\.hg$" "^\\.fslckout$" "^_FOSSIL_$" "^\\.bzr$" "^_darcs$" "^\\.pijul$" "^\\.tox$" "^\\.svn$" "^\\.stack-work$" "^\\.ccls-cache$" "^\\.cache$" "^\\.clangd$" "^\\.sl$" "^\\.jj$" "^\\.dist$"))
  '(tab-width 2)
@@ -174,6 +174,8 @@
 ;; vertico ends
 (use-package rust-mode
 	:ensure t)
+(use-package kotlin-mode
+	:ensure t)
 (use-package org-roam
   :ensure t
   :custom
@@ -285,6 +287,7 @@
 		(define-key eglot-java-mode-map (kbd "C-c l R") #'eglot-java-project-build-refresh))
 	;;(add-to-list 'eglot-server-programs '(java-mode "jdtls"))
 	(add-to-list 'eglot-server-programs '(java-mode "/Users/byeongcheollim/.emacs.d/share/eclipse.jdt.ls/bin/jdtls"))
+	(add-to-list 'eglot-server-programs '(kotlin-mode "/opt/homebrew/bin/kotlin-language-server"))
   (setq eglot-events-buffer-size 0)
   (add-hook 'elixir-mode-hook 'eglot-ensure)
 	(add-to-list 'eglot-server-programs '(elixir-mode "/Users/byeongcheollim/workspace/elixir-ls-v0.22.0/language_server.sh"))
@@ -310,6 +313,7 @@
   :hook
 	(java-mode . eglot-java-mode)
 	(java-mode . eglot-ensure)
+	(kotlin-mode . eglot-ensure)
   (haskell-mode . eglot-ensure)
   (typescript-ts-mode . eglot-ensure)
   (tsx-ts-mode . eglot-ensure)

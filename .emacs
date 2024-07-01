@@ -312,6 +312,7 @@
   (dolist (server rex/language-servers)
     (add-to-list 'eglot-server-programs server))
   :hook
+	(erlang-mode . eglot-ensure)
 	(java-mode . eglot-java-mode)
 	(java-mode . eglot-ensure)
 	(kotlin-mode . eglot-ensure)

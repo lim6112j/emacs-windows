@@ -6,7 +6,7 @@
 ;; mac alt-x weird char input
 (setq mac-option-modifier 'meta)
 (setq mac-command-modifier 'super)
-(toggle-debug-on-error t)
+;;(toggle-debug-on-error t)
 ;;(toggle-frame-fullscreen)
 (global-display-line-numbers-mode)
 (global-auto-revert-mode)

@@ -92,16 +92,20 @@
 
 ;; optional if you want which-key integration
 (use-package which-key
-  :ensure which-key
-    :config
+  :ensure t
+  :config
     (which-key-mode))
 (when (memq window-system '(mac ns x))
   (exec-path-from-shell-initialize))
-(projectile-mode +1)
-;; Recommended keymap prefix on macOS
-(define-key projectile-mode-map (kbd "s-p") 'projectile-command-map)
-;; Recommended keymap prefix on Windows/Linux
-(define-key projectile-mode-map (kbd "C-c p") 'projectile-command-map)
+(use-package projectile
+	:ensure t
+	:config
+	(projectile-mode +1)
+	;; Recommended keymap prefix on macOS
+	(define-key projectile-mode-map (kbd "s-p") 'projectile-command-map)
+	;; Recommended keymap prefix on Windows/Linux
+	(define-key projectile-mode-map (kbd "C-c p") 'projectile-command-map)	
+)
 ;; treemacs
 (global-set-key (kbd "C-c t") 'treemacs)
 ;; Enable vertico

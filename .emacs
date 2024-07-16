@@ -296,7 +296,7 @@
 	(add-to-list 'eglot-server-programs '(kotlin-mode "/opt/homebrew/bin/kotlin-language-server"))
   (setq eglot-events-buffer-size 0)
   (add-hook 'elixir-mode-hook 'eglot-ensure)
-	(add-to-list 'eglot-server-programs '(elixir-mode "/Users/byeongcheollim/workspace/elixir-ls-v0.22.0/language_server.sh"))
+	(add-to-list 'eglot-server-programs '(elixir-mode "/Users/byeongcheollim/workspace/elixir/elixir-ls-v0.22.1/language_server.sh"))
   (setq-default eglot-workspace-configuration
                 '((haskell
                    (plugin
@@ -317,6 +317,7 @@
   (dolist (server rex/language-servers)
     (add-to-list 'eglot-server-programs server))
   :hook
+	(elixir-mode . eglot-ensure)
 	(go-mode . eglot-ensure)
 	(erlang-mode . eglot-ensure)
 	(java-mode . eglot-java-mode)

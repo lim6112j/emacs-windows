@@ -57,7 +57,7 @@
  '(org-plantuml-jar-path
 	 "/Users/byeongcheollim/.config/emacs/.local/etc/plantuml.jar")
  '(package-selected-packages
-	 '(eglot-fsharp fsharp-mode restclient go-mode markdown-mode android-mode kotlin-mode yaml-mode eglot-java treemacs company tree-sitter-langs tree-sitter typescript-mode exec-path-from-shell which-key elixir-mode prettier-js jsonrpc general eldoc-box all haskell-mode projectile-ripgrep ripgrep tree-sitter-mode org-roam-ui org-roam org rust-mode yasnippet lsp savehist vertico projectile helm-lsp lsp-treemacs lsp-ivy help-lsp lsp-ui lsp-mode helm zenburn-theme use-package smartparens multiple-cursors))
+	 '(ob-mermaid mermaid-mode eglot-fsharp fsharp-mode restclient go-mode markdown-mode android-mode kotlin-mode yaml-mode eglot-java treemacs company tree-sitter-langs tree-sitter typescript-mode exec-path-from-shell which-key elixir-mode prettier-js jsonrpc general eldoc-box all haskell-mode projectile-ripgrep ripgrep tree-sitter-mode org-roam-ui org-roam org rust-mode yasnippet lsp savehist vertico projectile helm-lsp lsp-treemacs lsp-ivy help-lsp lsp-ui lsp-mode helm zenburn-theme use-package smartparens multiple-cursors))
  '(projectile-globally-ignored-directories
 	 '("^\\.idea$" "^\\.vscode$" "^\\.ensime_cache$" "^\\.eunit$" "^\\.git$" "^\\.hg$" "^\\.fslckout$" "^_FOSSIL_$" "^\\.bzr$" "^_darcs$" "^\\.pijul$" "^\\.tox$" "^\\.svn$" "^\\.stack-work$" "^\\.ccls-cache$" "^\\.cache$" "^\\.clangd$" "^\\.sl$" "^\\.jj$" "^\\.dist$"))
  '(tab-width 2)
@@ -526,5 +526,19 @@
 ;;; plantuml
 (with-eval-after-load 'org
 (org-babel-do-load-languages 'org-babel-load-languages '(
-(plantuml . t)
+																												 (plantuml . t)
+																												 (mermaid . t)
 )))
+;;; for mermaid-mode
+(use-package mermaid-mode
+	:ensure t
+	:defer t
+  :init
+  (setq mermaid-mmdc-location "/Users/byeongcheollim/.nvm/versions/node/v18.7.0/bin/mmdc")
+  )
+(use-package ob-mermaid
+	:ensure t
+	:defer t
+  :init
+  (setq ob-mermaid-cli-path "/Users/byeongcheollim/.nvm/versions/node/v18.7.0/bin/mmdc")
+  )

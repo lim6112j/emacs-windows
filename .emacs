@@ -54,8 +54,10 @@
  '(global-display-line-numbers-mode t)
  '(ns-alternate-modifier 'meta)
  '(ns-command-modifier 'super)
+ '(org-plantuml-jar-path
+	 "/Users/byeongcheollim/.config/emacs/.local/etc/plantuml.jar")
  '(package-selected-packages
-	 '(restclient go-mode markdown-mode android-mode kotlin-mode yaml-mode eglot-java treemacs company tree-sitter-langs tree-sitter typescript-mode exec-path-from-shell which-key elixir-mode prettier-js jsonrpc general eldoc-box all haskell-mode projectile-ripgrep ripgrep tree-sitter-mode org-roam-ui org-roam org rust-mode yasnippet lsp savehist vertico projectile helm-lsp lsp-treemacs lsp-ivy help-lsp lsp-ui lsp-mode helm zenburn-theme use-package smartparens multiple-cursors))
+	 '(eglot-fsharp fsharp-mode restclient go-mode markdown-mode android-mode kotlin-mode yaml-mode eglot-java treemacs company tree-sitter-langs tree-sitter typescript-mode exec-path-from-shell which-key elixir-mode prettier-js jsonrpc general eldoc-box all haskell-mode projectile-ripgrep ripgrep tree-sitter-mode org-roam-ui org-roam org rust-mode yasnippet lsp savehist vertico projectile helm-lsp lsp-treemacs lsp-ivy help-lsp lsp-ui lsp-mode helm zenburn-theme use-package smartparens multiple-cursors))
  '(projectile-globally-ignored-directories
 	 '("^\\.idea$" "^\\.vscode$" "^\\.ensime_cache$" "^\\.eunit$" "^\\.git$" "^\\.hg$" "^\\.fslckout$" "^_FOSSIL_$" "^\\.bzr$" "^_darcs$" "^\\.pijul$" "^\\.tox$" "^\\.svn$" "^\\.stack-work$" "^\\.ccls-cache$" "^\\.cache$" "^\\.clangd$" "^\\.sl$" "^\\.jj$" "^\\.dist$"))
  '(tab-width 2)
@@ -182,6 +184,14 @@
 	:ensure t)
 (use-package markdown-mode
 	:ensure t)
+(use-package fsharp-mode
+  :defer t
+  :ensure t)
+(use-package eglot-fsharp
+  :ensure t
+  :after fsharp-mode
+  :config
+  (add-hook 'fsharp-mode-hook #'eglot-ensure))
 (use-package org-roam
   :ensure t
   :custom
@@ -513,3 +523,8 @@
       (string-suffix-p
       "gpg"
       (file-name-extension (buffer-name)) t))))
+;;; plantuml
+(with-eval-after-load 'org
+(org-babel-do-load-languages 'org-babel-load-languages '(
+(plantuml . t)
+)))

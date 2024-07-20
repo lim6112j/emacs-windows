@@ -50,7 +50,7 @@
  '(ns-alternate-modifier 'meta)
  '(ns-command-modifier 'super)
  '(package-selected-packages
-	 '(nix-mode elixir-mode eglot typescript-mode prettier-js jsonrpc general treesit-auto tree-sitter-langs tree-sitter eldoc-box all haskell-mode projectile-ripgrep ripgrep tree-sitter-mode org-roam-ui org-roam org company rust-mode yasnippet lsp savehist vertico projectile helm-lsp lsp-treemacs lsp-ivy help-lsp lsp-ui lsp-mode helm zenburn-theme use-package smartparens multiple-cursors))
+	 '(kotlin-ts-mode nix-mode elixir-mode eglot typescript-mode prettier-js jsonrpc general treesit-auto tree-sitter-langs tree-sitter eldoc-box all haskell-mode projectile-ripgrep ripgrep tree-sitter-mode org-roam-ui org-roam org company rust-mode yasnippet lsp savehist vertico projectile helm-lsp lsp-treemacs lsp-ivy help-lsp lsp-ui lsp-mode helm zenburn-theme use-package smartparens multiple-cursors))
  '(projectile-globally-ignored-directories
 	 '("^\\.idea$" "^\\.vscode$" "^\\.ensime_cache$" "^\\.eunit$" "^\\.git$" "^\\.hg$" "^\\.fslckout$" "^_FOSSIL_$" "^\\.bzr$" "^_darcs$" "^\\.pijul$" "^\\.tox$" "^\\.svn$" "^\\.stack-work$" "^\\.ccls-cache$" "^\\.cache$" "^\\.clangd$" "^\\.sl$" "^\\.jj$" "^\\.dist$"))
  '(tab-width 2)
@@ -247,6 +247,10 @@
 ;; built-in in Emacs 29, thus :ensure nil
 (use-package nix-mode
 	:ensure t)
+(use-package kotlin-ts-mode
+	:ensure t
+	:defer t
+	:mode "\\.kt\\'")
 (use-package eglot :ensure nil :defer t
   :custom-face
   ;; personal preference here; I hate it when packages
@@ -274,6 +278,7 @@
                     (stan
                      (globalOn . :json-false))))))  ;; disable stan
 	(add-to-list 'eglot-server-programs '(nix-mode . ("rnix-lsp")))
+	(add-to-list 'eglot-server-programs '(kotlin-ts-mode "/usr/local/bin/kotlin-language-server"))
 	;; (add-to-list 'eglot-server-programs
   ;;                      '(rust-mode . ("rust-analyzer" :initializationOptions
   ;;                                    ( :procMacro (:enable t)
@@ -289,6 +294,7 @@
   (dolist (server rex/language-servers)
     (add-to-list 'eglot-server-programs server))
   :hook
+	(kotlin-ts-mode . eglot-ensure)
 	(nix-mode . eglot-ensure)
 	(nix-mode . company-mode)
   (java-mode . eglot-java-mode)

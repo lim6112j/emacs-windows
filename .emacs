@@ -11,6 +11,10 @@
 (global-display-line-numbers-mode)
 (global-auto-revert-mode)
 (windmove-default-keybindings)
+(global-set-key (kbd"s-j") 'windmove-down)
+(global-set-key (kbd"s-h") 'windmove-left)
+(global-set-key (kbd"s-k") 'windmove-up)
+(global-set-key (kbd"s-l") 'windmove-right)
 (package-initialize)
 (setq package-install-upgrade-built-in t)
 (add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/") t)
@@ -62,6 +66,7 @@
 	 '("^\\.idea$" "^\\.vscode$" "^\\.ensime_cache$" "^\\.eunit$" "^\\.git$" "^\\.hg$" "^\\.fslckout$" "^_FOSSIL_$" "^\\.bzr$" "^_darcs$" "^\\.pijul$" "^\\.tox$" "^\\.svn$" "^\\.stack-work$" "^\\.ccls-cache$" "^\\.cache$" "^\\.clangd$" "^\\.sl$" "^\\.jj$" "^\\.dist$"))
  '(tab-width 2)
  '(tool-bar-mode nil)
+ '(visible-bell t)
  '(warning-suppress-types '((magit))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
@@ -180,6 +185,11 @@
 	:ensure t)
 (use-package kotlin-mode
 	:ensure t)
+(require 'treesit)
+(add-to-list 'treesit-language-source-alist '(mermaid . ("https://github.com/fwcd/tree-sitter-kotlin")))
+(add-to-list 'load-path "~/workspace/kotlin-ts-mode")
+(require 'kotlin-ts-mode)
+(add-to-list 'auto-mode-alist '("\\.kt\\'" . kotlin-ts-mode)) ; if you want this mode to
 (use-package go-mode
 	:ensure t)
 (use-package markdown-mode
@@ -303,7 +313,7 @@
 		(define-key eglot-java-mode-map (kbd "C-c l R") #'eglot-java-project-build-refresh))
 	;;(add-to-list 'eglot-server-programs '(java-mode "jdtls"))
 	(add-to-list 'eglot-server-programs '(java-mode "/Users/byeongcheollim/.emacs.d/share/eclipse.jdt.ls/bin/jdtls"))
-	(add-to-list 'eglot-server-programs '(kotlin-mode "/opt/homebrew/bin/kotlin-language-server"))
+	(add-to-list 'eglot-server-programs '(kotlin-ts-mode "/opt/homebrew/bin/kotlin-language-server"))
   (setq eglot-events-buffer-size 0)
   (add-hook 'elixir-mode-hook 'eglot-ensure)
 	(add-to-list 'eglot-server-programs '(elixir-mode "/Users/byeongcheollim/workspace/elixir/elixir-ls-v0.22.1/language_server.sh"))
@@ -332,7 +342,7 @@
 	(erlang-mode . eglot-ensure)
 	(java-mode . eglot-java-mode)
 	(java-mode . eglot-ensure)
-	(kotlin-mode . eglot-ensure)
+	(kotlin-ts-mode . eglot-ensure)
   (haskell-mode . eglot-ensure)
   (typescript-ts-mode . eglot-ensure)
   (tsx-ts-mode . eglot-ensure)

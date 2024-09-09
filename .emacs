@@ -55,7 +55,7 @@
  '(ns-alternate-modifier 'meta)
  '(ns-command-modifier 'super)
  '(package-selected-packages
-	 '(kotlin-ts-mode nix-mode elixir-mode eglot typescript-mode prettier-js jsonrpc general treesit-auto tree-sitter-langs tree-sitter eldoc-box all haskell-mode projectile-ripgrep ripgrep tree-sitter-mode org-roam-ui org-roam org company rust-mode yasnippet lsp savehist vertico projectile helm-lsp lsp-treemacs lsp-ivy help-lsp lsp-ui lsp-mode helm zenburn-theme use-package smartparens multiple-cursors))
+	 '(psci kotlin-ts-mode nix-mode elixir-mode eglot typescript-mode prettier-js jsonrpc general treesit-auto tree-sitter-langs tree-sitter eldoc-box all haskell-mode projectile-ripgrep ripgrep tree-sitter-mode org-roam-ui org-roam org company rust-mode yasnippet lsp savehist vertico projectile helm-lsp lsp-treemacs lsp-ivy help-lsp lsp-ui lsp-mode helm zenburn-theme use-package smartparens multiple-cursors))
  '(projectile-globally-ignored-directories
 	 '("^\\.idea$" "^\\.vscode$" "^\\.ensime_cache$" "^\\.eunit$" "^\\.git$" "^\\.hg$" "^\\.fslckout$" "^_FOSSIL_$" "^\\.bzr$" "^_darcs$" "^\\.pijul$" "^\\.tox$" "^\\.svn$" "^\\.stack-work$" "^\\.ccls-cache$" "^\\.cache$" "^\\.clangd$" "^\\.sl$" "^\\.jj$" "^\\.dist$"))
  '(tab-width 2)
@@ -256,6 +256,10 @@
 	:ensure t
 	:defer t
 	:mode "\\.kt\\'")
+(use-package psci
+	:ensure t
+	:defer t
+	:mode "\\.purs\\'")
 (use-package eglot :ensure nil :defer t
   :custom-face
   ;; personal preference here; I hate it when packages
@@ -277,6 +281,7 @@
   (setq eglot-events-buffer-size 0)
   (add-hook 'elixir-mode-hook 'eglot-ensure)
 	(add-to-list 'eglot-server-programs '(elixir-mode "/Users/byeongcheollim/workspace/elixir-ls-v0.22.0/language_server.sh"))
+	(add-to-list 'eglot-server-programs '(psci-mode "/Users/byeongcheollim/.nvm/versions/node/v18.19.1/bin/purescript-language-server.sh"))
   (setq-default eglot-workspace-configuration
                 '((haskell
                    (plugin
@@ -299,6 +304,7 @@
   (dolist (server rex/language-servers)
     (add-to-list 'eglot-server-programs server))
   :hook
+	(psci-mode . eglot-ensure)
 	(kotlin-ts-mode . eglot-ensure)
 	(nix-mode . eglot-ensure)
 	(nix-mode . company-mode)

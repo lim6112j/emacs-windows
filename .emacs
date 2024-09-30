@@ -47,6 +47,9 @@
         (t (self-insert-command (or arg 1)))))
 (put 'narrow-to-region 'disabled nil)
 (put 'narrow-to-page 'disabled nil)
+(use-package paredit
+	:defer t
+	:ensure t)
 (use-package smartparens-mode
   :ensure smartparens ;;install the package
   :hook (prog-mode text-mode markdown-mode) ;; add `smartparens-mode` to these hooks
@@ -67,7 +70,7 @@
  '(org-plantuml-jar-path
 	 "/Users/byeongcheollim/.config/emacs/.local/etc/plantuml.jar")
  '(package-selected-packages
-	 '(org-bullets add-node-modules-path web-mode sbt-mode scala-mode ob-mermaid mermaid-mode eglot-fsharp fsharp-mode restclient go-mode markdown-mode android-mode kotlin-mode yaml-mode eglot-java treemacs company tree-sitter-langs tree-sitter typescript-mode exec-path-from-shell which-key elixir-mode prettier-js jsonrpc general eldoc-box all haskell-mode projectile-ripgrep ripgrep tree-sitter-mode org-roam-ui org-roam org rust-mode yasnippet lsp savehist vertico projectile helm-lsp lsp-treemacs lsp-ivy help-lsp lsp-ui lsp-mode helm zenburn-theme use-package smartparens multiple-cursors))
+	 '(clojure-mode org-bullets add-node-modules-path web-mode sbt-mode scala-mode ob-mermaid mermaid-mode eglot-fsharp fsharp-mode restclient go-mode markdown-mode android-mode kotlin-mode yaml-mode eglot-java treemacs company tree-sitter-langs tree-sitter typescript-mode exec-path-from-shell which-key elixir-mode prettier-js jsonrpc general eldoc-box all haskell-mode projectile-ripgrep ripgrep tree-sitter-mode org-roam-ui org-roam org rust-mode yasnippet lsp savehist vertico projectile helm-lsp lsp-treemacs lsp-ivy help-lsp lsp-ui lsp-mode helm zenburn-theme use-package smartparens multiple-cursors))
  '(projectile-globally-ignored-directories
 	 '("^\\.idea$" "^\\.vscode$" "^\\.ensime_cache$" "^\\.eunit$" "^\\.git$" "^\\.hg$" "^\\.fslckout$" "^_FOSSIL_$" "^\\.bzr$" "^_darcs$" "^\\.pijul$" "^\\.tox$" "^\\.svn$" "^\\.stack-work$" "^\\.ccls-cache$" "^\\.cache$" "^\\.clangd$" "^\\.sl$" "^\\.jj$" "^\\.dist$"))
  '(tab-width 2)
@@ -189,13 +192,11 @@
 ;; vertico ends
 (use-package rust-mode
 	:ensure t)
-(use-package kotlin-mode
-	:ensure t)
 (require 'treesit)
 (add-to-list 'treesit-language-source-alist '(mermaid . ("https://github.com/fwcd/tree-sitter-kotlin")))
 (add-to-list 'load-path "~/workspace/kotlin-ts-mode")
-(require 'kotlin-ts-mode)
-(add-to-list 'auto-mode-alist '("\\.kt\\'" . kotlin-ts-mode)) ; if you want this mode to
+(use-package kotlin-mode
+	:ensure t)
 (use-package go-mode
 	:ensure t)
 (use-package markdown-mode
@@ -208,7 +209,10 @@
   :interpreter ("scala" . scala-mode)
 	:hook (scala-mode . tree-sitter-hl-mode)
 	)
-
+;; clojure mode
+(use-package clojure-mode
+	:defer t
+	:ensure t)
 ;; Enable sbt mode for executing sbt commands
 (use-package sbt-mode
   :commands sbt-start sbt-command
@@ -338,6 +342,7 @@
 	;;(add-to-list 'eglot-server-programs '(java-mode "jdtls"))
 	(add-to-list 'eglot-server-programs '(java-mode "/Users/byeongcheollim/.emacs.d/share/eclipse.jdt.ls/bin/jdtls"))
 	(add-to-list 'eglot-server-programs '(kotlin-ts-mode "/opt/homebrew/bin/kotlin-language-server"))
+	(add-to-list 'eglot-server-programs '(kotlin-mode "/opt/homebrew/bin/kotlin-language-server"))
   (setq eglot-events-buffer-size 0)
   (add-hook 'elixir-mode-hook 'eglot-ensure)
 	(add-to-list 'eglot-server-programs '(elixir-mode "/Users/byeongcheollim/workspace/elixir/elixir-ls-v0.22.1/language_server.sh"))

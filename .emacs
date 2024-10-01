@@ -55,7 +55,7 @@
  '(ns-alternate-modifier 'meta)
  '(ns-command-modifier 'super)
  '(package-selected-packages
-	 '(psci kotlin-ts-mode nix-mode elixir-mode eglot typescript-mode prettier-js jsonrpc general treesit-auto tree-sitter-langs tree-sitter eldoc-box all haskell-mode projectile-ripgrep ripgrep tree-sitter-mode org-roam-ui org-roam org company rust-mode yasnippet lsp savehist vertico projectile helm-lsp lsp-treemacs lsp-ivy help-lsp lsp-ui lsp-mode helm zenburn-theme use-package smartparens multiple-cursors))
+	 '(clojure-ts-mode psci kotlin-ts-mode nix-mode elixir-mode eglot typescript-mode prettier-js jsonrpc general treesit-auto tree-sitter-langs tree-sitter eldoc-box all haskell-mode projectile-ripgrep ripgrep tree-sitter-mode org-roam-ui org-roam org company rust-mode yasnippet lsp savehist vertico projectile helm-lsp lsp-treemacs lsp-ivy help-lsp lsp-ui lsp-mode helm zenburn-theme use-package smartparens multiple-cursors))
  '(projectile-globally-ignored-directories
 	 '("^\\.idea$" "^\\.vscode$" "^\\.ensime_cache$" "^\\.eunit$" "^\\.git$" "^\\.hg$" "^\\.fslckout$" "^_FOSSIL_$" "^\\.bzr$" "^_darcs$" "^\\.pijul$" "^\\.tox$" "^\\.svn$" "^\\.stack-work$" "^\\.ccls-cache$" "^\\.cache$" "^\\.clangd$" "^\\.sl$" "^\\.jj$" "^\\.dist$"))
  '(tab-width 2)
@@ -260,6 +260,10 @@
 	:ensure t
 	:defer t
 	:mode "\\.purs\\'")
+(use-package clojure-ts-mode
+	:ensure t
+	:defer t
+	:mode "\\.clj\\'")
 (use-package eglot :ensure nil :defer t
   :custom-face
   ;; personal preference here; I hate it when packages
@@ -306,6 +310,7 @@
   :hook
 	(psci-mode . eglot-ensure)
 	(kotlin-ts-mode . eglot-ensure)
+	(kotlin-ts-mode . company-mode)
 	(nix-mode . eglot-ensure)
 	(nix-mode . company-mode)
   (java-mode . eglot-java-mode)
@@ -314,6 +319,8 @@
   (tsx-ts-mode . eglot-ensure)
 	(typescript-mode . eglot-ensure)
   (rust-mode . eglot-ensure)
+	(clojure-ts-mode . eglot-ensure)
+	(clojure-ts-mode . company-mode)
   (eglot-managed-mode
    . (lambda () (setq eldoc-documentation-function
                       'eldoc-documentation-compose-eagerly))))

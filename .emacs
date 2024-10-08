@@ -204,6 +204,10 @@
 (use-package fsharp-mode
   :defer t
   :ensure t)
+(use-package ruby-ts-mode
+	:ensure t
+	:defer t
+	:mode "\\.rb\\'")
 ;; Enable scala-mode and sbt-mode
 (use-package scala-mode
   :interpreter ("scala" . scala-mode)
@@ -381,6 +385,8 @@
 	(typescript-mode . eglot-ensure)
   (rust-mode . eglot-ensure)
 	(scala-mode .eglot-ensure)
+	(ruby-ts-mode . eglot-ensure)
+	(ruby-ts-mode . company-mode)
   (eglot-managed-mode
    . (lambda () (setq eldoc-documentation-function
                       'eldoc-documentation-compose-eagerly))))

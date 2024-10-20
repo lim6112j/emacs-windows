@@ -70,7 +70,7 @@
  '(org-plantuml-jar-path
 	 "/Users/byeongcheollim/.config/emacs/.local/etc/plantuml.jar")
  '(package-selected-packages
-	 '(clojure-mode org-bullets add-node-modules-path web-mode sbt-mode scala-mode ob-mermaid mermaid-mode eglot-fsharp fsharp-mode restclient go-mode markdown-mode android-mode kotlin-mode yaml-mode eglot-java treemacs company tree-sitter-langs tree-sitter typescript-mode exec-path-from-shell which-key elixir-mode prettier-js jsonrpc general eldoc-box all haskell-mode projectile-ripgrep ripgrep tree-sitter-mode org-roam-ui org-roam org rust-mode yasnippet lsp savehist vertico projectile helm-lsp lsp-treemacs lsp-ivy help-lsp lsp-ui lsp-mode helm zenburn-theme use-package smartparens multiple-cursors))
+	 '(elm-mode clojure-mode org-bullets add-node-modules-path web-mode sbt-mode scala-mode ob-mermaid mermaid-mode eglot-fsharp fsharp-mode restclient go-mode markdown-mode android-mode kotlin-mode yaml-mode eglot-java treemacs company tree-sitter-langs tree-sitter typescript-mode exec-path-from-shell which-key elixir-mode prettier-js jsonrpc general eldoc-box all haskell-mode projectile-ripgrep ripgrep tree-sitter-mode org-roam-ui org-roam org rust-mode yasnippet lsp savehist vertico projectile helm-lsp lsp-treemacs lsp-ivy help-lsp lsp-ui lsp-mode helm zenburn-theme use-package smartparens multiple-cursors))
  '(projectile-globally-ignored-directories
 	 '("^\\.idea$" "^\\.vscode$" "^\\.ensime_cache$" "^\\.eunit$" "^\\.git$" "^\\.hg$" "^\\.fslckout$" "^_FOSSIL_$" "^\\.bzr$" "^_darcs$" "^\\.pijul$" "^\\.tox$" "^\\.svn$" "^\\.stack-work$" "^\\.ccls-cache$" "^\\.cache$" "^\\.clangd$" "^\\.sl$" "^\\.jj$" "^\\.dist$"))
  '(tab-width 2)
@@ -208,6 +208,10 @@
 	:ensure t
 	:defer t
 	:mode "\\.rb\\'")
+(use-package elm-mode
+	:ensure t
+	:defer t
+	:mode "\\.elm\\'")
 ;; Enable scala-mode and sbt-mode
 (use-package scala-mode
   :interpreter ("scala" . scala-mode)
@@ -387,6 +391,8 @@
 	(scala-mode .eglot-ensure)
 	(ruby-ts-mode . eglot-ensure)
 	(ruby-ts-mode . company-mode)
+	(elm-mode . eglot-ensure)
+	(elm-mode . company-mode)
   (eglot-managed-mode
    . (lambda () (setq eldoc-documentation-function
                       'eldoc-documentation-compose-eagerly))))
@@ -541,7 +547,7 @@
 (put 'downcase-region 'disabled nil)
 
 ;; for m1 mac
-(setq load-path (cons  "/opt/homebrew/opt/erlang/lib/erlang/lib/tools-3.6/emacs"
+(setq load-path (cons  "/opt/homebrew/opt/erlang/lib/erlang/lib/tools-4.1/emacs"
       load-path))      (setq erlang-root-dir "/opt/homebrew/opt/erlang/bin")
       (setq exec-path (cons "/opt/homebrew/opt/erlang/bin" exec-path))
       (require 'erlang-start)

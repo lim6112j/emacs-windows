@@ -55,7 +55,7 @@
  '(ns-alternate-modifier 'meta)
  '(ns-command-modifier 'super)
  '(package-selected-packages
-	 '(clojure-ts-mode psci kotlin-ts-mode nix-mode elixir-mode eglot typescript-mode prettier-js jsonrpc general treesit-auto tree-sitter-langs tree-sitter eldoc-box all haskell-mode projectile-ripgrep ripgrep tree-sitter-mode org-roam-ui org-roam org company rust-mode yasnippet lsp savehist vertico projectile helm-lsp lsp-treemacs lsp-ivy help-lsp lsp-ui lsp-mode helm zenburn-theme use-package smartparens multiple-cursors))
+	 '(ob-mermaid clojure-ts-clojurescript-mode clojure-ts-mode psci kotlin-ts-mode nix-mode elixir-mode eglot typescript-mode prettier-js jsonrpc general treesit-auto tree-sitter-langs tree-sitter eldoc-box all haskell-mode projectile-ripgrep ripgrep tree-sitter-mode org-roam-ui org-roam org company rust-mode yasnippet lsp savehist vertico projectile helm-lsp lsp-treemacs lsp-ivy help-lsp lsp-ui lsp-mode helm zenburn-theme use-package smartparens multiple-cursors))
  '(projectile-globally-ignored-directories
 	 '("^\\.idea$" "^\\.vscode$" "^\\.ensime_cache$" "^\\.eunit$" "^\\.git$" "^\\.hg$" "^\\.fslckout$" "^_FOSSIL_$" "^\\.bzr$" "^_darcs$" "^\\.pijul$" "^\\.tox$" "^\\.svn$" "^\\.stack-work$" "^\\.ccls-cache$" "^\\.cache$" "^\\.clangd$" "^\\.sl$" "^\\.jj$" "^\\.dist$"))
  '(tab-width 2)
@@ -263,7 +263,13 @@
 (use-package clojure-ts-mode
 	:ensure t
 	:defer t
-	:mode "\\.clj\\'")
+	:mode
+  ("\\.clj\\'" . clojure-ts-mode)
+  ("\\.cljs\\'" . clojure-ts-clojurescript-mode))
+(use-package ruby-ts-mode
+	:ensure t
+	:defer t
+	:mode "\\.rb\\'")
 (use-package eglot :ensure nil :defer t
   :custom-face
   ;; personal preference here; I hate it when packages
@@ -321,6 +327,10 @@
   (rust-mode . eglot-ensure)
 	(clojure-ts-mode . eglot-ensure)
 	(clojure-ts-mode . company-mode)
+	(clojure-ts-clojurescript-mode . eglot-ensure)
+	(clojure-ts-clojurescript-mode . company-mode)
+	(ruby-ts-mode . eglot-ensure)
+	(ruby-ts-mode . company-mode)
   (eglot-managed-mode
    . (lambda () (setq eldoc-documentation-function
                       'eldoc-documentation-compose-eagerly))))
@@ -500,3 +510,10 @@
       (string-suffix-p
       "gpg"
       (file-name-extension (buffer-name)) t))))
+(use-package ob-mermaid
+	:ensure t)
+(setq og-mermaid-cli-path "/Users/byeongcheollim/.nvm/versions/node/v18.19.1/bin/mmdc")
+;; active Babel languages
+(org-babel-do-load-languages
+'org-babel-load-languages
+'((shell . t)))

@@ -290,6 +290,8 @@
 		(define-key eglot-java-mode-map (kbd "C-c l R") #'eglot-java-project-build-refresh))
   (setq eglot-events-buffer-size 0)
   (add-hook 'elixir-mode-hook 'eglot-ensure)
+
+  (add-to-list 'eglot-server-programs '(java-mode "/Users/byeongcheollim/.config/emacs/share/eclipse.jdt.ls/bin/jdtls"))
 	(add-to-list 'eglot-server-programs '(elixir-mode "/Users/byeongcheollim/workspace/elixir-ls-v0.22.0/language_server.sh"))
 	(add-to-list 'eglot-server-programs '(psci-mode "/Users/byeongcheollim/.nvm/versions/node/v18.19.1/bin/purescript-language-server.sh"))
   (setq-default eglot-workspace-configuration

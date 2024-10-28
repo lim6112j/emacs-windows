@@ -55,7 +55,7 @@
  '(ns-alternate-modifier 'meta)
  '(ns-command-modifier 'super)
  '(package-selected-packages
-	 '(python-mode ob-mermaid clojure-ts-clojurescript-mode clojure-ts-mode psci kotlin-ts-mode nix-mode elixir-mode eglot typescript-mode prettier-js jsonrpc general treesit-auto tree-sitter-langs tree-sitter eldoc-box all haskell-mode projectile-ripgrep ripgrep tree-sitter-mode org-roam-ui org-roam org company rust-mode yasnippet lsp savehist vertico projectile helm-lsp lsp-treemacs lsp-ivy help-lsp lsp-ui lsp-mode helm zenburn-theme use-package smartparens multiple-cursors))
+	 '(elm-mode python-mode ob-mermaid clojure-ts-clojurescript-mode clojure-ts-mode psci kotlin-ts-mode nix-mode elixir-mode eglot typescript-mode prettier-js jsonrpc general treesit-auto tree-sitter-langs tree-sitter eldoc-box all haskell-mode projectile-ripgrep ripgrep tree-sitter-mode org-roam-ui org-roam org company rust-mode yasnippet lsp savehist vertico projectile helm-lsp lsp-treemacs lsp-ivy help-lsp lsp-ui lsp-mode helm zenburn-theme use-package smartparens multiple-cursors))
  '(projectile-globally-ignored-directories
 	 '("^\\.idea$" "^\\.vscode$" "^\\.ensime_cache$" "^\\.eunit$" "^\\.git$" "^\\.hg$" "^\\.fslckout$" "^_FOSSIL_$" "^\\.bzr$" "^_darcs$" "^\\.pijul$" "^\\.tox$" "^\\.svn$" "^\\.stack-work$" "^\\.ccls-cache$" "^\\.cache$" "^\\.clangd$" "^\\.sl$" "^\\.jj$" "^\\.dist$"))
  '(tab-width 2)
@@ -274,6 +274,10 @@
 	:ensure t
 	:defer t
 	:mode "\\.py\\'")
+(use-package elm-mode
+	:ensure t
+	:defer t
+	:mode "\\.elm\\'")
 (use-package eglot :ensure nil :defer t
   :custom-face
   ;; personal preference here; I hate it when packages
@@ -341,6 +345,8 @@
 	(ruby-ts-mode . company-mode)
 	(python-mode . eglot-ensure)
 	(python-mode . company-mode)
+	(elm-mode . eglot-ensure)
+	(elm-mode . company-mode)
   (eglot-managed-mode
    . (lambda () (setq eldoc-documentation-function
                       'eldoc-documentation-compose-eagerly))))

@@ -302,6 +302,7 @@
   (add-to-list 'eglot-server-programs '(java-mode "/Users/byeongcheollim/.config/emacs/share/eclipse.jdt.ls/bin/jdtls"))
 	(add-to-list 'eglot-server-programs '(elixir-mode "/Users/byeongcheollim/workspace/elixir-ls-v0.22.0/language_server.sh"))
 	(add-to-list 'eglot-server-programs '(psci-mode "/Users/byeongcheollim/.nvm/versions/node/v18.19.1/bin/purescript-language-server.sh"))
+	(add-to-list 'eglot-server-programs '(csharp-mode "/Users/byeongcheollim/.local/share/nvim/mason/bin/omnisharp"))
   (setq-default eglot-workspace-configuration
                 '((haskell
                    (plugin
@@ -347,6 +348,8 @@
 	(python-mode . company-mode)
 	(elm-mode . eglot-ensure)
 	(elm-mode . company-mode)
+	(csharp-mode . eglot-ensure)
+	(csharp-mode . company-mode)
   (eglot-managed-mode
    . (lambda () (setq eldoc-documentation-function
                       'eldoc-documentation-compose-eagerly))))

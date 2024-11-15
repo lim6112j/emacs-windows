@@ -609,3 +609,5 @@
 	:ensure t)
 (use-package ob-rust
 	:ensure t)
+(use-package ob-kotlin
+	:ensure t)

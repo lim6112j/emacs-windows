@@ -67,6 +67,7 @@
  '(global-display-line-numbers-mode t)
  '(ns-alternate-modifier 'meta)
  '(ns-command-modifier 'super)
+ '(org-confirm-babel-evaluate nil)
  '(org-plantuml-jar-path
 	 "/Users/byeongcheollim/.config/emacs/.local/etc/plantuml.jar")
  '(package-selected-packages

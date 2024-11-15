@@ -70,7 +70,7 @@
  '(org-plantuml-jar-path
 	 "/Users/byeongcheollim/.config/emacs/.local/etc/plantuml.jar")
  '(package-selected-packages
-	 '(elm-mode clojure-mode org-bullets add-node-modules-path web-mode sbt-mode scala-mode ob-mermaid mermaid-mode eglot-fsharp fsharp-mode restclient go-mode markdown-mode android-mode kotlin-mode yaml-mode eglot-java treemacs company tree-sitter-langs tree-sitter typescript-mode exec-path-from-shell which-key elixir-mode prettier-js jsonrpc general eldoc-box all haskell-mode projectile-ripgrep ripgrep tree-sitter-mode org-roam-ui org-roam org rust-mode yasnippet lsp savehist vertico projectile helm-lsp lsp-treemacs lsp-ivy help-lsp lsp-ui lsp-mode helm zenburn-theme use-package smartparens multiple-cursors))
+	 '(editorconfig elm-mode clojure-mode org-bullets add-node-modules-path web-mode sbt-mode scala-mode ob-mermaid mermaid-mode eglot-fsharp fsharp-mode restclient go-mode markdown-mode android-mode kotlin-mode yaml-mode eglot-java treemacs company tree-sitter-langs tree-sitter typescript-mode exec-path-from-shell which-key elixir-mode prettier-js jsonrpc general eldoc-box all haskell-mode projectile-ripgrep ripgrep tree-sitter-mode org-roam-ui org-roam org rust-mode yasnippet lsp savehist vertico projectile helm-lsp lsp-treemacs lsp-ivy help-lsp lsp-ui lsp-mode helm zenburn-theme use-package smartparens multiple-cursors))
  '(projectile-globally-ignored-directories
 	 '("^\\.idea$" "^\\.vscode$" "^\\.ensime_cache$" "^\\.eunit$" "^\\.git$" "^\\.hg$" "^\\.fslckout$" "^_FOSSIL_$" "^\\.bzr$" "^_darcs$" "^\\.pijul$" "^\\.tox$" "^\\.svn$" "^\\.stack-work$" "^\\.ccls-cache$" "^\\.cache$" "^\\.clangd$" "^\\.sl$" "^\\.jj$" "^\\.dist$"))
  '(tab-width 2)
@@ -351,6 +351,7 @@
 	(add-to-list 'eglot-server-programs '(java-mode "/Users/byeongcheollim/.emacs.d/share/eclipse.jdt.ls/bin/jdtls"))
 	(add-to-list 'eglot-server-programs '(kotlin-ts-mode "/opt/homebrew/bin/kotlin-language-server"))
 	(add-to-list 'eglot-server-programs '(kotlin-mode "/opt/homebrew/bin/kotlin-language-server"))
+	(add-to-list 'eglot-server-programs '(csharp-mode . ("csharp-ls")))
   (setq eglot-events-buffer-size 0)
   (add-hook 'elixir-mode-hook 'eglot-ensure)
 	(add-to-list 'eglot-server-programs '(elixir-mode "/Users/byeongcheollim/workspace/elixir/elixir-ls-v0.22.1/language_server.sh"))
@@ -393,6 +394,8 @@
 	(ruby-ts-mode . company-mode)
 	(elm-mode . eglot-ensure)
 	(elm-mode . company-mode)
+	(csharp-mode . eglot-ensure)
+	(csharp-mode . company-mode)
   (eglot-managed-mode
    . (lambda () (setq eldoc-documentation-function
                       'eldoc-documentation-compose-eagerly))))
@@ -601,3 +604,7 @@
 	:ensure t
 	:config
 	(add-hook 'org-mode-hook (lambda () (org-bullets-mode 1))))
+(use-package editorconfig
+	:ensure t)
+(use-package ob-rust
+	:ensure t)

@@ -54,8 +54,9 @@
  '(global-display-line-numbers-mode t)
  '(ns-alternate-modifier 'meta)
  '(ns-command-modifier 'super)
+ '(org-confirm-babel-evaluate nil)
  '(package-selected-packages
-	 '(elm-mode python-mode ob-mermaid clojure-ts-clojurescript-mode clojure-ts-mode psci kotlin-ts-mode nix-mode elixir-mode eglot typescript-mode prettier-js jsonrpc general treesit-auto tree-sitter-langs tree-sitter eldoc-box all haskell-mode projectile-ripgrep ripgrep tree-sitter-mode org-roam-ui org-roam org company rust-mode yasnippet lsp savehist vertico projectile helm-lsp lsp-treemacs lsp-ivy help-lsp lsp-ui lsp-mode helm zenburn-theme use-package smartparens multiple-cursors))
+	 '(ob-rust ob-kotlin elm-mode python-mode ob-mermaid clojure-ts-clojurescript-mode clojure-ts-mode psci kotlin-ts-mode nix-mode elixir-mode eglot typescript-mode prettier-js jsonrpc general treesit-auto tree-sitter-langs tree-sitter eldoc-box all haskell-mode projectile-ripgrep ripgrep tree-sitter-mode org-roam-ui org-roam org company rust-mode yasnippet lsp savehist vertico projectile helm-lsp lsp-treemacs lsp-ivy help-lsp lsp-ui lsp-mode helm zenburn-theme use-package smartparens multiple-cursors))
  '(projectile-globally-ignored-directories
 	 '("^\\.idea$" "^\\.vscode$" "^\\.ensime_cache$" "^\\.eunit$" "^\\.git$" "^\\.hg$" "^\\.fslckout$" "^_FOSSIL_$" "^\\.bzr$" "^_darcs$" "^\\.pijul$" "^\\.tox$" "^\\.svn$" "^\\.stack-work$" "^\\.ccls-cache$" "^\\.cache$" "^\\.clangd$" "^\\.sl$" "^\\.jj$" "^\\.dist$"))
  '(tab-width 2)
@@ -533,3 +534,8 @@
 (org-babel-do-load-languages
 'org-babel-load-languages
 '((shell . t)))
+;; babel org kotin
+(use-package ob-kotlin
+	:ensure t)
+(use-package ob-rust
+	:ensure t)

@@ -539,3 +539,5 @@
 	:ensure t)
 (use-package ob-rust
 	:ensure t)
+(use-package kotlin-mode
+	:ensure t)

@@ -71,7 +71,7 @@
  '(org-plantuml-jar-path
 	 "/Users/byeongcheollim/.config/emacs/.local/etc/plantuml.jar")
  '(package-selected-packages
-	 '(ob-rust editorconfig elm-mode clojure-mode org-bullets add-node-modules-path web-mode sbt-mode scala-mode ob-mermaid mermaid-mode eglot-fsharp fsharp-mode restclient go-mode markdown-mode android-mode kotlin-mode yaml-mode eglot-java treemacs company tree-sitter-langs tree-sitter typescript-mode exec-path-from-shell which-key elixir-mode prettier-js jsonrpc general eldoc-box all haskell-mode projectile-ripgrep ripgrep tree-sitter-mode org-roam-ui org-roam org rust-mode yasnippet lsp savehist vertico projectile helm-lsp lsp-treemacs lsp-ivy help-lsp lsp-ui lsp-mode helm zenburn-theme use-package smartparens multiple-cursors))
+	 '(ob-kotlin ob-rust editorconfig elm-mode clojure-mode org-bullets add-node-modules-path web-mode sbt-mode scala-mode ob-mermaid mermaid-mode eglot-fsharp fsharp-mode restclient go-mode markdown-mode android-mode kotlin-mode yaml-mode eglot-java treemacs company tree-sitter-langs tree-sitter typescript-mode exec-path-from-shell which-key elixir-mode prettier-js jsonrpc general eldoc-box all haskell-mode projectile-ripgrep ripgrep tree-sitter-mode org-roam-ui org-roam org rust-mode yasnippet lsp savehist vertico projectile helm-lsp lsp-treemacs lsp-ivy help-lsp lsp-ui lsp-mode helm zenburn-theme use-package smartparens multiple-cursors))
  '(projectile-globally-ignored-directories
 	 '("^\\.idea$" "^\\.vscode$" "^\\.ensime_cache$" "^\\.eunit$" "^\\.git$" "^\\.hg$" "^\\.fslckout$" "^_FOSSIL_$" "^\\.bzr$" "^_darcs$" "^\\.pijul$" "^\\.tox$" "^\\.svn$" "^\\.stack-work$" "^\\.ccls-cache$" "^\\.cache$" "^\\.clangd$" "^\\.sl$" "^\\.jj$" "^\\.dist$"))
  '(tab-width 2)
@@ -551,10 +551,16 @@
 (put 'downcase-region 'disabled nil)
 
 ;; for m1 mac
-(setq load-path (cons  "/opt/homebrew/opt/erlang/lib/erlang/lib/tools-4.1/emacs"
-      load-path))      (setq erlang-root-dir "/opt/homebrew/opt/erlang/bin")
-      (setq exec-path (cons "/opt/homebrew/opt/erlang/bin" exec-path))
+;; (setq load-path (cons  "/opt/homebrew/opt/erlang/lib/erlang/lib/tools-4.1/emacs"
+;;      load-path))      (setq erlang-root-dir "/opt/homebrew/opt/erlang/bin")
+;;      (setq exec-path (cons "/opt/homebrew/opt/erlang/bin" exec-path))
+;;      (require 'erlang-start)
+
+(setq load-path (cons  "/Users/byeongcheollim/.asdf/installs/erlang/26.2.5.5/lib/tools-3.6/emacs"
+      load-path))      (setq erlang-root-dir "/Users/byeongcheollim/.asdf/installs/erlang/26.2.5.5/bin")
+      (setq exec-path (cons "/Users/byeongcheollim/.asdf/installs/erlang/26.2.5.5/bin" exec-path))
       (require 'erlang-start)
+
 ;; for intel mac
 ;;(Setq Load-path (cons  "/usr/local/opt/erlang/lib/erlang/lib/tools-3.6/emacs"
 ;;      load-path))      (setq erlang-root-dir "/usr/local/opt/erlang/bin")

@@ -593,6 +593,7 @@
 (org-babel-do-load-languages 'org-babel-load-languages '(
 																												 (plantuml . t)
 																												 (mermaid . t)
+																												 (C . t)
 )))
 ;;; for mermaid-mode
 (use-package mermaid-mode

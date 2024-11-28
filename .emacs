@@ -327,7 +327,8 @@
 
 (use-package eglot-java
 	:ensure t)
-
+(use-package haskell-mode
+	:ensure t)
 ;; setting for typescript and haskell
 ;; use-package for configuring, even though ;; built-in in Emacs 29, thus :ensure nil
 (use-package eglot :ensure nil :defer t

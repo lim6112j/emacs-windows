@@ -83,7 +83,7 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(default ((t (:family "MesloLGM Nerd Font Mono" :foundry "PfEd" :slant normal :weight normal :height 130 :width normal)))))
+ '(default ((t (:family "MesloLGM Nerd Font Mono" :foundry "PfEd" :slant normal :weight normal :height 150 :width normal)))))
 
 ;; (use-package tree-sitter
 ;;   :ensure t
@@ -387,6 +387,7 @@
 	(kotlin-ts-mode . company-mode)
 	(kotlin-mode . company-mode)
   (haskell-mode . eglot-ensure)
+  (haskell-mode . company-mode)
   (typescript-ts-mode . eglot-ensure)
   (tsx-ts-mode . eglot-ensure)
 	(typescript-mode . eglot-ensure)

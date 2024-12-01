@@ -59,7 +59,7 @@
  '(org-display-remote-inline-images 'download)
  '(org-startup-with-inline-images t)
  '(package-selected-packages
-	 '(kotlin-mode ob-rust ob-kotlin elm-mode python-mode ob-mermaid clojure-ts-clojurescript-mode clojure-ts-mode psci kotlin-ts-mode nix-mode elixir-mode eglot typescript-mode prettier-js jsonrpc general treesit-auto tree-sitter-langs tree-sitter eldoc-box all haskell-mode projectile-ripgrep ripgrep tree-sitter-mode org-roam-ui org-roam org company rust-mode yasnippet lsp savehist vertico projectile helm-lsp lsp-treemacs lsp-ivy help-lsp lsp-ui lsp-mode helm zenburn-theme use-package smartparens multiple-cursors))
+	 '(eglot-java kotlin-mode ob-rust ob-kotlin elm-mode python-mode ob-mermaid clojure-ts-clojurescript-mode clojure-ts-mode psci kotlin-ts-mode nix-mode elixir-mode eglot typescript-mode prettier-js jsonrpc general treesit-auto tree-sitter-langs tree-sitter eldoc-box all haskell-mode projectile-ripgrep ripgrep tree-sitter-mode org-roam-ui org-roam org company rust-mode yasnippet lsp savehist vertico projectile helm-lsp lsp-treemacs lsp-ivy help-lsp lsp-ui lsp-mode helm zenburn-theme use-package smartparens multiple-cursors))
  '(projectile-globally-ignored-directories
 	 '("^\\.idea$" "^\\.vscode$" "^\\.ensime_cache$" "^\\.eunit$" "^\\.git$" "^\\.hg$" "^\\.fslckout$" "^_FOSSIL_$" "^\\.bzr$" "^_darcs$" "^\\.pijul$" "^\\.tox$" "^\\.svn$" "^\\.stack-work$" "^\\.ccls-cache$" "^\\.cache$" "^\\.clangd$" "^\\.sl$" "^\\.jj$" "^\\.dist$"))
  '(tab-width 2)
@@ -282,6 +282,8 @@
 	:ensure t
 	:defer t
 	:mode "\\.elm\\'")
+(use-package eglot-java
+	:ensure t)
 (use-package eglot :ensure nil :defer t
   :custom-face
   ;; personal preference here; I hate it when packages
@@ -504,7 +506,7 @@
 ;;      (setq exec-path (cons "/opt/homebrew/opt/erlang/bin" exec-path))
 ;;      (require 'erlang-start)
 ;; for intel mac
-(setq load-path (cons  "/usr/local/opt/erlang/lib/erlang/lib/tools-3.6/emacs" load-path))
+(setq load-path (cons  "/usr/local/opt/erlang/lib/erlang/lib/tools-4.1/emacs" load-path))
 (setq erlang-root-dir "/usr/local/opt/erlang/bin")
 (setq exec-path (cons "/usr/local/opt/erlang/bin" exec-path))
 (require 'erlang-start)
@@ -544,3 +546,6 @@
 	:ensure t)
 (use-package kotlin-mode
 	:ensure t)
+;; set java_home
+;;(setenv "JAVA_HOME"
+;;				"/usr/local/Cellar/openjdk@17/17.0.13/libexec/openjdk.jdk/Contents/Home/")

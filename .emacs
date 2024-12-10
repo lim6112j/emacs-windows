@@ -620,3 +620,5 @@
 	:ensure t)
 (use-package ob-kotlin
 	:ensure t)
+(use-package ob-ruby
+	:ensure t)

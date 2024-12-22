@@ -59,7 +59,7 @@
  '(org-display-remote-inline-images 'download)
  '(org-startup-with-inline-images t)
  '(package-selected-packages
-	 '(eglot-java kotlin-mode ob-rust ob-kotlin elm-mode python-mode ob-mermaid clojure-ts-clojurescript-mode clojure-ts-mode psci kotlin-ts-mode nix-mode elixir-mode eglot typescript-mode prettier-js jsonrpc general treesit-auto tree-sitter-langs tree-sitter eldoc-box all haskell-mode projectile-ripgrep ripgrep tree-sitter-mode org-roam-ui org-roam org company rust-mode yasnippet lsp savehist vertico projectile helm-lsp lsp-treemacs lsp-ivy help-lsp lsp-ui lsp-mode helm zenburn-theme use-package smartparens multiple-cursors))
+	 '(editorconfig ob-haskell restclient org-bullets eglot-java kotlin-mode ob-rust ob-kotlin elm-mode python-mode ob-mermaid clojure-ts-clojurescript-mode clojure-ts-mode psci kotlin-ts-mode nix-mode elixir-mode eglot typescript-mode prettier-js jsonrpc general treesit-auto tree-sitter-langs tree-sitter eldoc-box all haskell-mode projectile-ripgrep ripgrep tree-sitter-mode org-roam-ui org-roam org company rust-mode yasnippet lsp savehist vertico projectile helm-lsp lsp-treemacs lsp-ivy help-lsp lsp-ui lsp-mode helm zenburn-theme use-package smartparens multiple-cursors))
  '(projectile-globally-ignored-directories
 	 '("^\\.idea$" "^\\.vscode$" "^\\.ensime_cache$" "^\\.eunit$" "^\\.git$" "^\\.hg$" "^\\.fslckout$" "^_FOSSIL_$" "^\\.bzr$" "^_darcs$" "^\\.pijul$" "^\\.tox$" "^\\.svn$" "^\\.stack-work$" "^\\.ccls-cache$" "^\\.cache$" "^\\.clangd$" "^\\.sl$" "^\\.jj$" "^\\.dist$"))
  '(tab-width 2)
@@ -70,7 +70,7 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(default ((t (:family "MesloLGM Nerd Font Mono" :foundry "PfEd" :slant normal :weight normal :height 130 :width normal)))))
+ '(default ((t (:family "MesloLGM Nerd Font Mono" :foundry "PfEd" :slant normal :weight normal :height 160 :width normal)))))
 
 ;; (use-package tree-sitter
 ;;   :ensure t
@@ -549,3 +549,24 @@
 ;; set java_home
 ;;(setenv "JAVA_HOME"
 ;;				"/usr/local/Cellar/openjdk@17/17.0.13/libexec/openjdk.jdk/Contents/Home/")
+(use-package org-bullets
+	:ensure t
+	:config
+	(add-hook 'org-mode-hook (lambda () (org-bullets-mode 1)))
+)
+(use-package restclient
+	:ensure t
+)
+;; for org haskell
+(require 'ob-haskell)
+;;(use-package ob-haskell
+;;	:ensure t)
+;; copilot
+;;(setq max-lisp-eval-depth 16000)
+(use-package editorconfig
+	:ensure t)
+
+(add-to-list 'load-path "/Users/byeongcheollim/workspace/copilot/copilot.el")
+(require 'copilot)
+(define-key copilot-completion-map (kbd "<tab>") 'copilot-accept-completion)
+(define-key copilot-completion-map (kbd "TAB") 'copilot-accept-completion)

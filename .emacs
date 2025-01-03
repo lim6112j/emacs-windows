@@ -626,3 +626,4 @@
 	:ensure t
 	:init
 	(global-diff-hl-mode))
+(global-hl-line-mode)

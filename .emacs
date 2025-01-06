@@ -627,3 +627,11 @@
 	:init
 	(global-diff-hl-mode))
 (global-hl-line-mode)
+;; for copilot
+(use-package editorconfig
+	:ensure t)
+
+(add-to-list 'load-path "/Users/byeongcheollim/workspace/copilot/copilot.el")
+(require 'copilot)
+(define-key copilot-completion-map (kbd "<tab>") 'copilot-accept-completion)
+(define-key copilot-completion-map (kbd "TAB") 'copilot-accept-completion)

@@ -572,8 +572,10 @@
 
 (add-to-list 'load-path "/Users/byeongcheollim/workspace/copilot/copilot.el")
 (require 'copilot)
-(define-key copilot-completion-map (kbd "<tab>") 'copilot-accept-completion)
-(define-key copilot-completion-map (kbd "TAB") 'copilot-accept-completion)
+(define-key copilot-completion-map (kbd "<tab>") 'copilot-next-completion)
+(define-key copilot-completion-map (kbd "TAB") 'copilot-next-completion)
+(define-key copilot-completion-map (kbd "<C-return>") 'copilot-accept-completion)
+(define-key copilot-completion-map (kbd "C-RET") 'copilot-accept-completion)
 ;; diff show on buffer
 (use-package diff-hl
 	:ensure t

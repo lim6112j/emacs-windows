@@ -388,6 +388,7 @@
 	(kotlin-mode . company-mode)
   (haskell-mode . eglot-ensure)
   (haskell-mode . company-mode)
+	(haskell-mode . copilot-mode)
   (typescript-ts-mode . eglot-ensure)
   (tsx-ts-mode . eglot-ensure)
 	(typescript-mode . eglot-ensure)
@@ -631,7 +632,7 @@
 (use-package editorconfig
 	:ensure t)
 
-(add-to-list 'load-path "/Users/byeongcheollim/workspace/copilot/copilot.el")
+(add-to-list 'load-path "/Users/byeongcheollim/workspace/copilot/")
 (require 'copilot)
 (define-key copilot-completion-map (kbd "<tab>") 'copilot-accept-completion)
 (define-key copilot-completion-map (kbd "TAB") 'copilot-accept-completion)

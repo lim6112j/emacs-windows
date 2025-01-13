@@ -634,5 +634,7 @@
 
 (add-to-list 'load-path "/Users/byeongcheollim/workspace/copilot/")
 (require 'copilot)
-(define-key copilot-completion-map (kbd "<tab>") 'copilot-accept-completion)
-(define-key copilot-completion-map (kbd "TAB") 'copilot-accept-completion)
+(define-key copilot-completion-map (kbd "<tab>") 'copilot-next-completion)
+(define-key copilot-completion-map (kbd "TAB") 'copilot-next-completion)
+(define-key copilot-completion-map (kbd "<C-return") 'copilot-accept-completion)
+(define-key copilot-completion-map (kbd "C-RET") 'copilot-accept-completion)

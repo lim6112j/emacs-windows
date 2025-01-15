@@ -17,9 +17,9 @@
 (add-to-list 'package-archives '("melpa-stable" . "https://stable.melpa.org/packages/") t)
 (use-package zenburn-theme
   :ensure zenburn-theme)
-;;(load-theme 'zenburn t)
+(load-theme 'zenburn t)
 ;;(load-theme 'catppuccin t)
-(load-theme 'anti-zenburn t)
+;;(load-theme 'anti-zenburn t)
 ;; multiple cursors
 (use-package multiple-cursors
   :ensure multiple-cursors
@@ -72,7 +72,7 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(default ((t (:family "MesloLGM Nerd Font Mono" :foundry "PfEd" :slant normal :weight normal :height 160 :width normal)))))
+ '(default ((t (:family "MesloLGM Nerd Font Mono" :foundry "PfEd" :slant normal :weight normal :height 180 :width normal)))))
 
 ;; (use-package tree-sitter
 ;;   :ensure t
@@ -582,3 +582,6 @@
 	:ensure t
 	:init
 	(global-diff-hl-mode))
+;; split and focus
+(global-set-key "\C-x2" (lambda () (interactive)(split-window-vertically) (other-window 1)))
+(global-set-key "\C-x3" (lambda () (interactive)(split-window-horizontally) (other-window 1)))

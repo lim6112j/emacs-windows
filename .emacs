@@ -650,9 +650,9 @@
 	:ensure t)
 ;; shell on other window
 (defun shell-other-window ()
-  "Open a `shell' in a new window."
+  "Open a `eshell' in a new window."
   (interactive)
-  (let ((buf (shell)))
+  (let ((buf (eshell)))
     (switch-to-buffer (other-buffer buf))
     (switch-to-buffer-other-window buf)))
 ;; shell window

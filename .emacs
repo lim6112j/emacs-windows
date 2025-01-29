@@ -607,7 +607,7 @@
      ;; These keymaps activate only when a minuet suggestion is displayed in the current buffer
      ("M-p" . #'minuet-previous-suggestion) ;; invoke completion or cycle to next completion
      ("M-n" . #'minuet-next-suggestion) ;; invoke completion or cycle to previous completion
-     ("M-A" . #'minuet-accept-suggestion) ;; accept whole completion
+     ("C-return" . #'minuet-accept-suggestion) ;; accept whole completion
      ;; Accept the first line of completion, or N lines with a numeric-prefix:
      ;; e.g. C-u 2 M-a will accepts 2 lines of completion.
      ("M-a" . #'minuet-accept-suggestion-line)
@@ -621,7 +621,7 @@
     :config
     (setq minuet-provider 'openai-fim-compatible)
     (setq minuet-n-completions 1) ; recommended for Local LLM for resource saving
-		(setq minuet-request-timeout 8)
+		(setq minuet-request-timeout 20)
     ; I recommend you start with a small context window firstly, and gradually increase it based on your local computing power.
     (setq minuet-context-window 512)
     (plist-put minuet-openai-fim-compatible-options :end-point "http://localhost:11434/v1/completions")

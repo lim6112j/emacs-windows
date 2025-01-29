@@ -596,3 +596,40 @@
     (switch-to-buffer-other-window buf)))
 ;; shell window
 (global-set-key (kbd "C-;") 'shell-other-window)
+
+;; deepseek
+(use-package minuet
+  	:ensure t
+    :bind
+    (("M-y" . #'minuet-complete-with-minibuffer) ;; use minibuffer for completion
+     ("M-i" . #'minuet-show-suggestion) ;; use overlay for completion
+     :map minuet-active-mode-map
+     ;; These keymaps activate only when a minuet suggestion is displayed in the current buffer
+     ("M-p" . #'minuet-previous-suggestion) ;; invoke completion or cycle to next completion
+     ("M-n" . #'minuet-next-suggestion) ;; invoke completion or cycle to previous completion
+     ("M-A" . #'minuet-accept-suggestion) ;; accept whole completion
+     ;; Accept the first line of completion, or N lines with a numeric-prefix:
+     ;; e.g. C-u 2 M-a will accepts 2 lines of completion.
+     ("M-a" . #'minuet-accept-suggestion-line)
+     ("M-e" . #'minuet-dismiss-suggestion))
+
+    :init
+    ;; if you want to enable auto suggestion.
+    ;; Note that you can manually invoke completions without enable minuet-auto-suggestion-mode
+    (add-hook 'prog-mode-hook #'minuet-auto-suggestion-mode)
+
+    :config
+    (setq minuet-provider 'openai-fim-compatible)
+    (setq minuet-n-completions 1) ; recommended for Local LLM for resource saving
+		(setq minuet-request-timeout 8)
+    ; I recommend you start with a small context window firstly, and gradually increase it based on your local computing power.
+    (setq minuet-context-window 512)
+    (plist-put minuet-openai-fim-compatible-options :end-point "http://localhost:11434/v1/completions")
+    ;; an arbitrary non-null environment variable as placeholder
+    (plist-put minuet-openai-fim-compatible-options :name "Deepseek")
+    (plist-put minuet-openai-fim-compatible-options :api-key "TERM")
+    (plist-put minuet-openai-fim-compatible-options :model "deepseek-coder-v2")
+    ;; Required when defining minuet-ative-mode-map in insert/normal states.
+    ;; Not required when defining minuet-active-mode-map without evil state.
+    ;; (add-hook 'minuet-active-mode-hook #'evil-normalize-keymaps))
+    (minuet-set-optional-options minuet-openai-fim-compatible-options :max_tokens 256))

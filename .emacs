@@ -74,7 +74,7 @@
 	 "/Users/byeongcheollim/.config/emacs/.local/etc/plantuml.jar")
  '(org-todo-keywords '((sequence "TODO" "DONE" "PENDING" "CANCELED")))
  '(package-selected-packages
-	 '(ocaml-ts-mode copilot-chat diff-hl ob-ruby ob-kotlin ob-rust editorconfig elm-mode clojure-mode org-bullets add-node-modules-path web-mode sbt-mode scala-mode ob-mermaid mermaid-mode eglot-fsharp fsharp-mode restclient go-mode markdown-mode android-mode kotlin-mode yaml-mode eglot-java treemacs company tree-sitter-langs tree-sitter typescript-mode exec-path-from-shell which-key elixir-mode prettier-js jsonrpc general eldoc-box all haskell-mode projectile-ripgrep ripgrep tree-sitter-mode org-roam-ui org-roam org rust-mode yasnippet lsp savehist vertico projectile helm-lsp lsp-treemacs lsp-ivy help-lsp lsp-ui lsp-mode helm zenburn-theme use-package smartparens multiple-cursors))
+	 '(python-mode minuet ocaml-ts-mode copilot-chat diff-hl ob-ruby ob-kotlin ob-rust editorconfig elm-mode clojure-mode org-bullets add-node-modules-path web-mode sbt-mode scala-mode ob-mermaid mermaid-mode eglot-fsharp fsharp-mode restclient go-mode markdown-mode android-mode kotlin-mode yaml-mode eglot-java treemacs company tree-sitter-langs tree-sitter typescript-mode exec-path-from-shell which-key elixir-mode prettier-js jsonrpc general eldoc-box all haskell-mode projectile-ripgrep ripgrep tree-sitter-mode org-roam-ui org-roam org rust-mode yasnippet lsp savehist vertico projectile helm-lsp lsp-treemacs lsp-ivy help-lsp lsp-ui lsp-mode helm zenburn-theme use-package smartparens multiple-cursors))
  '(projectile-globally-ignored-directories
 	 '("^\\.idea$" "^\\.vscode$" "^\\.ensime_cache$" "^\\.eunit$" "^\\.git$" "^\\.hg$" "^\\.fslckout$" "^_FOSSIL_$" "^\\.bzr$" "^_darcs$" "^\\.pijul$" "^\\.tox$" "^\\.svn$" "^\\.stack-work$" "^\\.ccls-cache$" "^\\.cache$" "^\\.clangd$" "^\\.sl$" "^\\.jj$" "^\\.dist$"))
  '(tab-width 2)
@@ -212,6 +212,10 @@
 	:ensure t
 	:defer t
 	:mode "\\.rb\\'")
+(use-package python-mode
+	:ensure t
+	:defer t
+	:mode "\\.py\\'")
 (use-package ocaml-ts-mode
 	:ensure t
 	:defer t
@@ -404,6 +408,8 @@
 	(scala-mode .eglot-ensure)
 	(ruby-ts-mode . eglot-ensure)
 	(ruby-ts-mode . company-mode)
+	(python-mode . eglot-ensure)
+	(python-mode . company-mode)
 	(elm-mode . eglot-ensure)
 	(elm-mode . company-mode)
 	(csharp-mode . eglot-ensure)
@@ -664,3 +670,40 @@
     (switch-to-buffer-other-window buf)))
 ;; shell window
 (global-set-key (kbd "C-;") 'shell-other-window)
+;; deepseek
+(use-package minuet
+	  :ensure t
+    :bind
+    (("M-y" . #'minuet-complete-with-minibuffer) ;; use minibuffer for completion
+     ("M-i" . #'minuet-show-suggestion) ;; use overlay for completion
+
+     :map minuet-active-mode-map
+     ;; These keymaps activate only when a minuet suggestion is displayed in the current buffer
+     ("M-p" . #'minuet-previous-suggestion) ;; invoke completion or cycle to next completion
+     ("M-n" . #'minuet-next-suggestion) ;; invoke completion or cycle to previous completion
+     ("M-A" . #'minuet-accept-suggestion) ;; accept whole completion
+     ;; Accept the first line of completion, or N lines with a numeric-prefix:
+     ;; e.g. C-u 2 M-a will accepts 2 lines of completion.
+     ("M-a" . #'minuet-accept-suggestion-line)
+     ("M-e" . #'minuet-dismiss-suggestion))
+
+    :init
+    ;; if you want to enable auto suggestion.
+    ;; Note that you can manually invoke completions without enable minuet-auto-suggestion-mode
+    ;;(add-hook 'prog-mode-hook #'minuet-auto-suggestion-mode)
+
+    :config
+    (setq minuet-provider 'openai-fim-compatible)
+		(setq minuet-n-completions 1)
+		(setq minuet-request-timeout 8)
+		(setq minuet-context-window 256)
+    (plist-put minuet-openai-fim-compatible-options :end-point "http://localhost:11434/v1/completions")
+    ;; an arbitrary non-null environment variable as placeholder
+    (plist-put minuet-openai-fim-compatible-options :name "Deepseek")
+    (plist-put minuet-openai-fim-compatible-options :api-key "TERM")
+    (plist-put minuet-openai-fim-compatible-options :model "deepseek-coder-v2")
+    ;; Required when defining minuet-ative-mode-map in insert/normal states.
+    ;; Not required when defining minuet-active-mode-map without evil state.
+    ;;(add-hook 'minuet-active-mode-hook #'evil-normalize-keymaps)
+
+    (minuet-set-optional-options minuet-openai-fim-compatible-options :max_tokens 256))

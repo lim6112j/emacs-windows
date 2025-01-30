@@ -621,9 +621,9 @@
     :config
     (setq minuet-provider 'openai-fim-compatible)
     (setq minuet-n-completions 1) ; recommended for Local LLM for resource saving
-		(setq minuet-request-timeout 20)
+		(setq minuet-request-timeout 8)
     ; I recommend you start with a small context window firstly, and gradually increase it based on your local computing power.
-    (setq minuet-context-window 512)
+    (setq minuet-context-window 128)
     (plist-put minuet-openai-fim-compatible-options :end-point "http://localhost:11434/v1/completions")
     ;; an arbitrary non-null environment variable as placeholder
     (plist-put minuet-openai-fim-compatible-options :name "Deepseek")

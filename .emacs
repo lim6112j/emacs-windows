@@ -388,6 +388,8 @@
   (dolist (server rex/language-servers)
     (add-to-list 'eglot-server-programs server))
   :hook
+	(c-mode . eglot-ensure)
+	(c-mode . company-mode)
 	(elixir-mode . eglot-ensure)
 	(go-mode . eglot-ensure)
 	(erlang-mode . eglot-ensure)
@@ -674,7 +676,7 @@
 (use-package minuet
 	  :ensure t
     :bind
-    (("M-y" . #'minuet-complete-with-minibuffer) ;; use minibuffer for completion
+    (;;("M-y" . #'minuet-complete-with-minibuffer) ;; use minibuffer for completion
      ("M-i" . #'minuet-show-suggestion) ;; use overlay for completion
 
      :map minuet-active-mode-map
@@ -696,7 +698,7 @@
     (setq minuet-provider 'openai-fim-compatible)
 		(setq minuet-n-completions 1)
 		(setq minuet-request-timeout 8)
-		(setq minuet-context-window 256)
+		(setq minuet-context-window 768)
     (plist-put minuet-openai-fim-compatible-options :end-point "http://localhost:11434/v1/completions")
     ;; an arbitrary non-null environment variable as placeholder
     (plist-put minuet-openai-fim-compatible-options :name "Deepseek")

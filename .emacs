@@ -360,6 +360,8 @@
 	(python-mode . company-mode)
 	(elm-mode . eglot-ensure)
 	(elm-mode . company-mode)
+	(c-mode . eglot-ensure)
+	(c-mode . company-mode)
   (eglot-managed-mode
    . (lambda () (setq eldoc-documentation-function
                       'eldoc-documentation-compose-eagerly))))

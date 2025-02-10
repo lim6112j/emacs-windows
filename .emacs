@@ -700,21 +700,22 @@
 		(setq minuet-request-timeout 8)
 		(setq minuet-context-window 768)
 		;; for local
-    ;; (plist-put minuet-openai-fim-compatible-options :end-point "http://localhost:11434/v1/completions")
-    ;; (plist-put minuet-openai-fim-compatible-options :name "Deepseek")
-    ;; (plist-put minuet-openai-fim-compatible-options :api-key "TERM")
-    ;; (plist-put minuet-openai-fim-compatible-options :model "deepseek-coder-v2")
+    (plist-put minuet-openai-fim-compatible-options :end-point "http://localhost:11434/v1/completions")
+    (plist-put minuet-openai-fim-compatible-options :name "Deepseek")
+    (plist-put minuet-openai-fim-compatible-options :api-key "TERM")
+    (plist-put minuet-openai-fim-compatible-options :model "deepseek-coder-v2")
 
 		;; for api
-		(plist-put minuet-openai-fim-compatible-options
-							 '(:model "deepseek-chat"
-								 :end-point "https://api.deepseek.com/beta"
-								 :api-key "DEEPSEEK_API_KEY"
-								 :name "Deepseek"
-								 :template (:prompt minuet--default-fim-prompt-function
-																		:suffix minuet--default-fim-suffix-function)
-								 :optional nil)
-							 "config options for Minuet OpenAI Fim compatible provider")
+		;; (plist-put minuet-openai-fim-compatible-options
+		;; 					 '(:model "deepseek-chat"
+		;; 						 :end-point "https://api.deepseek.com/beta"
+		;; 						 :api-key "DEEPSEEK_API_KEY"
+		;; 						 :name "Deepseek"
+		;; 						 :template (:prompt minuet--default-fim-prompt-function
+		;; 																:suffix minuet--default-fim-suffix-function)
+		;; 						 :optional nil)
+		;; 					 "config options for Minuet OpenAI Fim compatible provider")
+
     ;; Required when defining minuet-ative-mode-map in insert/normal states.
     ;; Not required when defining minuet-active-mode-map without evil state.
     ;;(add-hook 'minuet-active-mode-hook #'evil-normalize-keymaps)

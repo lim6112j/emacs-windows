@@ -302,6 +302,7 @@
   :config
   ;; these two lines help prevent lag with the typescript language server. they
   ;; might actually be mutually exclusive but I haven't investigated further
+	(define-key eglot-mode-map (kbd "C-c a") 'eglot-code-actions)
   (with-eval-after-load 'eglot (fset #'jsonrpc--log-event #'ignore))
 	(with-eval-after-load 'eglot-java
 		(define-key eglot-java-mode-map (kbd "C-c l n") #'eglot-java-file-new)

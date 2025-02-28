@@ -228,7 +228,7 @@
 (use-package scala-mode
   :interpreter ("scala" . scala-mode)
 	:hook (scala-mode . tree-sitter-hl-mode)
-	)
+	:mode "\\.scala\\'")
 ;; clojure mode
 (use-package clojure-mode
 	:defer t
@@ -413,6 +413,7 @@
   (tsx-ts-mode . eglot-ensure)
 	(typescript-mode . eglot-ensure)
   (rust-mode . eglot-ensure)
+  (scala-mode . company-mode)
 	(scala-mode .eglot-ensure)
 	(ruby-ts-mode . eglot-ensure)
 	(ruby-ts-mode . company-mode)

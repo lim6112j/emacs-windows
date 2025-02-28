@@ -642,3 +642,6 @@
     ;; Not required when defining minuet-active-mode-map without evil state.
     ;; (add-hook 'minuet-active-mode-hook #'evil-normalize-keymaps))
     (minuet-set-optional-options minuet-openai-fim-compatible-options :max_tokens 256))
+
+;; java setting for scala
+(setq exec-path (cons "/usr/local/Cellar/openjdk@8/1.8.0-422/libexec/openjdk.jdk/Contents/Home/bin" exec-path))

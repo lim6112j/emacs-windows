@@ -290,6 +290,10 @@
 	:ensure t
 	:defer t
 	:mode "\\.dart\\'")
+(use-package scala-mode
+	:ensure t
+	:defer t
+	:mode "\\.scala\\'")
 (use-package eglot-java
 	:ensure t)
 (use-package eglot :ensure nil :defer t
@@ -367,6 +371,8 @@
 	(elm-mode . company-mode)
 	(c-mode . eglot-ensure)
 	(c-mode . company-mode)
+	(scala-mode . company-mode)
+	(scala-mode . eglot-ensure)
 	(dart-mode . eglot-ensure)
 	(dart-mode . company-mode)
   (eglot-managed-mode

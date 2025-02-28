@@ -6,6 +6,7 @@
 ;; mac alt-x weird char input
 (setq mac-option-modifier 'meta)
 (setq mac-command-modifier 'super)
+
 ;;(toggle-debug-on-error t)
 ;;(toggle-frame-fullscreen)
 (global-display-line-numbers-mode)
@@ -729,3 +730,6 @@
     ;;(add-hook 'minuet-active-mode-hook #'evil-normalize-keymaps)
 
     (minuet-set-optional-options minuet-openai-fim-compatible-options :max_tokens 256))
+
+;; java setting for scala
+(setq exec-path (cons "/Library/Java/JavaVirtualMachines/zulu-8.jdk/Contents/Home/bin/" exec-path))

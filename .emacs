@@ -227,8 +227,7 @@
 ;; Enable scala-mode and sbt-mode
 (use-package scala-mode
   :interpreter ("scala" . scala-mode)
-	:hook (scala-mode . tree-sitter-hl-mode)
-	:mode "\\.scala\\'")
+	:hook (scala-mode . tree-sitter-hl-mode))
 ;; clojure mode
 (use-package clojure-mode
 	:defer t

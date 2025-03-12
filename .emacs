@@ -75,7 +75,7 @@
 	 "/Users/byeongcheollim/.config/emacs/.local/etc/plantuml.jar")
  '(org-todo-keywords '((sequence "TODO" "DONE" "PENDING" "CANCELED")))
  '(package-selected-packages
-	 '(dart-mode python-mode minuet ocaml-ts-mode copilot-chat diff-hl ob-ruby ob-kotlin ob-rust editorconfig elm-mode clojure-mode org-bullets add-node-modules-path web-mode sbt-mode scala-mode ob-mermaid mermaid-mode eglot-fsharp fsharp-mode restclient go-mode markdown-mode android-mode kotlin-mode yaml-mode eglot-java treemacs company tree-sitter-langs tree-sitter typescript-mode exec-path-from-shell which-key elixir-mode prettier-js jsonrpc general eldoc-box all haskell-mode projectile-ripgrep ripgrep tree-sitter-mode org-roam-ui org-roam org rust-mode yasnippet lsp savehist vertico projectile helm-lsp lsp-treemacs lsp-ivy help-lsp lsp-ui lsp-mode helm zenburn-theme use-package smartparens multiple-cursors))
+	 '(indent-bars dart-mode python-mode minuet ocaml-ts-mode copilot-chat diff-hl ob-ruby ob-kotlin ob-rust editorconfig elm-mode clojure-mode org-bullets add-node-modules-path web-mode sbt-mode scala-mode ob-mermaid mermaid-mode eglot-fsharp fsharp-mode restclient go-mode markdown-mode android-mode kotlin-mode yaml-mode eglot-java treemacs company tree-sitter-langs tree-sitter typescript-mode exec-path-from-shell which-key elixir-mode prettier-js jsonrpc general eldoc-box all haskell-mode projectile-ripgrep ripgrep tree-sitter-mode org-roam-ui org-roam org rust-mode yasnippet lsp savehist vertico projectile helm-lsp lsp-treemacs lsp-ivy help-lsp lsp-ui lsp-mode helm zenburn-theme use-package smartparens multiple-cursors))
  '(projectile-globally-ignored-directories
 	 '("^\\.idea$" "^\\.vscode$" "^\\.ensime_cache$" "^\\.eunit$" "^\\.git$" "^\\.hg$" "^\\.fslckout$" "^_FOSSIL_$" "^\\.bzr$" "^_darcs$" "^\\.pijul$" "^\\.tox$" "^\\.svn$" "^\\.stack-work$" "^\\.ccls-cache$" "^\\.cache$" "^\\.clangd$" "^\\.sl$" "^\\.jj$" "^\\.dist$"))
  '(tab-width 2)
@@ -437,6 +437,7 @@
 	(elm-mode . company-mode)
 	(dart-mode . company-mode)
 	(dart-mode . eglot-ensure)
+	(dart-mode . indent-bars-mode)
 	(csharp-mode . eglot-ensure)
 	(csharp-mode . company-mode)
 	(ocaml-ts-mode . eglot-ensure)
@@ -747,3 +748,6 @@
 
 ;; java setting for scala
 (setq exec-path (cons "/Library/Java/JavaVirtualMachines/zulu-8.jdk/Contents/Home/bin/" exec-path))
+;; indent line show
+(use-package indent-bars
+	:ensure t)

@@ -721,14 +721,18 @@
     :config
     (setq minuet-provider 'openai-fim-compatible)
 		(setq minuet-n-completions 1)
-		(setq minuet-request-timeout 8)
-		(setq minuet-context-window 768)
-		;; for local
-    (plist-put minuet-openai-fim-compatible-options :end-point "http://localhost:11434/v1/completions")
-    (plist-put minuet-openai-fim-compatible-options :name "Deepseek")
+;		(setq minuet-request-timeout 8)
+		(setq minuet-context-window 512)
+		;; ;; for local
+    ;; (plist-put minuet-openai-fim-compatible-options :end-point "http://localhost:11434/v1/completions")
+    ;; (plist-put minuet-openai-fim-compatible-options :name "Deepseek")
+    ;; (plist-put minuet-openai-fim-compatible-options :api-key "TERM")
+    ;; (plist-put minuet-openai-fim-compatible-options :model "deepseek-coder-v2")
+		;; for qwen2.5-coder
+		(plist-put minuet-openai-fim-compatible-options :end-point "http://localhost:11434/v1/completions")
+    (plist-put minuet-openai-fim-compatible-options :name "Ollama")
     (plist-put minuet-openai-fim-compatible-options :api-key "TERM")
-    (plist-put minuet-openai-fim-compatible-options :model "deepseek-coder-v2")
-
+    (plist-put minuet-openai-fim-compatible-options :model "qwen2.5-coder:3b")
 		;; for api
 		;; (plist-put minuet-openai-fim-compatible-options
 		;; 					 '(:model "deepseek-chat"
@@ -744,7 +748,7 @@
     ;; Not required when defining minuet-active-mode-map without evil state.
     ;;(add-hook 'minuet-active-mode-hook #'evil-normalize-keymaps)
 
-    (minuet-set-optional-options minuet-openai-fim-compatible-options :max_tokens 256))
+    (minuet-set-optional-options minuet-openai-fim-compatible-options :max_tokens 56))
 
 ;; java setting for scala
 (setq exec-path (cons "/Library/Java/JavaVirtualMachines/zulu-8.jdk/Contents/Home/bin/" exec-path))

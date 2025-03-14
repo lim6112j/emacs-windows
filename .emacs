@@ -716,7 +716,7 @@
     :init
     ;; if you want to enable auto suggestion.
     ;; Note that you can manually invoke completions without enable minuet-auto-suggestion-mode
-    ;;(add-hook 'prog-mode-hook #'minuet-auto-suggestion-mode)
+    (add-hook 'prog-mode-hook #'minuet-auto-suggestion-mode)
 
     :config
     (setq minuet-provider 'openai-fim-compatible)
@@ -732,7 +732,7 @@
 		(plist-put minuet-openai-fim-compatible-options :end-point "http://localhost:11434/v1/completions")
     (plist-put minuet-openai-fim-compatible-options :name "Ollama")
     (plist-put minuet-openai-fim-compatible-options :api-key "TERM")
-    (plist-put minuet-openai-fim-compatible-options :model "qwen2.5-coder:3b")
+    (plist-put minuet-openai-fim-compatible-options :model "qwen2.5-coder")
 		;; for api
 		;; (plist-put minuet-openai-fim-compatible-options
 		;; 					 '(:model "deepseek-chat"

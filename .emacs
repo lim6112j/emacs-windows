@@ -225,6 +225,10 @@
 	:ensure t
 	:defer t
 	:mode "\\.elm\\'")
+(use-package zig-mode
+	:ensure t
+	:defer t
+	:mode "\\.zig\\'")
 ;; Enable scala-mode and sbt-mode
 (use-package scala-mode
   :interpreter ("scala" . scala-mode)
@@ -442,6 +446,8 @@
 	(csharp-mode . company-mode)
 	(ocaml-ts-mode . eglot-ensure)
 	(ocaml-ts-mode . company-mode)
+	(zig-mode . eglot-ensure)
+	(zig-mode . company-mode)
   (eglot-managed-mode
    . (lambda () (setq eldoc-documentation-function
                       'eldoc-documentation-compose-eagerly))))

@@ -389,7 +389,7 @@
 	(add-to-list 'eglot-server-programs '(kotlin-ts-mode "/opt/homebrew/bin/kotlin-language-server"))
 	(add-to-list 'eglot-server-programs '(kotlin-mode "/opt/homebrew/bin/kotlin-language-server"))
 	(add-to-list 'eglot-server-programs '(csharp-mode . ("csharp-ls")))
-	(add-to-list 'eglot-server-programs '(zig-mode . ("/Users/byeongcheollim/workspace/zig/zls/zls-out/bin/zls")))
+	(add-to-list 'eglot-server-programs '(zig-mode . ("/Users/byeongcheollim/workspace/zig/zls/zig-out/bin/zls")))
   (setq eglot-events-buffer-size 0)
   (add-hook 'elixir-mode-hook 'eglot-ensure)
 	(add-to-list 'eglot-server-programs '(elixir-mode "/Users/byeongcheollim/workspace/elixir/elixir-ls-v0.22.1/language_server.sh"))

@@ -594,7 +594,14 @@
 (global-set-key (kbd "<s-M-return>") 'newline-above)
 (use-package company
 	:ensure t
+	:defer 0.1
 	:config
+	(global-company-mode t)
+	(setq-default
+	 company-idle-delay 0.05
+	 company-require-match nil
+	 company-minimum-prefix.length 0
+	 company-frontends '(company-preview-frontend))
 	(add-hook 'rust-mode-hook 'company-mode)
 	(add-hook 'typescript-mode-hook 'company-mode))
 

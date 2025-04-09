@@ -91,8 +91,8 @@
 													 ocaml-ts-mode org org-bullets org-roam
 													 org-roam-ui prettier-js projectile
 													 projectile-ripgrep restclient ripgrep
-													 rust-mode savehist sbt-mode scala-mode
-													 smartparens tree-sitter tree-sitter-langs
+													 savehist sbt-mode scala-mode smartparens
+													 tree-sitter tree-sitter-langs
 													 tree-sitter-mode treemacs typescript-mode
 													 use-package vertico web-mode which-key
 													 yaml-mode yasnippet zenburn-theme zig-mode))
@@ -242,6 +242,9 @@
 	:ensure t
 	:defer t
 	:mode "\\.ml\\'")
+(use-package rust-ts-mode
+	:defer t
+	:mode "\\.rs\\'")
 (use-package elm-mode
 	:ensure t
 	:defer t

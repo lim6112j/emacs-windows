@@ -64,21 +64,44 @@
  ;; If there is more than one, they won't work right.
  '(codeium/metadata/api_key "d991e117-bb51-4042-a7d6-0b0ef4a7bf34")
  '(custom-safe-themes
-	 '("f366d4bc6d14dcac2963d45df51956b2409a15b770ec2f6d730e73ce0ca5c8a7" default))
+	 '("f366d4bc6d14dcac2963d45df51956b2409a15b770ec2f6d730e73ce0ca5c8a7"
+		 default))
  '(fit-frame-to-buffer t)
  '(global-display-line-numbers-mode t)
  '(ns-alternate-modifier 'meta)
  '(ns-command-modifier 'super)
  '(org-agenda-files
-	 '("~/org/roam/20210822015618-study.org" "/Users/byeongcheollim/org/roam/20220917025026-ciel.org"))
+	 '("~/org/roam/20210822015618-study.org"
+		 "/Users/byeongcheollim/org/roam/20220917025026-ciel.org"))
  '(org-confirm-babel-evaluate nil)
  '(org-plantuml-jar-path
 	 "/Users/byeongcheollim/.config/emacs/.local/etc/plantuml.jar")
  '(org-todo-keywords '((sequence "TODO" "DONE" "PENDING" "CANCELED")))
  '(package-selected-packages
-	 '(zig-mode indent-bars dart-mode python-mode minuet ocaml-ts-mode copilot-chat diff-hl ob-ruby ob-kotlin ob-rust editorconfig elm-mode clojure-mode org-bullets add-node-modules-path web-mode sbt-mode scala-mode ob-mermaid mermaid-mode eglot-fsharp fsharp-mode restclient go-mode markdown-mode android-mode kotlin-mode yaml-mode eglot-java treemacs company tree-sitter-langs tree-sitter typescript-mode exec-path-from-shell which-key elixir-mode prettier-js jsonrpc general eldoc-box all haskell-mode projectile-ripgrep ripgrep tree-sitter-mode org-roam-ui org-roam org rust-mode yasnippet lsp savehist vertico projectile helm-lsp lsp-treemacs lsp-ivy help-lsp lsp-ui lsp-mode helm zenburn-theme use-package smartparens multiple-cursors))
+	 '(add-node-modules-path all android-mode clojure-mode company
+													 copilot-chat dart-mode diff-hl editorconfig
+													 eglot-fsharp eglot-java eldoc-box
+													 elixir-mode elm-mode exec-path-from-shell
+													 fsharp-mode general go-mode haskell-mode
+													 helm helm-lsp help-lsp indent-bars jsonrpc
+													 kotlin-mode lsp lsp-ivy lsp-mode
+													 lsp-treemacs lsp-ui markdown-mode
+													 mermaid-mode minuet multiple-cursors
+													 ob-kotlin ob-mermaid ob-ruby ob-rust
+													 ocaml-ts-mode org org-bullets org-roam
+													 org-roam-ui prettier-js projectile
+													 projectile-ripgrep restclient ripgrep
+													 rust-mode savehist sbt-mode scala-mode
+													 smartparens tree-sitter tree-sitter-langs
+													 tree-sitter-mode treemacs typescript-mode
+													 use-package vertico web-mode which-key
+													 yaml-mode yasnippet zenburn-theme zig-mode))
  '(projectile-globally-ignored-directories
-	 '("^\\.idea$" "^\\.vscode$" "^\\.ensime_cache$" "^\\.eunit$" "^\\.git$" "^\\.hg$" "^\\.fslckout$" "^_FOSSIL_$" "^\\.bzr$" "^_darcs$" "^\\.pijul$" "^\\.tox$" "^\\.svn$" "^\\.stack-work$" "^\\.ccls-cache$" "^\\.cache$" "^\\.clangd$" "^\\.sl$" "^\\.jj$" "^\\.dist$"))
+	 '("^\\.idea$" "^\\.vscode$" "^\\.ensime_cache$" "^\\.eunit$"
+		 "^\\.git$" "^\\.hg$" "^\\.fslckout$" "^_FOSSIL_$" "^\\.bzr$"
+		 "^_darcs$" "^\\.pijul$" "^\\.tox$" "^\\.svn$" "^\\.stack-work$"
+		 "^\\.ccls-cache$" "^\\.cache$" "^\\.clangd$" "^\\.sl$" "^\\.jj$"
+		 "^\\.dist$"))
  '(tab-width 2)
  '(tool-bar-mode nil)
  '(visible-bell t)
@@ -196,10 +219,11 @@
   ;; Enable recursive minibuffers
   (setq enable-recursive-minibuffers t))
 ;; vertico ends
-(use-package rust-mode
-	:ensure t)
 (require 'treesit)
 (add-to-list 'treesit-language-source-alist '(mermaid . ("https://github.com/fwcd/tree-sitter-kotlin")))
+(add-to-list 'treesit-language-source-alist '(python . ("https://github.com/tree-sitter/tree-sitter-python")))
+(add-to-list 'treesit-language-source-alist
+      '(rust . ("https://github.com/tree-sitter/tree-sitter-rust")))
 (add-to-list 'load-path "~/workspace/kotlin-ts-mode")
 (use-package kotlin-mode
 	:ensure t)
@@ -214,10 +238,6 @@
 	:ensure t
 	:defer t
 	:mode "\\.rb\\'")
-(use-package python-mode
-	:ensure t
-	:defer t
-	:mode "\\.py\\'")
 (use-package ocaml-ts-mode
 	:ensure t
 	:defer t
@@ -432,13 +452,13 @@
   (typescript-ts-mode . eglot-ensure)
   (tsx-ts-mode . eglot-ensure)
 	(typescript-mode . eglot-ensure)
-  (rust-mode . eglot-ensure)
+  (rust-ts-mode . eglot-ensure)
   (scala-mode . company-mode)
 	(scala-mode .eglot-ensure)
 	(ruby-ts-mode . eglot-ensure)
 	(ruby-ts-mode . company-mode)
-	(python-mode . eglot-ensure)
-	(python-mode . company-mode)
+	(python-ts-mode . eglot-ensure)
+	(python-ts-mode . company-mode)
 	(elm-mode . eglot-ensure)
 	(elm-mode . company-mode)
 	(dart-mode . company-mode)
@@ -602,7 +622,7 @@
 	 company-require-match nil
 	 company-minimum-prefix.length 0
 	 company-frontends '(company-preview-frontend))
-	(add-hook 'rust-mode-hook 'company-mode)
+	(add-hook 'rust-ts-mode-hook 'company-mode)
 	(add-hook 'typescript-mode-hook 'company-mode))
 
 (use-package restclient

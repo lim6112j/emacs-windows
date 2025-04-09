@@ -223,7 +223,7 @@
 (add-to-list 'treesit-language-source-alist '(mermaid . ("https://github.com/fwcd/tree-sitter-kotlin")))
 (add-to-list 'treesit-language-source-alist '(python . ("https://github.com/tree-sitter/tree-sitter-python")))
 (add-to-list 'treesit-language-source-alist
-      '(rust . ("https://github.com/tree-sitter/tree-sitter-rust")))
+      '(rust . ("https://github.com/tree-sitter/tree-sitter-rust" "v0.23.3")))
 (add-to-list 'load-path "~/workspace/kotlin-ts-mode")
 (use-package kotlin-mode
 	:ensure t)

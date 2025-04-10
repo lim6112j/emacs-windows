@@ -238,6 +238,9 @@
 	:ensure t
 	:defer t
 	:mode "\\.rb\\'")
+(use-package python-ts-mode
+	:defer t
+	:mode "\\.py\\'")
 (use-package ocaml-ts-mode
 	:ensure t
 	:defer t

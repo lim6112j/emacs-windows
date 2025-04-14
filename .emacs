@@ -63,7 +63,7 @@
  '(org-startup-with-inline-images t)
  '(org-todo-keywords '((sequence "TODO" "DONE" "PENDING" "DELETE")))
  '(package-selected-packages
-	 '(dart-mode anti-zenburn-theme catppuccin-theme diff-hl editorconfig ob-haskell restclient org-bullets eglot-java kotlin-mode ob-rust ob-kotlin elm-mode python-mode ob-mermaid clojure-ts-clojurescript-mode clojure-ts-mode psci kotlin-ts-mode nix-mode elixir-mode eglot typescript-mode prettier-js jsonrpc general treesit-auto tree-sitter-langs tree-sitter eldoc-box all haskell-mode projectile-ripgrep ripgrep tree-sitter-mode org-roam-ui org-roam org company rust-mode yasnippet lsp savehist vertico projectile helm-lsp lsp-treemacs lsp-ivy help-lsp lsp-ui lsp-mode helm zenburn-theme use-package smartparens multiple-cursors))
+	 '(transient aidermacs aider scala-mode dart-mode anti-zenburn-theme catppuccin-theme diff-hl editorconfig ob-haskell restclient org-bullets eglot-java kotlin-mode ob-rust ob-kotlin elm-mode python-mode ob-mermaid clojure-ts-clojurescript-mode clojure-ts-mode psci kotlin-ts-mode nix-mode elixir-mode eglot typescript-mode prettier-js jsonrpc general treesit-auto tree-sitter-langs tree-sitter eldoc-box all haskell-mode projectile-ripgrep ripgrep tree-sitter-mode org-roam-ui org-roam org company rust-mode yasnippet lsp savehist vertico projectile helm-lsp lsp-treemacs lsp-ivy help-lsp lsp-ui lsp-mode helm zenburn-theme use-package smartparens multiple-cursors))
  '(projectile-globally-ignored-directories
 	 '("^\\.idea$" "^\\.vscode$" "^\\.ensime_cache$" "^\\.eunit$" "^\\.git$" "^\\.hg$" "^\\.fslckout$" "^_FOSSIL_$" "^\\.bzr$" "^_darcs$" "^\\.pijul$" "^\\.tox$" "^\\.svn$" "^\\.stack-work$" "^\\.ccls-cache$" "^\\.cache$" "^\\.clangd$" "^\\.sl$" "^\\.jj$" "^\\.dist$"))
  '(tab-width 2)
@@ -651,3 +651,19 @@
 
 ;; java setting for scala
 (setq exec-path (cons "/usr/local/Cellar/openjdk@8/1.8.0-422/libexec/openjdk.jdk/Contents/Home/bin" exec-path))
+;; transient for aider
+(use-package transient
+	:ensure t)
+;; aider
+(use-package aidermacs
+	:ensure t
+  :bind (("C-c a" . aidermacs-transient-menu))
+  :config
+  ; Set API_KEY in .bashrc, that will automatically picked up by aider or in elisp
+  (setenv "ANTHROPIC_API_KEY" "sk")
+  ;; defun my-get-openrouter-api-key yourself elsewhere for security reasons
+  ;;(setenv "OPENROUTER_API_KEY" (my-get-openrouter-api-key))
+  :custom
+  ; See the Configuration section below
+  (aidermacs-use-architect-mode t)
+  (aidermacs-default-model "sonnet"))

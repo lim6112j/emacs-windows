@@ -842,7 +842,7 @@
 ;;     (setq codeium/document/text 'my-codeium/document/text)
 ;;     (setq codeium/document/cursor_offset 'my-codeium/document/cursor_offset))
 
-(package-vc-install '(aider :url "https://github.com/tninja/aider.el"))
+;;(package-vc-install '(aider :url "https://github.com/tninja/aider.el"))
 (use-package aider
   :config
   ;; For latest claude sonnet model
@@ -859,4 +859,4 @@
   ;; (setq aider-args `("--config" ,(expand-file-name "~/.aider.conf.yml")))
   ;; ;;
   ;; Optional: Set a key binding for the transient menu
-  (global-set-key (kbd "C-c a") 'aider-transient-menu))
+  (global-set-key (kbd "C-c b") 'aider-transient-menu))

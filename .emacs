@@ -846,9 +846,9 @@
 (use-package aider
   :config
   ;; For latest claude sonnet model
-  ;;(setq aider-args '("--model" "sonnet" "--no-auto-accept-architect"))
-  (setq aider-args '("--model" "haiku" "--no-auto-accept-architect"))
-  ;; (setenv "ANTHROPIC_API_KEY" anthropic-api-key)
+  (setq aider-args '("--model" "sonnet" "--no-auto-accept-architect" "--no-auto-commits"))
+  ;;(setq aider-args '("--model" "haiku" "--no-auto-accept-architect" "--no-auto-commits"))
+  (setenv "ANTHROPIC_API_KEY" "sk")
   ;; Or chatgpt model
   ;; (setq aider-args '("--model" "o3-mini"))
   ;; (setenv "OPENAI_API_KEY" <your-openai-api-key>)

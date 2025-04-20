@@ -77,7 +77,21 @@
  '(org-plantuml-jar-path
 	 "/Users/byeongcheollim/.config/emacs/.local/etc/plantuml.jar")
  '(org-todo-keywords '((sequence "TODO" "DONE" "PENDING" "CANCELED")))
- '(package-selected-packages nil)
+ '(package-selected-packages
+	 '(add-node-modules-path aider android-mode clojure-mode company
+													 copilot-chat dart-mode diff-hl editorconfig
+													 eglot-fsharp eglot-java eldoc-box
+													 elixir-mode elm-mode exec-path-from-shell
+													 go-mode haskell-mode indent-bars
+													 kotlin-mode mermaid-mode minuet
+													 multiple-cursors ob-kotlin ob-mermaid
+													 ob-rust ocaml-ts-mode org-bullets
+													 org-roam-ui paredit prettier-js
+													 projectile-ripgrep restclient sbt-mode
+													 scala-mode smartparens tree-sitter-langs
+													 treemacs typescript-mode vertico web-mode
+													 wgrep which-key yaml-mode zenburn-theme
+													 zig-mode))
  '(projectile-globally-ignored-directories
 	 '("^\\.idea$" "^\\.vscode$" "^\\.ensime_cache$" "^\\.eunit$"
 		 "^\\.git$" "^\\.hg$" "^\\.fslckout$" "^_FOSSIL_$" "^\\.bzr$"
@@ -843,12 +857,13 @@
 ;;     (setq codeium/document/cursor_offset 'my-codeium/document/cursor_offset))
 
 ;;(package-vc-install '(aider :url "https://github.com/tninja/aider.el"))
+(setenv "OPENROUTER_API_KEY" "")
 (use-package aider
   :config
   ;; For latest claude sonnet model
   (setq aider-args '("--model" "sonnet" "--no-auto-accept-architect" "--no-auto-commits"))
   ;;(setq aider-args '("--model" "haiku" "--no-auto-accept-architect" "--no-auto-commits"))
-  (setenv "ANTHROPIC_API_KEY" "sk")
+  (setenv "ANTHROPIC_API_KEY" "")
   ;; Or chatgpt model
   ;; (setq aider-args '("--model" "o3-mini"))
   ;; (setenv "OPENAI_API_KEY" <your-openai-api-key>)
@@ -860,3 +875,5 @@
   ;; ;;
   ;; Optional: Set a key binding for the transient menu
   (global-set-key (kbd "C-c b") 'aider-transient-menu))
+(use-package wgrep
+	:ensure t)

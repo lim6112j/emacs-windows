@@ -15,10 +15,12 @@
 (setq package-install-upgrade-built-in t)
 (add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/") t)
 (add-to-list 'package-archives '("melpa-stable" . "https://stable.melpa.org/packages/") t)
-(use-package zenburn-theme
-  :ensure zenburn-theme)
-(load-theme 'zenburn t)
-;;(load-theme 'catppuccin t)
+;;(use-package zenburn-theme
+;;  :ensure zenburn-theme)
+;;(load-theme 'zenburn t)
+(use-package catppuccin-theme
+	:ensure t)
+(load-theme 'catppuccin t)
 ;;(load-theme 'anti-zenburn t)
 ;; multiple cursors
 (use-package multiple-cursors
@@ -296,6 +298,10 @@
 	:mode "\\.scala\\'")
 (use-package eglot-java
 	:ensure t)
+(use-package purescript-mode
+	:ensure t
+	:defer t
+	:mode "\\.purs\\'")
 (use-package eglot :ensure nil :defer t
   :custom-face
   ;; personal preference here; I hate it when packages
@@ -375,6 +381,7 @@
 	(scala-mode . eglot-ensure)
 	(dart-mode . eglot-ensure)
 	(dart-mode . company-mode)
+	(purescript-mode . eglot-ensure)
   (eglot-managed-mode
    . (lambda () (setq eldoc-documentation-function
                       'eldoc-documentation-compose-eagerly))))
@@ -648,9 +655,15 @@
     ;; Not required when defining minuet-active-mode-map without evil state.
     ;; (add-hook 'minuet-active-mode-hook #'evil-normalize-keymaps))
     (minuet-set-optional-options minuet-openai-fim-compatible-options :max_tokens 256))
+(setenv "OPENAI_API_KEYl" "")
+  ; Set API_KEY in .bashrc, that will automatically picked up by aider or in elisp
+(setenv "ANTHROPIC_API_KEY" "")
+(setenv "GEMINI_API_KEY" "")
 
 ;; java setting for scala
-(setq exec-path (cons "/usr/local/Cellar/openjdk@8/1.8.0-422/libexec/openjdk.jdk/Contents/Home/bin" exec-path))
+;;(setq exec-path (cons "/usr/local/Cellar/openjdk@8/1.8.0-422/libexec/openjdk.jdk/Contents/Home/bin" exec-path))
+;; java setting for closure script
+(setq exec-path (cons "/usr/local/Cellar/openjdk@21/21.0.6/libexec/openjdk.jdk/Contents/Home/bin" exec-path))
 ;; transient for aider
 (use-package transient
 	:ensure t)
@@ -659,8 +672,6 @@
 	:ensure t
   :bind (("C-c a" . aidermacs-transient-menu))
   :config
-  ; Set API_KEY in .bashrc, that will automatically picked up by aider or in elisp
-  (setenv "ANTHROPIC_API_KEY" "sk")
   ;; defun my-get-openrouter-api-key yourself elsewhere for security reasons
   ;;(setenv "OPENROUTER_API_KEY" (my-get-openrouter-api-key))
   :custom

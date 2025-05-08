@@ -65,7 +65,7 @@
  '(org-startup-with-inline-images t)
  '(org-todo-keywords '((sequence "TODO" "DONE" "PENDING" "DELETE")))
  '(package-selected-packages
-	 '(transient aidermacs aider scala-mode dart-mode anti-zenburn-theme catppuccin-theme diff-hl editorconfig ob-haskell restclient org-bullets eglot-java kotlin-mode ob-rust ob-kotlin elm-mode python-mode ob-mermaid clojure-ts-clojurescript-mode clojure-ts-mode psci kotlin-ts-mode nix-mode elixir-mode eglot typescript-mode prettier-js jsonrpc general treesit-auto tree-sitter-langs tree-sitter eldoc-box all haskell-mode projectile-ripgrep ripgrep tree-sitter-mode org-roam-ui org-roam org company rust-mode yasnippet lsp savehist vertico projectile helm-lsp lsp-treemacs lsp-ivy help-lsp lsp-ui lsp-mode helm zenburn-theme use-package smartparens multiple-cursors))
+	 '(gptel transient aidermacs aider scala-mode dart-mode anti-zenburn-theme catppuccin-theme diff-hl editorconfig ob-haskell restclient org-bullets eglot-java kotlin-mode ob-rust ob-kotlin elm-mode python-mode ob-mermaid clojure-ts-clojurescript-mode clojure-ts-mode psci kotlin-ts-mode nix-mode elixir-mode eglot typescript-mode prettier-js jsonrpc general treesit-auto tree-sitter-langs tree-sitter eldoc-box all haskell-mode projectile-ripgrep ripgrep tree-sitter-mode org-roam-ui org-roam org company rust-mode yasnippet lsp savehist vertico projectile helm-lsp lsp-treemacs lsp-ivy help-lsp lsp-ui lsp-mode helm zenburn-theme use-package smartparens multiple-cursors))
  '(projectile-globally-ignored-directories
 	 '("^\\.idea$" "^\\.vscode$" "^\\.ensime_cache$" "^\\.eunit$" "^\\.git$" "^\\.hg$" "^\\.fslckout$" "^_FOSSIL_$" "^\\.bzr$" "^_darcs$" "^\\.pijul$" "^\\.tox$" "^\\.svn$" "^\\.stack-work$" "^\\.ccls-cache$" "^\\.cache$" "^\\.clangd$" "^\\.sl$" "^\\.jj$" "^\\.dist$"))
  '(tab-width 2)
@@ -535,7 +535,7 @@
 ;;      (setq exec-path (cons "/opt/homebrew/opt/erlang/bin" exec-path))
 ;;      (require 'erlang-start)
 ;; for intel mac
-(setq load-path (cons  "/usr/local/opt/erlang/lib/erlang/lib/tools-4.1/emacs" load-path))
+(setq load-path (cons  "/usr/local/opt/erlang/lib/erlang/lib/tools-4.1.1/emacs" load-path))
 (setq erlang-root-dir "/usr/local/opt/erlang/bin")
 (setq exec-path (cons "/usr/local/opt/erlang/bin" exec-path))
 (require 'erlang-start)
@@ -660,10 +660,10 @@
 (setenv "ANTHROPIC_API_KEY" "")
 (setenv "GEMINI_API_KEY" "")
 
-;; java setting for scala
-;;(setq exec-path (cons "/usr/local/Cellar/openjdk@8/1.8.0-422/libexec/openjdk.jdk/Contents/Home/bin" exec-path))
+;; for scala and java
+(setq exec-path (cons "/usr/local/Cellar/openjdk@8/1.8.0-422/libexec/openjdk.jdk/Contents/Home/bin" exec-path))
 ;; java setting for closure script
-(setq exec-path (cons "/usr/local/Cellar/openjdk@21/21.0.6/libexec/openjdk.jdk/Contents/Home/bin" exec-path))
+;;(setq exec-path (cons "/usr/local/Cellar/openjdk@21/21.0.6/libexec/openjdk.jdk/Contents/Home/bin" exec-path))
 ;; transient for aider
 (use-package transient
 	:ensure t)
@@ -678,3 +678,33 @@
   ; See the Configuration section below
   (aidermacs-use-architect-mode t)
   (aidermacs-default-model "sonnet"))
+;; Add GPTel configuration
+
+;; gptel
+(use-package gptel
+	:ensure t)
+;; OPTIONAL configuration
+;; (setq
+;;  gptel-model 'gemini-2.5-pro-exp-03-25
+;;  gptel-backend (gptel-make-gemini "Gemini"
+;;                  :key "AIzaSyDHduO1qxGhllvrBm16fSKIGN93JSnj-mc"
+;;                  :stream t))
+;; :key can be a function that returns the API key.
+(gptel-make-gemini "Gemini" :key "" :stream t)
+;; OpenRouter offers an OpenAI compatible API
+(gptel-make-openai "OpenRouter"               ;Any name you want
+  :host "openrouter.ai"
+  :endpoint "/api/v1/chat/completions"
+  :stream t
+  :key ""                   ;can be a function that returns the key
+  :models '(x-ai/grok-3-mini-beta
+						openai/gpt-3.5-turbo
+						openai/gpt-4.1
+						deepseek/deepseek-chat
+            google/gemini-pro))
+
+(gptel-make-deepseek "DeepSeek"       ;Any name you want
+  :stream t                           ;for streaming responses
+  :key "")               ;can be a function that returns the key
+(global-set-key (kbd "C-c g") 'gptel-menu)
+

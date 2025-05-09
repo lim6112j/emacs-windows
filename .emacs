@@ -3,6 +3,7 @@
 (menu-bar-mode 1)
 (tool-bar-mode 0)
 (scroll-bar-mode -1)
+(setq frame-title-format "%f - %b")
 ;; mac alt-x weird char input
 (setq mac-option-modifier 'meta)
 (setq mac-command-modifier 'super)
@@ -29,6 +30,9 @@
 (use-package zenburn-theme
   :ensure t)
 (load-theme 'zenburn t)
+(use-package catppuccin-theme
+  :ensure t)
+(load-theme 'catppuccin t)
 ;; multiple cursors
 (use-package multiple-cursors
   :ensure multiple-cursors
@@ -78,20 +82,20 @@
 	 "/Users/byeongcheollim/.config/emacs/.local/etc/plantuml.jar")
  '(org-todo-keywords '((sequence "TODO" "DONE" "PENDING" "CANCELED")))
  '(package-selected-packages
-	 '(add-node-modules-path aider android-mode clojure-mode company
-													 copilot-chat dart-mode diff-hl editorconfig
-													 eglot-fsharp eglot-java eldoc-box
-													 elixir-mode elm-mode exec-path-from-shell
-													 go-mode haskell-mode indent-bars
-													 kotlin-mode mermaid-mode minuet
-													 multiple-cursors ob-kotlin ob-mermaid
-													 ob-rust ocaml-ts-mode org-bullets
-													 org-roam-ui paredit prettier-js
-													 projectile-ripgrep restclient sbt-mode
-													 scala-mode smartparens tree-sitter-langs
-													 treemacs typescript-mode vertico web-mode
-													 wgrep which-key yaml-mode zenburn-theme
-													 zig-mode))
+	 '(add-node-modules-path aider android-mode catppuccin-theme
+													 clojure-mode company copilot-chat dart-mode
+													 diff-hl editorconfig eglot-fsharp
+													 eglot-java eldoc-box elixir-mode elm-mode
+													 exec-path-from-shell go-mode gptel
+													 haskell-mode indent-bars kotlin-mode
+													 mermaid-mode minuet multiple-cursors
+													 ob-kotlin ob-mermaid ob-rust ocaml-ts-mode
+													 org-bullets org-roam-ui ox-pandoc paredit
+													 prettier-js projectile-ripgrep restclient
+													 sbt-mode scala-mode smartparens
+													 tree-sitter-langs treemacs typescript-mode
+													 vertico web-mode wgrep which-key yaml-mode
+													 zenburn-theme zig-mode))
  '(projectile-globally-ignored-directories
 	 '("^\\.idea$" "^\\.vscode$" "^\\.ensime_cache$" "^\\.eunit$"
 		 "^\\.git$" "^\\.hg$" "^\\.fslckout$" "^_FOSSIL_$" "^\\.bzr$"
@@ -766,10 +770,10 @@
     ;; (plist-put minuet-openai-fim-compatible-options :api-key "TERM")
     ;; (plist-put minuet-openai-fim-compatible-options :model "deepseek-coder-v2")
 		;; for qwen2.5-coder
-		(plist-put minuet-openai-fim-compatible-options :end-point "http://localhost:11434/v1/completions")
-    (plist-put minuet-openai-fim-compatible-options :name "Ollama")
-    (plist-put minuet-openai-fim-compatible-options :api-key "TERM")
-    (plist-put minuet-openai-fim-compatible-options :model "qwen2.5-coder")
+		;; (plist-put minuet-openai-fim-compatible-options :end-point "http://localhost:11434/v1/completions")
+    ;; (plist-put minuet-openai-fim-compatible-options :name "Ollama")
+    ;; (plist-put minuet-openai-fim-compatible-options :api-key "TERM")
+    ;; (plist-put minuet-openai-fim-compatible-options :model "qwen2.5-coder")
 		;; for api
 		;; (plist-put minuet-openai-fim-compatible-options
 		;; 					 '(:model "deepseek-chat"
@@ -784,8 +788,24 @@
     ;; Required when defining minuet-ative-mode-map in insert/normal states.
     ;; Not required when defining minuet-active-mode-map without evil state.
     ;;(add-hook 'minuet-active-mode-hook #'evil-normalize-keymaps)
-
-    (minuet-set-optional-options minuet-openai-fim-compatible-options :max_tokens 56))
+		(defvar minuet-openai-compatible-options
+			`(:end-point "https://openrouter.ai/api/v1/chat/completions"
+									 :api-key "OPENROUTER_API_KEY"
+									 :model "qwen/qwen2.5-32b-instruct"
+									 :system
+									 (:template minuet-default-system-template
+															:prompt minuet-default-prompt
+															:guidelines minuet-default-guidelines
+															:n-completions-template minuet-default-n-completion-template)
+									 :fewshots minuet-default-fewshots
+									 :chat-input
+									 (:template minuet-default-chat-input-template
+															:language-and-tab minuet--default-chat-input-language-and-tab-function
+															:context-before-cursor minuet--default-chat-input-before-cursor-function
+															:context-after-cursor minuet--default-chat-input-after-cursor-function)
+									 :optional nil)
+			"Config options for Minuet OpenAI compatible provider.")
+		(minuet-set-optional-options minuet-openai-fim-compatible-options :max_tokens 8000))
 
 ;; java setting for scala
 (setq exec-path (cons "/Library/Java/JavaVirtualMachines/zulu-8.jdk/Contents/Home/bin/" exec-path))
@@ -858,6 +878,9 @@
 
 ;;(package-vc-install '(aider :url "https://github.com/tninja/aider.el"))
 (setenv "OPENROUTER_API_KEY" "")
+(setenv "GEMINI_API_KEY" "")
+(setenv "DEEPSEEK_API_KEY" "")
+(setenv "OLLAMA_API_BASE" "http://localhost:11434")
 (use-package aider
   :config
   ;; For latest claude sonnet model
@@ -868,12 +891,44 @@
   ;; (setq aider-args '("--model" "o3-mini"))
   ;; (setenv "OPENAI_API_KEY" <your-openai-api-key>)
   ;; Or gemini model
-  ;; (setq aider-args '("--model" "gemini-exp"))
+  (setq aider-args '("--model" "gemini-exp"))
   ;; (setenv "GEMINI_API_KEY" <your-gemini-api-key>)
   ;; Or use your personal config file
   ;; (setq aider-args `("--config" ,(expand-file-name "~/.aider.conf.yml")))
   ;; ;;
   ;; Optional: Set a key binding for the transient menu
-  (global-set-key (kbd "C-c b") 'aider-transient-menu))
+  (global-set-key (kbd "C-c a") 'aider-transient-menu))
 (use-package wgrep
 	:ensure t)
+;; gptel
+(use-package gptel
+	:ensure t)
+;; OPTIONAL configuration
+;; (setq
+;;  gptel-model 'gemini-2.5-pro-exp-03-25
+;;  gptel-backend (gptel-make-gemini "Gemini"
+;;                  :key "AIzaSyDHduO1qxGhllvrBm16fSKIGN93JSnj-mc"
+;;                  :stream t))
+;; :key can be a function that returns the API key.
+(gptel-make-gemini "Gemini" :key "" :stream t)
+;; OpenRouter offers an OpenAI compatible API
+(gptel-make-openai "OpenRouter"               ;Any name you want
+  :host "openrouter.ai"
+  :endpoint "/api/v1/chat/completions"
+  :stream t
+  :key ""                   ;can be a function that returns the key
+  :models '(x-ai/grok-3-mini-beta
+						openai/gpt-4o-mini
+						openai/gpt-4.1
+						deepseek/deepseek-reasoner
+						google/gemini-2.5-pro-exp-03-25))
+
+(gptel-make-deepseek "DeepSeek"       ;Any name you want
+  :stream t                           ;for streaming responses
+  :key "")               ;can be a function that returns the key
+(global-set-key (kbd "C-c g") 'gptel-menu)
+;; for better markdown export
+(use-package ox-pandoc
+	:ensure t)
+(load-file "")
+start

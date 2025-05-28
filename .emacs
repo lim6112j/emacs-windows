@@ -27,12 +27,32 @@
 (setq package-install-upgrade-built-in t)
 (add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/") t)
 (add-to-list 'package-archives '("melpa-stable" . "https://stable.melpa.org/packages/") t)
-(use-package zenburn-theme
-  :ensure t)
-(load-theme 'zenburn t)
-(use-package catppuccin-theme
-  :ensure t)
-(load-theme 'catppuccin t)
+;; (use-package zenburn-theme
+;;   :ensure t)
+;; (load-theme 'zenburn t)
+;; (use-package catppuccin-theme
+;;   :ensure t)
+;; (load-theme 'catppuccin t)
+(use-package all-the-icons
+	:ensure t
+  :if (display-graphic-p))
+(use-package doom-themes
+  :ensure t
+  :config
+  ;; Global settings (defaults)
+  (setq doom-themes-enable-bold t    ; if nil, bold is universally disabled
+        doom-themes-enable-italic t) ; if nil, italics is universally disabled
+  (load-theme 'doom-one t)
+
+  ;; Enable flashing mode-line on errors
+  (doom-themes-visual-bell-config)
+  ;; Enable custom neotree theme (nerd-icons must be installed!)
+  (doom-themes-neotree-config)
+  ;; or for treemacs users
+  (setq doom-themes-treemacs-theme "doom-atom") ; use "doom-colors" for less minimal icon theme
+  (doom-themes-treemacs-config)
+  ;; Corrects (and improves) org-mode's native fontification.
+  (doom-themes-org-config))
 ;; multiple cursors
 (use-package multiple-cursors
   :ensure multiple-cursors
@@ -66,42 +86,23 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(codeium/metadata/api_key "d991e117-bb51-4042-a7d6-0b0ef4a7bf34")
+ '(codeium/metadata/api_key "")
  '(custom-safe-themes
-	 '("f366d4bc6d14dcac2963d45df51956b2409a15b770ec2f6d730e73ce0ca5c8a7"
-		 default))
+	 '("f366d4bc6d14dcac2963d45df51956b2409a15b770ec2f6d730e73ce0ca5c8a7" default))
  '(fit-frame-to-buffer t)
  '(global-display-line-numbers-mode t)
  '(ns-alternate-modifier 'meta)
  '(ns-command-modifier 'super)
  '(org-agenda-files
-	 '("~/org/roam/20210822015618-study.org"
-		 "/Users/byeongcheollim/org/roam/20220917025026-ciel.org"))
+	 '("~/org/roam/20210822015618-study.org" "/Users/byeongcheollim/org/roam/20220917025026-ciel.org"))
  '(org-confirm-babel-evaluate nil)
  '(org-plantuml-jar-path
 	 "/Users/byeongcheollim/.config/emacs/.local/etc/plantuml.jar")
  '(org-todo-keywords '((sequence "TODO" "DONE" "PENDING" "CANCELED")))
  '(package-selected-packages
-	 '(add-node-modules-path aider android-mode catppuccin-theme
-													 clojure-mode company copilot-chat dart-mode
-													 diff-hl editorconfig eglot-fsharp
-													 eglot-java eldoc-box elixir-mode elm-mode
-													 exec-path-from-shell go-mode gptel
-													 haskell-mode indent-bars kotlin-mode
-													 mermaid-mode minuet multiple-cursors
-													 ob-kotlin ob-mermaid ob-rust ocaml-ts-mode
-													 org-bullets org-roam-ui ox-pandoc paredit
-													 prettier-js projectile-ripgrep restclient
-													 sbt-mode scala-mode smartparens
-													 tree-sitter-langs treemacs typescript-mode
-													 vertico web-mode wgrep which-key yaml-mode
-													 zenburn-theme zig-mode))
+	 '(aider add-node-modules-path all-the-icons android-mode catppuccin-theme clojure-mode company copilot-chat dart-mode diff-hl doom-themes editorconfig eglot-fsharp eglot-java eldoc-box elixir-mode elm-mode exec-path-from-shell go-mode gptel haskell-mode indent-bars kotlin-mode mermaid-mode minuet multiple-cursors ob-kotlin ob-mermaid ob-rust ocaml-ts-mode org-bullets org-roam-ui ox-pandoc paredit prettier-js projectile-ripgrep restclient sbt-mode scala-mode smartparens tree-sitter-langs treemacs typescript-mode vertico web-mode wgrep which-key yaml-mode zenburn-theme zig-mode))
  '(projectile-globally-ignored-directories
-	 '("^\\.idea$" "^\\.vscode$" "^\\.ensime_cache$" "^\\.eunit$"
-		 "^\\.git$" "^\\.hg$" "^\\.fslckout$" "^_FOSSIL_$" "^\\.bzr$"
-		 "^_darcs$" "^\\.pijul$" "^\\.tox$" "^\\.svn$" "^\\.stack-work$"
-		 "^\\.ccls-cache$" "^\\.cache$" "^\\.clangd$" "^\\.sl$" "^\\.jj$"
-		 "^\\.dist$"))
+	 '("^\\.idea$" "^\\.vscode$" "^\\.ensime_cache$" "^\\.eunit$" "^\\.git$" "^\\.hg$" "^\\.fslckout$" "^_FOSSIL_$" "^\\.bzr$" "^_darcs$" "^\\.pijul$" "^\\.tox$" "^\\.svn$" "^\\.stack-work$" "^\\.ccls-cache$" "^\\.cache$" "^\\.clangd$" "^\\.sl$" "^\\.jj$" "^\\.dist$"))
  '(tab-width 2)
  '(tool-bar-mode nil)
  '(visible-bell t)
@@ -622,7 +623,7 @@
 	:ensure t
 	:defer 0.1
 	:config
-	(global-company-mode t)
+	;;(global-company-mode t)
 	(setq-default
 	 company-idle-delay 0.05
 	 company-require-match nil
@@ -686,13 +687,13 @@
 	:ensure t
 	:defer t
   :init
-  (setq mermaid-mmdc-location "/Users/byeongcheollim/.nvm/versions/node/v18.7.0/bin/mmdc")
+  (setq mermaid-mmdc-location "/opt/homebrew/bin/mmdc")
   )
 (use-package ob-mermaid
 	:ensure t
 	:defer t
   :init
-  (setq ob-mermaid-cli-path "/Users/byeongcheollim/.nvm/versions/node/v18.7.0/bin/mmdc")
+  (setq ob-mermaid-cli-path "/opt/homebrew/bin/mmdc")
   )
 (use-package org-bullets
 	:ensure t
@@ -791,7 +792,7 @@
 		(defvar minuet-openai-compatible-options
 			`(:end-point "https://openrouter.ai/api/v1/chat/completions"
 									 :api-key "OPENROUTER_API_KEY"
-									 :model "qwen/qwen2.5-32b-instruct"
+									 :model "deepseek/deepseek-r1:free"
 									 :system
 									 (:template minuet-default-system-template
 															:prompt minuet-default-prompt
@@ -877,51 +878,74 @@
 ;;     (setq codeium/document/cursor_offset 'my-codeium/document/cursor_offset))
 
 ;;(package-vc-install '(aider :url "https://github.com/tninja/aider.el"))
+;; personal
+;;(setenv "OPENROUTER_API_KEY" "")
+;; ciel account
 (setenv "OPENROUTER_API_KEY" "")
 (setenv "GEMINI_API_KEY" "")
 (setenv "DEEPSEEK_API_KEY" "")
 (setenv "OLLAMA_API_BASE" "http://localhost:11434")
+(setenv "ANTHROPIC_API_KEY" "")
+;; currently aider-transient-menu error while eglot
 (use-package aider
+	:ensure t
   :config
   ;; For latest claude sonnet model
-  (setq aider-args '("--model" "sonnet" "--no-auto-accept-architect" "--no-auto-commits"))
+  ;;(setq aider-args '("--model" "sonnet" "--no-auto-accept-architect" "--no-auto-commits"))
   ;;(setq aider-args '("--model" "haiku" "--no-auto-accept-architect" "--no-auto-commits"))
-  (setenv "ANTHROPIC_API_KEY" "")
   ;; Or chatgpt model
   ;; (setq aider-args '("--model" "o3-mini"))
   ;; (setenv "OPENAI_API_KEY" <your-openai-api-key>)
   ;; Or gemini model
-  (setq aider-args '("--model" "gemini-exp"))
+  (setq aider-args '("--model" "openrouter/google/gemini-2.5-pro-preview" "--no-auto-accept-architect" "--no-auto-commits"))
   ;; (setenv "GEMINI_API_KEY" <your-gemini-api-key>)
   ;; Or use your personal config file
   ;; (setq aider-args `("--config" ,(expand-file-name "~/.aider.conf.yml")))
   ;; ;;
   ;; Optional: Set a key binding for the transient menu
-  (global-set-key (kbd "C-c a") 'aider-transient-menu))
+  (global-set-key (kbd "C-c b") 'aider-transient-menu))
 (use-package wgrep
 	:ensure t)
 ;; gptel
 (use-package gptel
 	:ensure t)
+;; Configure curl for gptel and other packages
+(setq gptel-use-curl nil)  ; Enable curl usage
+(setq gptel-log-level 'debug)
+
+(let ((homebrew-curl-path "/opt/homebrew/opt/curl/bin"))
+  (when (file-exists-p homebrew-curl-path)
+    (setenv "PATH" (concat homebrew-curl-path ":" (getenv "PATH")))
+    (push homebrew-curl-path exec-path)
+    (setq curl-program (expand-file-name "curl" homebrew-curl-path))
+    ;; Verify curl configuration
+    (when-let ((curl-path (executable-find "curl")))
+      (message "Using curl from: %s" curl-path))))
+
+;; Verify curl configuration function
+(defun which-curl ()
+  "Display which curl is being used by Emacs."
+  (interactive)
+  (let ((curl-path (executable-find "curl")))
+    (message "Curl program: %s" (or curl-path "not found"))))
+
+;; Run verification at startup
+(which-curl)
 ;; OPTIONAL configuration
-;; (setq
-;;  gptel-model 'gemini-2.5-pro-exp-03-25
-;;  gptel-backend (gptel-make-gemini "Gemini"
-;;                  :key "AIzaSyDHduO1qxGhllvrBm16fSKIGN93JSnj-mc"
-;;                  :stream t))
+(setq
+ gptel-model 'google/gemini-2.5-pro-preview
+ gptel-backend (gptel-make-openai "OpenRouter"
+								 :host "openrouter.ai"
+								 :endpoint "/api/v1/chat/completion"
+                 :key ""
+								 :models '(x-ai/grok-3-mini-beta
+													 openai/gpt-4o-mini
+													 openai/gpt-4.1
+													 deepseek/deepseek-reasoner
+													 google/gemini-2.5-pro-preview)
+                 :stream t))
 ;; :key can be a function that returns the API key.
 (gptel-make-gemini "Gemini" :key "" :stream t)
-;; OpenRouter offers an OpenAI compatible API
-(gptel-make-openai "OpenRouter"               ;Any name you want
-  :host "openrouter.ai"
-  :endpoint "/api/v1/chat/completions"
-  :stream t
-  :key ""                   ;can be a function that returns the key
-  :models '(x-ai/grok-3-mini-beta
-						openai/gpt-4o-mini
-						openai/gpt-4.1
-						deepseek/deepseek-reasoner
-						google/gemini-2.5-pro-exp-03-25))
 
 (gptel-make-deepseek "DeepSeek"       ;Any name you want
   :stream t                           ;for streaming responses
@@ -930,5 +954,4 @@
 ;; for better markdown export
 (use-package ox-pandoc
 	:ensure t)
-(load-file "")
-start
+(load-file "/Users/byeongcheollim/.emacs.d/lisp/org-capture-config.el")

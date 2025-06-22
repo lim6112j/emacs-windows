@@ -18,11 +18,32 @@
 ;;(use-package zenburn-theme
 ;;  :ensure zenburn-theme)
 ;;(load-theme 'zenburn t)
-(use-package catppuccin-theme
-	:ensure t)
-(load-theme 'catppuccin t)
+;; (use-package catppuccin-theme
+;; 	:ensure t)
+;; (load-theme 'catppuccin t)
 ;;(load-theme 'anti-zenburn t)
 ;; multiple cursors
+(use-package all-the-icons
+	:ensure t
+  :if (display-graphic-p))
+
+(use-package doom-themes
+  :ensure t
+  :config
+  ;; Global settings (defaults)
+  (setq doom-themes-enable-bold t    ; if nil, bold is universally disabled
+        doom-themes-enable-italic t) ; if nil, italics is universally disabled
+  (load-theme 'doom-one t)
+
+  ;; Enable flashing mode-line on errors
+  (doom-themes-visual-bell-config)
+  ;; Enable custom neotree theme (nerd-icons must be installed!)
+  (doom-themes-neotree-config)
+  ;; or for treemacs users
+  (setq doom-themes-treemacs-theme "doom-atom") ; use "doom-colors" for less minimal icon theme
+  (doom-themes-treemacs-config)
+  ;; Corrects (and improves) org-mode's native fontification.
+  (doom-themes-org-config))
 (use-package multiple-cursors
   :ensure multiple-cursors
   :config
@@ -65,7 +86,7 @@
  '(org-startup-with-inline-images t)
  '(org-todo-keywords '((sequence "TODO" "DONE" "PENDING" "DELETE")))
  '(package-selected-packages
-	 '(gptel transient aidermacs aider scala-mode dart-mode anti-zenburn-theme catppuccin-theme diff-hl editorconfig ob-haskell restclient org-bullets eglot-java kotlin-mode ob-rust ob-kotlin elm-mode python-mode ob-mermaid clojure-ts-clojurescript-mode clojure-ts-mode psci kotlin-ts-mode nix-mode elixir-mode eglot typescript-mode prettier-js jsonrpc general treesit-auto tree-sitter-langs tree-sitter eldoc-box all haskell-mode projectile-ripgrep ripgrep tree-sitter-mode org-roam-ui org-roam org company rust-mode yasnippet lsp savehist vertico projectile helm-lsp lsp-treemacs lsp-ivy help-lsp lsp-ui lsp-mode helm zenburn-theme use-package smartparens multiple-cursors))
+	 '(all-the-icons doom-themes gptel transient aidermacs aider scala-mode dart-mode anti-zenburn-theme catppuccin-theme diff-hl editorconfig ob-haskell restclient org-bullets eglot-java kotlin-mode ob-rust ob-kotlin elm-mode python-mode ob-mermaid clojure-ts-clojurescript-mode clojure-ts-mode psci kotlin-ts-mode nix-mode elixir-mode eglot typescript-mode prettier-js jsonrpc general treesit-auto tree-sitter-langs tree-sitter eldoc-box all haskell-mode projectile-ripgrep ripgrep tree-sitter-mode org-roam-ui org-roam org company rust-mode yasnippet lsp savehist vertico projectile helm-lsp lsp-treemacs lsp-ivy help-lsp lsp-ui lsp-mode helm zenburn-theme use-package smartparens multiple-cursors))
  '(projectile-globally-ignored-directories
 	 '("^\\.idea$" "^\\.vscode$" "^\\.ensime_cache$" "^\\.eunit$" "^\\.git$" "^\\.hg$" "^\\.fslckout$" "^_FOSSIL_$" "^\\.bzr$" "^_darcs$" "^\\.pijul$" "^\\.tox$" "^\\.svn$" "^\\.stack-work$" "^\\.ccls-cache$" "^\\.cache$" "^\\.clangd$" "^\\.sl$" "^\\.jj$" "^\\.dist$"))
  '(tab-width 2)
@@ -655,22 +676,29 @@
     ;; Not required when defining minuet-active-mode-map without evil state.
     ;; (add-hook 'minuet-active-mode-hook #'evil-normalize-keymaps))
     (minuet-set-optional-options minuet-openai-fim-compatible-options :max_tokens 256))
-(setenv "OPENAI_API_KEYl" "")
+;; api keys
+(setenv "OPENAI_API_KEY" "")
   ; Set API_KEY in .bashrc, that will automatically picked up by aider or in elisp
 (setenv "ANTHROPIC_API_KEY" "")
 (setenv "GEMINI_API_KEY" "")
-
+(setenv "OLLAMA_API_BASE" "http://127.0.0.1:11434")
+;; openrouter ciel key
+;;(setenv "OPENROUTER_API_KEY" "")
+;; openrouter personal key
+(setenv "OPENROUTER_API_KEY" "")
+(setenv "DEEPSEEK_API_KEY" "")
+(setenv "GEMINI_API_KEY" "")
 ;; for scala and java
-(setq exec-path (cons "/usr/local/Cellar/openjdk@8/1.8.0-422/libexec/openjdk.jdk/Contents/Home/bin" exec-path))
+;;(setq exec-path (cons "/usr/local/Cellar/openjdk@8/1.8.0-422/libexec/openjdk.jdk/Contents/Home/bin" exec-path))
 ;; java setting for closure script
-;;(setq exec-path (cons "/usr/local/Cellar/openjdk@21/21.0.6/libexec/openjdk.jdk/Contents/Home/bin" exec-path))
+(setq exec-path (cons "/usr/local/Cellar/openjdk@21/21.0.6/libexec/openjdk.jdk/Contents/Home/bin" exec-path))
 ;; transient for aider
 (use-package transient
 	:ensure t)
 ;; aider
 (use-package aidermacs
 	:ensure t
-  :bind (("C-c a" . aidermacs-transient-menu))
+  :bind (("C-c b" . aidermacs-transient-menu))
   :config
   ;; defun my-get-openrouter-api-key yourself elsewhere for security reasons
   ;;(setenv "OPENROUTER_API_KEY" (my-get-openrouter-api-key))
@@ -681,30 +709,27 @@
 ;; Add GPTel configuration
 
 ;; gptel
+
 (use-package gptel
 	:ensure t)
-;; OPTIONAL configuration
-;; (setq
-;;  gptel-model 'gemini-2.5-pro-exp-03-25
-;;  gptel-backend (gptel-make-gemini "Gemini"
-;;                  :key "AIzaSyDHduO1qxGhllvrBm16fSKIGN93JSnj-mc"
-;;                  :stream t))
 ;; :key can be a function that returns the API key.
-(gptel-make-gemini "Gemini" :key "" :stream t)
+(gptel-make-gemini "Gemini" :key (getenv "GEMINI_API_KEY") :stream t)
 ;; OpenRouter offers an OpenAI compatible API
-(gptel-make-openai "OpenRouter"               ;Any name you want
+(setq
+ gptel-model 'openai/gpt-4o-mini
+ gptel-backend (gptel-make-openai "OpenRouter"               ;Any name you want
   :host "openrouter.ai"
   :endpoint "/api/v1/chat/completions"
   :stream t
-  :key ""                   ;can be a function that returns the key
+  :key (getenv "OPENROUTER_API_KEY")
   :models '(x-ai/grok-3-mini-beta
+						openai/gpt-4o-mini
 						openai/gpt-3.5-turbo
 						openai/gpt-4.1
 						deepseek/deepseek-chat
-            google/gemini-pro))
+            google/gemini-2.5-pro-preview)))
 
 (gptel-make-deepseek "DeepSeek"       ;Any name you want
   :stream t                           ;for streaming responses
-  :key "")               ;can be a function that returns the key
+  :key (getenv "DEEPSEEK_API_KEY"))               ;can be a function that returns the key
 (global-set-key (kbd "C-c g") 'gptel-menu)
-

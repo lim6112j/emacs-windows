@@ -75,18 +75,20 @@
  ;; If there is more than one, they won't work right.
  '(custom-safe-themes
 	 '("f366d4bc6d14dcac2963d45df51956b2409a15b770ec2f6d730e73ce0ca5c8a7" default))
+ '(display-line-numbers-type 'relative)
  '(fit-frame-to-buffer t)
  '(global-display-line-numbers-mode t)
  '(ns-alternate-modifier 'meta)
  '(ns-command-modifier 'super)
  '(org-agenda-files '("~/org/roam/"))
+ '(org-babel-load-languages '((shell . t) (C . t)))
  '(org-confirm-babel-evaluate nil)
  '(org-cycle-inline-images-display t)
  '(org-display-remote-inline-images 'download)
  '(org-startup-with-inline-images t)
  '(org-todo-keywords '((sequence "TODO" "DONE" "PENDING" "DELETE")))
  '(package-selected-packages
-	 '(all-the-icons doom-themes gptel transient aidermacs aider scala-mode dart-mode anti-zenburn-theme catppuccin-theme diff-hl editorconfig ob-haskell restclient org-bullets eglot-java kotlin-mode ob-rust ob-kotlin elm-mode python-mode ob-mermaid clojure-ts-clojurescript-mode clojure-ts-mode psci kotlin-ts-mode nix-mode elixir-mode eglot typescript-mode prettier-js jsonrpc general treesit-auto tree-sitter-langs tree-sitter eldoc-box all haskell-mode projectile-ripgrep ripgrep tree-sitter-mode org-roam-ui org-roam org company rust-mode yasnippet lsp savehist vertico projectile helm-lsp lsp-treemacs lsp-ivy help-lsp lsp-ui lsp-mode helm zenburn-theme use-package smartparens multiple-cursors))
+	 '(ob-C gptel-agent all-the-icons doom-themes gptel transient aidermacs aider scala-mode dart-mode anti-zenburn-theme catppuccin-theme diff-hl editorconfig ob-haskell restclient org-bullets eglot-java kotlin-mode ob-rust ob-kotlin elm-mode python-mode ob-mermaid clojure-ts-clojurescript-mode clojure-ts-mode psci kotlin-ts-mode nix-mode elixir-mode eglot typescript-mode prettier-js jsonrpc general treesit-auto tree-sitter-langs tree-sitter eldoc-box all haskell-mode projectile-ripgrep ripgrep tree-sitter-mode org-roam-ui org-roam org company rust-mode yasnippet lsp savehist vertico projectile helm-lsp lsp-treemacs lsp-ivy help-lsp lsp-ui lsp-mode helm zenburn-theme use-package smartparens multiple-cursors))
  '(projectile-globally-ignored-directories
 	 '("^\\.idea$" "^\\.vscode$" "^\\.ensime_cache$" "^\\.eunit$" "^\\.git$" "^\\.hg$" "^\\.fslckout$" "^_FOSSIL_$" "^\\.bzr$" "^_darcs$" "^\\.pijul$" "^\\.tox$" "^\\.svn$" "^\\.stack-work$" "^\\.ccls-cache$" "^\\.cache$" "^\\.clangd$" "^\\.sl$" "^\\.jj$" "^\\.dist$"))
  '(tab-width 2)
@@ -381,7 +383,7 @@
 	(java-mode . company-mode)
   (haskell-mode . eglot-ensure)
 	(haskell-mode . company-mode)
-	(haskell-mode . copilot-mode)
+;;	(haskell-mode . copilot-mode)
   (typescript-ts-mode . eglot-ensure)
   (tsx-ts-mode . eglot-ensure)
 	(typescript-mode . eglot-ensure)
@@ -613,6 +615,12 @@
 ;;	:ensure t)
 ;; copilot
 ;;(setq max-lisp-eval-depth 16000)
+;; Fix newline/indentation inside org babel source blocks
+(setq org-src-tab-acts-natively t)
+(add-hook 'org-mode-hook
+          (lambda ()
+            (electric-indent-local-mode -1)))
+
 (use-package editorconfig
 	:ensure t)
 
@@ -676,18 +684,18 @@
     ;; Not required when defining minuet-active-mode-map without evil state.
     ;; (add-hook 'minuet-active-mode-hook #'evil-normalize-keymaps))
     (minuet-set-optional-options minuet-openai-fim-compatible-options :max_tokens 256))
-;; api keys
-(setenv "OPENAI_API_KEY" "")
+;; api key
+(setenv "OPENAI_API_KEY" "***REMOVED***")
   ; Set API_KEY in .bashrc, that will automatically picked up by aider or in elisp
-(setenv "ANTHROPIC_API_KEY" "")
-(setenv "GEMINI_API_KEY" "")
+(setenv "ANTHROPIC_API_KEY" "***REMOVED***")
+(setenv "GEMINI_API_KEY" "***REMOVED***")
 (setenv "OLLAMA_API_BASE" "http://127.0.0.1:11434")
 ;; openrouter ciel key
-;;(setenv "OPENROUTER_API_KEY" "")
+(setenv "OPENROUTER_API_KEY" "***REMOVED***")
 ;; openrouter personal key
-(setenv "OPENROUTER_API_KEY" "")
-(setenv "DEEPSEEK_API_KEY" "")
-(setenv "GEMINI_API_KEY" "")
+;;(setenv "OPENROUTER_API_KEY" "***REMOVED***")
+(setenv "DEEPSEEK_API_KEY" "***REMOVED***")
+(setenv "GEMINI_API_KEY" "***REMOVED***")
 ;; for scala and java
 ;;(setq exec-path (cons "/usr/local/Cellar/openjdk@8/1.8.0-422/libexec/openjdk.jdk/Contents/Home/bin" exec-path))
 ;; java setting for closure script
@@ -727,9 +735,12 @@
 						openai/gpt-3.5-turbo
 						openai/gpt-4.1
 						deepseek/deepseek-chat
-            google/gemini-2.5-pro-preview)))
+            google/gemini-2.5-pro
+						anthropic/claude-sonnet-4)))
 
 (gptel-make-deepseek "DeepSeek"       ;Any name you want
   :stream t                           ;for streaming responses
   :key (getenv "DEEPSEEK_API_KEY"))               ;can be a function that returns the key
 (global-set-key (kbd "C-c g") 'gptel-menu)
+(add-to-list 'load-path "~/workspace/drools_el/")
+(load "drools-mode.el")

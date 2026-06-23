@@ -223,6 +223,14 @@
    browse-url-generic-args     '("/c" "start")
    browse-url-browser-function #'browse-url-generic))
 (setq org-directory "~/org/")
+((org-mode . ((eval . (let ((schema-file (expand-file-name "CLAUDE.md" (dir-locals-find-file default-directory))))
+                        (if (file-exists-p schema-file)
+                            (setq-local gptel-system-prompt
+                                        (with-temp-buffer
+                                          (insert-file-contents schema-file)
+                                          (buffer-string)))
+                          (message "Warning: CLAUDE.md not found for gptel context.")))))))
+
 (defun hs-cycle (&optional level)
   (interactive "p")
   (let (message-log-max

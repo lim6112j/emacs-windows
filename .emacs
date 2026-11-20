@@ -685,18 +685,9 @@
     ;; Not required when defining minuet-active-mode-map without evil state.
     ;; (add-hook 'minuet-active-mode-hook #'evil-normalize-keymaps))
     (minuet-set-optional-options minuet-openai-fim-compatible-options :max_tokens 256))
-;; api key
-(setenv "OPENAI_API_KEY" "***REMOVED***")
-  ; Set API_KEY in .bashrc, that will automatically picked up by aider or in elisp
-(setenv "ANTHROPIC_API_KEY" "***REMOVED***")
-(setenv "GEMINI_API_KEY" "***REMOVED***")
-(setenv "OLLAMA_API_BASE" "http://127.0.0.1:11434")
-;; openrouter ciel key
-(setenv "OPENROUTER_API_KEY" "***REMOVED***")
-;; openrouter personal key
-;;(setenv "OPENROUTER_API_KEY" "***REMOVED***")
-(setenv "DEEPSEEK_API_KEY" "***REMOVED***")
-(setenv "GEMINI_API_KEY" "***REMOVED***")
+;; API keys and local endpoints live outside this repository.
+;; They are loaded from ~/.config/emacs/secrets.el (see that file).
+(load (expand-file-name "secrets.el" user-emacs-directory) 'noerror 'nomessage)
 ;; for scala and java
 ;;(setq exec-path (cons "/usr/local/Cellar/openjdk@8/1.8.0-422/libexec/openjdk.jdk/Contents/Home/bin" exec-path))
 ;; java setting for closure script
@@ -745,3 +736,10 @@
 (global-set-key (kbd "C-c g") 'gptel-menu)
 (add-to-list 'load-path "~/workspace/drools_el/")
 (load "drools-mode.el")
+
+;; iA Writer-style long-form writing environment (see writing.el).
+;; init.el is a symlink to this file, so resolve the real directory first.
+(load (expand-file-name "writing.el"
+                        (file-name-directory
+                         (file-truename (or load-file-name user-init-file))))
+      'noerror 'nomessage)

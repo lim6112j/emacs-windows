@@ -114,6 +114,7 @@
  '(org-confirm-babel-evaluate nil)
  '(org-cycle-inline-images-display t)
  '(org-display-remote-inline-images 'download)
+ '(org-return-follows-link t)
  '(org-startup-with-inline-images t)
  '(org-todo-keywords '((sequence "TODO" "DONE" "PENDING" "DELETE")))
  '(package-selected-packages
@@ -429,6 +430,9 @@
   (setq eglot-confirm-server-initiated-edits nil)
   (setq eglot-sync-connect 0)
   (setq eglot-autoshutdown t)
+  ;; HLS needs well over 30s to load a project (stack cradle + GHC session),
+  ;; so eglot's default `eglot-connect-timeout' of 30s kills the connection first.
+  (setq eglot-connect-timeout 300)
   (setq rex/language-servers
         (list '(tsx-ts-mode "typescript-language-server" "--stdio")
               ))
@@ -779,7 +783,7 @@
 (gptel-make-gemini "Gemini" :key (getenv "GEMINI_API_KEY") :stream t)
 ;; OpenRouter offers an OpenAI compatible API
 (setq
- gptel-model 'openai/gpt-4o-mini
+ gptel-model 'deepseek/deepseek-v4.1-flash-1017
  gptel-backend (gptel-make-openai "OpenRouter"               ;Any name you want
   :host "openrouter.ai"
   :endpoint "/api/v1/chat/completions"
@@ -788,6 +792,7 @@
   :models '(x-ai/grok-3-mini-beta
 						openai/gpt-4o-mini
 						openai/gpt-3.5-turbo
+						deepseek/deepseek-v4.1-flash-1017
 						openai/gpt-4.1
 						deepseek/deepseek-chat
             google/gemini-2.5-pro
@@ -809,3 +814,5 @@
                         (file-name-directory
                          (file-truename (or load-file-name user-init-file))))
       'noerror 'nomessage)
+(with-eval-after-load 'org
+  (setf (cdr (assoc 'file org-link-frame-setup)) 'find-file))

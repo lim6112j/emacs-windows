@@ -145,8 +145,24 @@
   :ensure which-key
     :config
     (which-key-mode))
-(when (memq window-system '(mac ns x))
-  (exec-path-from-shell-initialize))
+;; Pull PATH and friends from the login shell. `window-system' is nil while a
+;; daemon is starting, so this also has to run when a GUI frame attaches later
+;; (the usual case with an `emacs --daemon' setup); it never runs in a tty.
+(use-package exec-path-from-shell
+  :ensure t
+  :config
+  (defvar my/exec-path-from-shell-done nil
+    "Non-nil once `exec-path-from-shell-initialize' has been run.")
+  (defun my/exec-path-from-shell-maybe (&optional frame)
+    (unless my/exec-path-from-shell-done
+      ;; Use FRAME, not the selected frame: `after-make-frame-functions' runs
+      ;; before Emacs selects the new frame, so plain `(window-system)' would
+      ;; still report the previous (tty) frame and this would never run.
+      (when (memq (window-system frame) '(mac ns x))
+        (exec-path-from-shell-initialize)
+        (setq my/exec-path-from-shell-done t))))
+  (my/exec-path-from-shell-maybe)
+  (add-hook 'after-make-frame-functions #'my/exec-path-from-shell-maybe))
 ;; projectile is installed but not loaded at this point, so activate it through
 ;; `use-package' instead of calling `projectile-mode' directly (that used to be
 ;; the first startup error: "Symbol's function definition is void: projectile-mode").

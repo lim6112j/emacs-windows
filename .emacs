@@ -11,10 +11,18 @@
 (global-set-key (kbd"s-b") 'windmove-left)
 (global-set-key (kbd"s-p") 'windmove-up)
 (global-set-key (kbd"s-f") 'windmove-right)
-(package-initialize)
-(setq package-install-upgrade-built-in t)
+;; `early-init.el' sets `package-enable-at-startup' to nil, so package.el is not
+;; loaded yet here; require it explicitly.
+(require 'package)
+
+;; Register the archives BEFORE `package-initialize': it only indexes the
+;; repositories that are already in `package-archives', so initializing first
+;; left MELPA out of the index and every MELPA-only package looked
+;; "unavailable" to `package-install'.
 (add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/") t)
 (add-to-list 'package-archives '("melpa-stable" . "https://stable.melpa.org/packages/") t)
+(package-initialize)
+(setq package-install-upgrade-built-in t)
 ;;(use-package zenburn-theme
 ;;  :ensure zenburn-theme)
 ;;(load-theme 'zenburn t)
@@ -39,9 +47,12 @@
   (doom-themes-visual-bell-config)
   ;; Enable custom neotree theme (nerd-icons must be installed!)
   (doom-themes-neotree-config)
-  ;; or for treemacs users
-  (setq doom-themes-treemacs-theme "doom-atom") ; use "doom-colors" for less minimal icon theme
-  (doom-themes-treemacs-config)
+  ;; or for treemacs users: its icon theme needs nerd-icons, and doom-themes
+  ;; errors out when treemacs is loaded without it, so only enable it when
+  ;; nerd-icons is actually available
+  (when (require 'nerd-icons nil t)
+    (setq doom-themes-treemacs-theme "doom-atom") ; use "doom-colors" for less minimal icon theme
+    (doom-themes-treemacs-config))
   ;; Corrects (and improves) org-mode's native fontification.
   (doom-themes-org-config))
 (use-package multiple-cursors
@@ -136,13 +147,29 @@
     (which-key-mode))
 (when (memq window-system '(mac ns x))
   (exec-path-from-shell-initialize))
-(projectile-mode +1)
-;; Recommended keymap prefix on macOS
-;; (define-key projectile-mode-map (kbd "s-p") 'projectile-command-map)
-;; Recommended keymap prefix on Windows/Linux
-(define-key projectile-mode-map (kbd "C-c p") 'projectile-command-map)
-;; treemacs
-(global-set-key (kbd "C-c t") 'treemacs)
+;; projectile is installed but not loaded at this point, so activate it through
+;; `use-package' instead of calling `projectile-mode' directly (that used to be
+;; the first startup error: "Symbol's function definition is void: projectile-mode").
+(use-package projectile
+  :ensure t
+  :config
+  (projectile-mode +1)
+  ;; Recommended keymap prefix on macOS
+  ;; (define-key projectile-mode-map (kbd "s-p") 'projectile-command-map)
+  ;; Recommended keymap prefix on Windows/Linux
+  (define-key projectile-mode-map (kbd "C-c p") 'projectile-command-map))
+;; nerd-icons provides the icon theme used by treemacs (and by doom-themes'
+;; treemacs config). Install it when missing, but tolerate a failure (offline,
+;; no package index) so that it cannot break initialization.
+(unless (package-installed-p 'nerd-icons)
+  (condition-case err
+      (package-install 'nerd-icons)
+    (error (message "Could not install nerd-icons: %S" err))))
+
+;; treemacs (loaded on demand via `C-c t')
+(use-package treemacs
+  :ensure t
+  :bind (("C-c t" . treemacs)))
 ;; Enable vertico
 (use-package vertico
   :ensure vertico
@@ -195,7 +222,8 @@
   ;; Enable recursive minibuffers
   (setq enable-recursive-minibuffers t))
 ;; vertico ends
-(require 'rust-mode)
+(use-package rust-mode
+  :ensure t)
 (use-package org-roam
   :ensure t
   :custom
@@ -414,6 +442,7 @@
 ;; C-j and C-k and any other command closes it again, but it can very rarely get
 ;; stuck on screen, which requires C-g
 (use-package eldoc-box
+  :ensure t
   :defer t
   :config
   (defun rex/eldoc-box-scroll-up ()
@@ -446,30 +475,20 @@
   ("\\.env$" . conf-mode))
 
 (use-package web-mode
+  :ensure t
   :config
   (setq web-mode-code-indent-offset 2)
   (setq web-mode-markup-indent-offset 2)
   :mode
   ("\\.html$" . web-mode)
   ("\\.twig$" . web-mode))
-;; this should be replaced by the built-in modes eventually, but it's not always
-;; simple to switch and not every language has a builtin `lang'-ts-mode
-(use-package tree-sitter
-  :demand t
-  :diminish tree-sitter-mode
-  :config
-  (setq treesit-font-lock-level 4))
-
-(use-package tree-sitter-langs
-  :after tree-sitter)
-
-;; seems like it will still throw a warning the first time you visit a file with
-;; a treesit major mode if you don't have the grammar installed; manually
-;; running M-x lang-ts-mode after waiting a few seconds for this package to
-;; install and compile the grammar fixes the warning and you shouldn't see it
-;; again afterwards
+;; Emacs 29+ ships its own treesit implementation; the old `tree-sitter' and
+;; `tree-sitter-langs' packages need an external dynamic module that is not
+;; built for this Emacs, so only the grammar auto-installer is used here.
 (use-package treesit-auto
+  :ensure t
   :config
+  (setq treesit-font-lock-level 4)
   (setq treesit-auto-install t))
 
 (use-package flymake :ensure nil
@@ -481,13 +500,14 @@
         ;; space, so make it shorter
         '(" " flymake-mode-line-exception flymake-mode-line-counters)))
 (use-package add-node-modules-path
+  :ensure t
   :hook
   (tsx-ts-mode . add-node-modules-path)
   (typescript-ts-mode . add-node-modules-path))
 
 ;; you need to have prettier installed for this to work obviously
 (use-package prettier-js
-  :diminish prettier-js-mode
+  :ensure t
   :hook
   (tsx-ts-mode . prettier-js-mode)
   (typescript-ts-mode . prettier-js-mode))
@@ -558,11 +578,13 @@
 ;;      load-path))      (setq erlang-root-dir "/opt/homebrew/opt/erlang/bin")
 ;;      (setq exec-path (cons "/opt/homebrew/opt/erlang/bin" exec-path))
 ;;      (require 'erlang-start)
-;; for intel mac
-(setq load-path (cons  "/usr/local/opt/erlang/lib/erlang/lib/tools-4.1.1/emacs" load-path))
-(setq erlang-root-dir "/usr/local/opt/erlang/bin")
-(setq exec-path (cons "/usr/local/opt/erlang/bin" exec-path))
-(require 'erlang-start)
+;; for intel mac (the Erlang install path only exists on that machine, so
+;; guard it instead of erroring out on every other host)
+(when (file-exists-p "/usr/local/opt/erlang")
+  (setq load-path (cons  "/usr/local/opt/erlang/lib/erlang/lib/tools-4.1.1/emacs" load-path))
+  (setq erlang-root-dir "/usr/local/opt/erlang/bin")
+  (setq exec-path (cons "/usr/local/opt/erlang/bin" exec-path))
+  (require 'erlang-start nil t))
 ;; faster emacs
 (fset #'jsonrpc--log-event #'ignore)
 (setq eglot-events-buffer-size 0)
@@ -571,9 +593,14 @@
 (setq company-minimum-prefix-length 1)
 
 ;; for autosave annoying vc appearance
-(add-to-list 'load-path "/Users/byeongcheollim/emacs-auto-save") ; add auto-save to your load-path
-(require 'auto-save)
-(auto-save-enable)
+;; the auto-save package is vendored outside this repo and only present on the
+;; original machine; install it with M-x package-install RET auto-save RET
+;; (or clone it into ~/emacs-auto-save) to enable it again.
+(when (file-directory-p (expand-file-name "~/emacs-auto-save"))
+  (add-to-list 'load-path (expand-file-name "~/emacs-auto-save"))
+  (require 'auto-save nil t)
+  (when (fboundp 'auto-save-enable)
+    (auto-save-enable)))
 
 (setq auto-save-silent t)   ; quietly save
 (setq auto-save-delete-trailing-whitespace t)  ; automatically delete spaces at the end of the line when saving
@@ -610,8 +637,8 @@
 (use-package restclient
 	:ensure t
 )
-;; for org haskell
-(require 'ob-haskell)
+;; ob-haskell ships with Org; load it only when available
+(require 'ob-haskell nil t)
 ;;(use-package ob-haskell
 ;;	:ensure t)
 ;; copilot
@@ -625,12 +652,16 @@
 (use-package editorconfig
 	:ensure t)
 
-(add-to-list 'load-path "/Users/byeongcheollim/workspace/copilot/copilot.el")
-(require 'copilot)
-(define-key copilot-completion-map (kbd "<tab>") 'copilot-next-completion)
-(define-key copilot-completion-map (kbd "TAB") 'copilot-next-completion)
-(define-key copilot-completion-map (kbd "<C-return>") 'copilot-accept-completion)
-(define-key copilot-completion-map (kbd "C-RET") 'copilot-accept-completion)
+;; copilot (installed from ELPA; it used to be loaded from a vendored path
+;; that only exists on the original machine). Loaded eagerly so that the
+;; bindings in `copilot-completion-map' are actually installed.
+(use-package copilot
+  :ensure t
+  :config
+  (define-key copilot-completion-map (kbd "<tab>") 'copilot-next-completion)
+  (define-key copilot-completion-map (kbd "TAB") 'copilot-next-completion)
+  (define-key copilot-completion-map (kbd "<C-return>") 'copilot-accept-completion)
+  (define-key copilot-completion-map (kbd "C-RET") 'copilot-accept-completion))
 ;; diff show on buffer
 (use-package diff-hl
 	:ensure t
@@ -734,8 +765,11 @@
   :stream t                           ;for streaming responses
   :key (getenv "DEEPSEEK_API_KEY"))               ;can be a function that returns the key
 (global-set-key (kbd "C-c g") 'gptel-menu)
-(add-to-list 'load-path "~/workspace/drools_el/")
-(load "drools-mode.el")
+;; drools-mode is a local, out-of-repo file; load it only when present.
+(let ((drools-dir (expand-file-name "~/workspace/drools_el/")))
+  (when (file-directory-p drools-dir)
+    (add-to-list 'load-path drools-dir)
+    (load "drools-mode.el" 'noerror 'nomessage)))
 
 ;; iA Writer-style long-form writing environment (see writing.el).
 ;; init.el is a symlink to this file, so resolve the real directory first.

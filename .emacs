@@ -1,3 +1,21 @@
+;;; -*- lexical-binding: t; -*-
+
+;; Native compilation is broken on this machine: the libgccjit shipped with
+;; this Emacs build defaults to a macOS deployment target of 18.0, and the
+;; current Xcode clang refuses it ("clang: error: invalid version number in
+;; '-mmacosx-version-min=18.0'"), so every JIT compile died with native-ice.
+;; Pin the target the bundled libgccjit was built for (lib-arm64-11).
+(require 'comp)
+(setq native-comp-driver-options
+      (cons "-mmacosx-version-min=11.0"
+            (if (boundp 'native-comp-driver-options)
+                native-comp-driver-options
+              '("-Wl,-w"))))
+
+;; Trampoline compiles and the async JIT workers run as `emacs -Q'
+;; subprocesses that never read this file, so they only see the environment.
+(setenv "MACOSX_DEPLOYMENT_TARGET" "11.0")
+
 ;; (set-language-environment "Korean")
 ;; (prefer-coding-system 'utf-8)
 (menu-bar-mode 1)
@@ -570,16 +588,14 @@
   2. insert newline with index"
 
   (interactive)
-  (let ((oldpos (point)))
-    (end-of-line)
-    (newline-and-indent)))
+  (end-of-line)
+  (newline-and-indent))
 (defun newline-above ()
 (interactive)
-(let ((oldpos (point)))
 	(previous-line)
   (end-of-line)
 	(newline-and-indent)
-))
+)
 (global-set-key (kbd "<s-return>") 'newline-without-break-of-line)
 (global-set-key (kbd "<s-M-return>") 'newline-above)
 

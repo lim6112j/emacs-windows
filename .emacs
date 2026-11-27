@@ -103,7 +103,8 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(custom-safe-themes
-	 '("f366d4bc6d14dcac2963d45df51956b2409a15b770ec2f6d730e73ce0ca5c8a7" default))
+	 '("f366d4bc6d14dcac2963d45df51956b2409a15b770ec2f6d730e73ce0ca5c8a7"
+		 default))
  '(display-line-numbers-type 'relative)
  '(fit-frame-to-buffer t)
  '(global-display-line-numbers-mode t)
@@ -118,9 +119,32 @@
  '(org-startup-with-inline-images t)
  '(org-todo-keywords '((sequence "TODO" "DONE" "PENDING" "DELETE")))
  '(package-selected-packages
-	 '(ob-C gptel-agent all-the-icons doom-themes gptel transient aidermacs aider scala-mode dart-mode anti-zenburn-theme catppuccin-theme diff-hl editorconfig ob-haskell restclient org-bullets eglot-java kotlin-mode ob-rust ob-kotlin elm-mode python-mode ob-mermaid clojure-ts-clojurescript-mode clojure-ts-mode psci kotlin-ts-mode nix-mode elixir-mode eglot typescript-mode prettier-js jsonrpc general treesit-auto tree-sitter-langs tree-sitter eldoc-box all haskell-mode projectile-ripgrep ripgrep tree-sitter-mode org-roam-ui org-roam org company rust-mode yasnippet lsp savehist vertico projectile helm-lsp lsp-treemacs lsp-ivy help-lsp lsp-ui lsp-mode helm zenburn-theme use-package smartparens multiple-cursors))
+	 '(add-node-modules-path aider aidermacs all all-the-icons
+													 anti-zenburn-theme catppuccin-theme
+													 clojure-ts-clojurescript-mode
+													 clojure-ts-mode company copilot dart-mode
+													 diff-hl doom-themes editorconfig eglot
+													 eglot-java eldoc-box elixir-mode elm-mode
+													 general gptel gptel-agent haskell-mode helm
+													 helm-lsp help-lsp jsonrpc kotlin-mode
+													 kotlin-ts-mode lsp lsp-ivy lsp-mode
+													 lsp-treemacs lsp-ui multiple-cursors
+													 nerd-icons nix-mode ob-C ob-haskell
+													 ob-kotlin ob-mermaid ob-rust org
+													 org-bullets org-roam org-roam-ui
+													 prettier-js projectile projectile-ripgrep
+													 psci python-mode restclient ripgrep
+													 rust-mode savehist scala-mode smartparens
+													 transient tree-sitter tree-sitter-langs
+													 tree-sitter-mode treesit-auto
+													 typescript-mode use-package vertico
+													 yasnippet zenburn-theme))
  '(projectile-globally-ignored-directories
-	 '("^\\.idea$" "^\\.vscode$" "^\\.ensime_cache$" "^\\.eunit$" "^\\.git$" "^\\.hg$" "^\\.fslckout$" "^_FOSSIL_$" "^\\.bzr$" "^_darcs$" "^\\.pijul$" "^\\.tox$" "^\\.svn$" "^\\.stack-work$" "^\\.ccls-cache$" "^\\.cache$" "^\\.clangd$" "^\\.sl$" "^\\.jj$" "^\\.dist$"))
+	 '("^\\.idea$" "^\\.vscode$" "^\\.ensime_cache$" "^\\.eunit$"
+		 "^\\.git$" "^\\.hg$" "^\\.fslckout$" "^_FOSSIL_$" "^\\.bzr$"
+		 "^_darcs$" "^\\.pijul$" "^\\.tox$" "^\\.svn$" "^\\.stack-work$"
+		 "^\\.ccls-cache$" "^\\.cache$" "^\\.clangd$" "^\\.sl$" "^\\.jj$"
+		 "^\\.dist$"))
  '(tab-width 2)
  '(tool-bar-mode nil)
  '(warning-suppress-types '((magit))))
@@ -198,8 +222,20 @@
 ;; no package index) so that it cannot break initialization.
 (unless (package-installed-p 'nerd-icons)
   (condition-case err
-      (package-install 'nerd-icons)
-    (error (message "Could not install nerd-icons: %S" err))))
+      (progn
+        ;; `package-install' only downloads a fresh archive index when
+        ;; `package-archive-contents' is nil; with a stale cache it just signals
+        ;; "Package `nerd-icons' is unavailable", so refresh when needed.
+        (unless (assq 'nerd-icons package-archive-contents)
+          (package-refresh-contents))
+        (package-install 'nerd-icons))
+    (error
+     ;; `message' alone is easy to miss in a busy `*Messages*' buffer, and this
+     ;; is the only feedback that treemacs will show up without icons.
+     (display-warning 'nerd-icons
+                      (format "Could not install nerd-icons: %s"
+                              (error-message-string err))
+                      :warning))))
 
 ;; treemacs (loaded on demand via `C-c t')
 (use-package treemacs
@@ -620,7 +656,15 @@
   (setq load-path (cons  "/usr/local/opt/erlang/lib/erlang/lib/tools-4.1.1/emacs" load-path))
   (setq erlang-root-dir "/usr/local/opt/erlang/bin")
   (setq exec-path (cons "/usr/local/opt/erlang/bin" exec-path))
-  (require 'erlang-start nil t))
+  ;; `erlang-start.el' ships with Homebrew's Erlang and has no
+  ;; `lexical-binding' cookie, so Emacs 31 warns on every load.  It belongs to
+  ;; Homebrew, so patching the file would be undone by `brew upgrade erlang';
+  ;; inhibit just this warning instead.  `warning-inhibit-types' is the
+  ;; variable to let-bind for this (unlike `warning-suppress-types', which
+  ;; only affects interactive display and is ignored in batch/daemon sessions).
+  (let ((warning-inhibit-types
+         (cons '(files missing-lexbind-cookie) warning-inhibit-types)))
+    (require 'erlang-start nil t)))
 ;; faster emacs
 (fset #'jsonrpc--log-event #'ignore)
 (setq eglot-events-buffer-size 0)
